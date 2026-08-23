@@ -17,7 +17,6 @@ body {
     margin: 0;
 }
 
-
 .start-page {
     display: flex;
     flex-direction: column;
@@ -125,8 +124,6 @@ body {
     }
 }
 
-
-
 .settings-page {
     display: flex;
     flex-direction: column;
@@ -148,4 +145,8 @@ body {
         display: flex;
         flex-direction: row;
     }
+}
+
+.hidden {
+    display: none;
 }

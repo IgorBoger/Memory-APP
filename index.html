@@ -11,7 +11,7 @@
 
 <body>
 
-    <!-- <main class="start-page">
+    <main class="start-page hidden">
 
         <div class="start-page__title">
             <p>It's play time.</p>
@@ -20,25 +20,26 @@
 
 
         <button class="start-page__button" id="start-button" type="button">
-            <img class="start-page__button__ctl-img" src="/img/btn-controller.png" alt="">
+            <img class="start-page__button__ctl-img" src="/img/legacy-start-page/btn-controller.png" alt="">
             <span class="start-page__button__text">Play</span>
 
             <span class="start-page__button__arrow">
-                <img class="start-page__button__arrow-img" src="/img/start-arrow.png" alt="">
-                <img class="start-page__button__arrow-hover-img" src="/img/start-arrow-hover.png" alt="">
+                <img class="start-page__button__arrow-img" src="/img/legacy-start-page/start-arrow.png" alt="">
+                <img class="start-page__button__arrow-hover-img" src="/img/legacy-start-page/start-arrow-hover.png" alt="">
             </span>
         </button>
 
         <div class="start-page__logo">
-            <img src="/img/overlay-controller.png" alt="Memory-APP Logo">
+            <img src="/img/legacy-start-page/overlay-controller.png" alt="Memory-APP Logo">
         </div>
 
-    </main> -->
+    </main>
 
     <section class="settings-page">
 
         <div class="settings-page__title">
             <h1>Settings</h1>
+            <img src="/img/settings-page/settings-underline.png" alt="">
         </div>
 
         <div class="settings-page__content">
@@ -46,7 +47,10 @@
             <div class="settings-page__content__left">
                 <div class="settings-page__options">
                     <div class="settings-page__option-group">
-                        <h2>Game themes</h2>
+                        <h2>
+                            <img src="/img/settings-page/game-themes.png" alt="">
+                            Game themes
+                        </h2>
 
                         <label>
                             <input type="radio" name="game-theme" value="code-vibes" checked>
@@ -70,7 +74,10 @@
                     </div>
 
                     <div class="settings-page__option-group">
-                        <h2>Choose player</h2>
+                        <h2>
+                            <img src="/img/settings-page/choose-player.png" alt="">
+                            Choose player
+                        </h2>
 
                         <label>
                             <input type="radio" name="player" value="blue" checked>
@@ -84,7 +91,10 @@
                     </div>
 
                     <div class="settings-page__option-group">
-                        <h2>Board size</h2>
+                        <h2>
+                            <img src="/img/settings-page/board-size.png" alt="">
+                            Board size
+                        </h2>
 
                         <label>
                             <input type="radio" name="board-size" value="16" checked>
@@ -110,12 +120,12 @@
                     <div>
                         <div>
                             <span>
-                                <img src="" alt="Blue player">
+                                <img src="/img/settings-page/blue-label.png" alt="">
                                 <p>Blue</p>
                                 <p>0</p>
                             </span>
                             <span>
-                                <img src="" alt="Orange player">
+                                <img src="/img/settings-page/orange-label.png" alt="">
                                 <p>Orange</p>
                                 <p>0</p>
                             </span>
@@ -123,19 +133,19 @@
 
                         <span>
                             <p>Current player</p>
-                            <img src="" alt="Blue player">
+                            <img src="/img/settings-page/blue-label.png" alt="">
                         </span>
 
                         <button type="button">
-                            <img src="" alt="">
-                            <p>Button</p>
+                            <img src="/img/settings-page/exit-game.png" alt="">
+                            <span>Exit game</span>
                         </button>
                     </div>
 
 
                     <div>
-                        <img src="" alt="">
-                        <img src="" alt="">
+                        <img src="/img/settings-page/dev-logo.png" alt="Code vibes card">
+                        <img src="/img/settings-page/git-logo.png" alt="Git card">
                     </div>
 
 
@@ -144,12 +154,15 @@
 
                 <div>
 
-                    <span>Game themes</span>
-                    <span>Choose player</span>
+                    <span>Game theme</span>
+                    <img src="/img/settings-page/summary-divider.png" alt="">
+                    <span>Player</span>
+                    <img src="/img/settings-page/summary-divider.png" alt="">
                     <span>Board size</span>
 
                     <button class="settings-page__content__start-button" id="start-game-button" type="button">
-                        Start Game
+                        <img src="/img/settings-page/start-game-icon.png" alt="">
+                        <span>Start</span>
                     </button>
 
                 </div>
