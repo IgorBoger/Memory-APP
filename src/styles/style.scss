@@ -124,3 +124,28 @@ body {
         bottom: 8px;
     }
 }
+
+
+
+.settings-page {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    box-sizing: border-box;
+    padding: 80px;
+
+    &__title {
+        >h1 {
+            font-family: "Red Rose", sans-serif;
+            font-weight: 700;
+            font-size: 54px;
+            margin: 0;
+            // padding: 24px;
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: row;
+    }
+}

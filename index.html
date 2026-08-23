@@ -11,7 +11,7 @@
 
 <body>
 
-    <main class="start-page">
+    <!-- <main class="start-page">
 
         <div class="start-page__title">
             <p>It's play time.</p>
@@ -33,7 +33,131 @@
             <img src="/img/overlay-controller.png" alt="Memory-APP Logo">
         </div>
 
-    </main>
+    </main> -->
+
+    <section class="settings-page">
+
+        <div class="settings-page__title">
+            <h1>Settings</h1>
+        </div>
+
+        <div class="settings-page__content">
+
+            <div class="settings-page__content__left">
+                <div class="settings-page__options">
+                    <div class="settings-page__option-group">
+                        <h2>Game themes</h2>
+
+                        <label>
+                            <input type="radio" name="game-theme" value="code-vibes" checked>
+                            Code vibes theme
+                        </label>
+
+                        <label>
+                            <input type="radio" name="game-theme" value="gaming">
+                            Gaming theme
+                        </label>
+
+                        <label>
+                            <input type="radio" name="game-theme" value="da-projects">
+                            DA Projects theme
+                        </label>
+
+                        <label>
+                            <input type="radio" name="game-theme" value="foods">
+                            Foods theme
+                        </label>
+                    </div>
+
+                    <div class="settings-page__option-group">
+                        <h2>Choose player</h2>
+
+                        <label>
+                            <input type="radio" name="player" value="blue" checked>
+                            Blue
+                        </label>
+
+                        <label>
+                            <input type="radio" name="player" value="orange">
+                            Orange
+                        </label>
+                    </div>
+
+                    <div class="settings-page__option-group">
+                        <h2>Board size</h2>
+
+                        <label>
+                            <input type="radio" name="board-size" value="16" checked>
+                            16 cards
+                        </label>
+
+                        <label>
+                            <input type="radio" name="board-size" value="24">
+                            24 cards
+                        </label>
+
+                        <label>
+                            <input type="radio" name="board-size" value="36">
+                            36 cards
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-page__content__right">
+                <div>
+
+                    <div>
+                        <div>
+                            <span>
+                                <img src="" alt="Blue player">
+                                <p>Blue</p>
+                                <p>0</p>
+                            </span>
+                            <span>
+                                <img src="" alt="Orange player">
+                                <p>Orange</p>
+                                <p>0</p>
+                            </span>
+                        </div>
+
+                        <span>
+                            <p>Current player</p>
+                            <img src="" alt="Blue player">
+                        </span>
+
+                        <button type="button">
+                            <img src="" alt="">
+                            <p>Button</p>
+                        </button>
+                    </div>
+
+
+                    <div>
+                        <img src="" alt="">
+                        <img src="" alt="">
+                    </div>
+
+
+                </div>
+
+
+                <div>
+
+                    <span>Game themes</span>
+                    <span>Choose player</span>
+                    <span>Board size</span>
+
+                    <button class="settings-page__content__start-button" id="start-game-button" type="button">
+                        Start Game
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+    </section>
 
 </body>
 
