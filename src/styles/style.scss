@@ -13,6 +13,14 @@
 }
 
 
+@font-face {
+    font-family: "Red Rose";
+    src: url("/fonts/Red_Rose/static/RedRose-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+
 body {
     margin: 0;
     color: rgb(48, 49, 49);
@@ -161,7 +169,7 @@ body {
         display: flex;
         flex-direction: column;
 
-        > h2 {
+        >h2 {
             font-family: "Almarai", sans-serif;
             font-weight: 700;
             font-size: 24px;
@@ -179,7 +187,7 @@ body {
         flex-direction: column;
         padding-left: 36px;
 
-        > label {
+        >label {
             font-family: "Almarai", sans-serif;
             font-weight: 400;
             font-size: 20px;
@@ -220,6 +228,204 @@ body {
             }
         }
 
+    }
+
+    &__preview {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 50%;
+        justify-content: space-between;
+    }
+
+    &__preview-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 17px 7px;
+        background: linear-gradient(225deg,
+                rgba(48, 49, 49, 1),
+                rgba(109, 109, 109, 1));
+        width: 100%;
+        height: 412px;
+        box-sizing: border-box;
+        border-radius: 16px;
+    }
+
+    &__preview-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 8px 20px;
+    }
+
+    &__score-list {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        background-color: rgb(74, 104, 99);
+        padding: 4px 8px;
+    }
+
+    &__score {
+        display: flex;
+        flex-direction: row;
+        gap: 4px;
+
+        >img {
+            width: 10px;
+            height: 8px;
+            object-fit: cover;
+        }
+
+        >p {
+            font-family: "Red Rose", sans-serif;
+            font-weight: 700;
+            font-size: 8px;
+            line-height: 100%;
+            letter-spacing: 0;
+            margin: 0;
+        }
+    }
+
+    &__score--blue {
+        color: rgb(43, 177, 255);
+    }
+
+    &__score--orange {
+        color: rgb(245, 142, 57);
+    }
+
+    &__current-player {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 8px;
+
+
+        >p {
+            font-family: "Red Rose", sans-serif;
+            font-weight: 400;
+            font-size: 10px;
+            line-height: 100%;
+            letter-spacing: 0;
+            white-space: nowrap;
+            margin: 0;
+            color: rgb(255, 255, 255);
+        }
+
+        >img {
+            width: 10px;
+            height: 8px;
+            object-fit: cover;
+        }
+    }
+
+    &__exit-button {
+        font-family: "Red Rose", sans-serif;
+        font-weight: 700;
+        font-size: 10px;
+        line-height: 100%;
+        letter-spacing: 0;
+        white-space: nowrap;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 8px 4px;
+        width: 84px;
+        height: 20px;
+        color: rgb(255, 255, 255);
+        background-color: rgba(77, 213, 188, 0.2);
+        border: 1px solid rgba(77, 213, 188);
+    }
+
+    &__card-preview {
+        position: absolute;
+        left: 50%;
+        top: 60%;
+        transform: translate(-50%, -50%);
+        width: 350px;
+        height: 250px;
+    }
+
+    &__dev {
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+        transform: rotate(-5.5deg);
+        z-index: 1;
+        position: absolute;
+        box-shadow: 4px 4px 5.4px 0 rgba(0, 0, 0, 0.2);
+        left: 10px;
+        top: 10px;
+    }
+
+    &__git {
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+        transform: rotate(12deg);
+        position: absolute;
+        box-shadow: 4px 4px 5.4px 0 rgba(0, 0, 0, 0.2);
+        left: 150px;
+        top: 50px;
+    }
+
+    &__summary {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background-color: rgba(246, 246, 246);
+        padding: 14px 20px;
+
+        >span {
+            font-family: "Almarai", sans-serif;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 100%;
+            letter-spacing: 0;
+            color: rgb(48, 49, 49);
+            white-space: nowrap;
+        }
+    }
+
+    &__start-button {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border: none;
+        background-color: rgb(240, 234, 110);
+        color: rgb(48, 49, 49);
+        gap: 8px;
+        padding: 14px 20px;
+        font-family: "Red Rose", sans-serif;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 100%;
+        letter-spacing: 0;
+
+        >img {
+            width: 20px;
+            height: 16px;
+            object-fit: cover;
+        }
+    }
+
+    &__start-button:disabled {
+        background-color: rgb(219, 219, 214);
+        color: rgb(160, 160, 160);
+        cursor: not-allowed;
+    }
+
+    &__start-button:disabled>img {
+        filter: grayscale(1);
+        opacity: 0.45;
     }
 }
 

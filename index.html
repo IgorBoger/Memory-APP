@@ -119,53 +119,54 @@
                 </div>
             </div>
 
-            <div class="settings-page__content__right">
-                <div>
+            <div class="settings-page__preview">
 
-                    <div>
-                        <div>
-                            <span>
+                <div class="settings-page__preview-content">
+
+                    <div class="settings-page__preview-header">
+
+                        <div class="settings-page__score-list">
+                            <span class="settings-page__score settings-page__score--blue">
                                 <img src="/img/settings-page/blue-label.png" alt="">
                                 <p>Blue</p>
                                 <p>0</p>
                             </span>
-                            <span>
+
+                            <span class="settings-page__score settings-page__score--orange">
                                 <img src="/img/settings-page/orange-label.png" alt="">
                                 <p>Orange</p>
                                 <p>0</p>
                             </span>
                         </div>
 
-                        <span>
+                        <span class="settings-page__current-player">
                             <p>Current player</p>
                             <img src="/img/settings-page/blue-label.png" alt="">
                         </span>
 
-                        <button type="button">
+                        <button type="button" class="settings-page__exit-button">
                             <img src="/img/settings-page/exit-game.png" alt="">
                             <span>Exit game</span>
                         </button>
                     </div>
 
 
-                    <div>
-                        <img src="/img/settings-page/dev-logo.png" alt="Code vibes card">
-                        <img src="/img/settings-page/git-logo.png" alt="Git card">
+                    <div class="settings-page__card-preview">
+                        <img class="settings-page__dev" src="/img/settings-page/dev-logo.png" alt="Code vibes card">
+                        <img class="settings-page__git" src="/img/settings-page/git-logo.png" alt="Git card">
                     </div>
-
-
                 </div>
 
 
-                <div>
+                <div class="settings-page__summary">
 
-                    <span>Game theme</span>
+                    <span>Theme </span>
                     <img src="/img/settings-page/summary-divider.png" alt="">
                     <span>Player</span>
                     <img src="/img/settings-page/summary-divider.png" alt="">
                     <span>Board size</span>
 
-                    <button class="settings-page__content__start-button" id="start-game-button" type="button">
+                    <button class="settings-page__start-button" id="start-game-button" type="button" disabled>
                         <img src="/img/settings-page/start-game-icon.png" alt="">
                         <span>Start</span>
                     </button>
