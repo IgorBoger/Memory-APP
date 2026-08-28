@@ -24,7 +24,98 @@
 body {
     margin: 0;
     color: rgb(48, 49, 49);
+    overflow: hidden;
 }
+
+
+[hidden] {
+    display: none !important;
+}
+
+.app-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 20px;
+    background-color: rgb(47, 49, 49);
+    color: rgb(240, 234, 110);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 300ms ease-in-out, visibility 300ms ease;
+
+    >p {
+        margin: 0;
+        font-family: "Red Rose", sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+    }
+}
+
+.app-loader__spinner {
+    width: 56px;
+    height: 56px;
+    border: 6px solid rgba(240, 234, 110, 0.2);
+    border-top-color: rgb(240, 234, 110);
+    border-radius: 50%;
+    animation: spin 900ms linear infinite;
+}
+
+body.app-loading {
+    .app-loader {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .page {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+body:not(.app-loading) {
+    .page--active {
+        animation: appFadeIn 260ms ease both;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes appFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.page {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(16px);
+    transition: opacity 300ms ease, transform 300ms ease;
+}
+
+
+.page--active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
 
 .start-page {
     display: flex;
@@ -133,6 +224,12 @@ body {
     }
 }
 
+
+.hidden {
+    display: none;
+}
+
+
 .settings-page {
     display: flex;
     flex-direction: column;
@@ -208,6 +305,7 @@ body {
                 margin: 0;
                 box-sizing: border-box;
                 position: relative;
+                cursor: pointer;
             }
 
             input[type="radio"]::before {
@@ -427,8 +525,4 @@ body {
         filter: grayscale(1);
         opacity: 0.45;
     }
-}
-
-.hidden {
-    display: none;
 }

@@ -6,12 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory-APP</title>
 
+    <link rel="stylesheet" href="src/styles/style.scss">
     <script type="module" src="/src/main.ts"></script>
 </head>
 
 <body>
 
-    <main class="start-page hidden">
+
+
+    <main class="start-page page page--active" id="startPage">
 
         <div class="start-page__title">
             <p>It's play time.</p>
@@ -19,7 +22,7 @@
         </div>
 
 
-        <button class="start-page__button" id="start-button" type="button">
+        <button class="start-page__button" id="playButton" type="button">
             <img class="start-page__button__ctl-img" src="/img/legacy-start-page/btn-controller.png" alt="">
             <span class="start-page__button__text">Play</span>
 
@@ -36,7 +39,7 @@
 
     </main>
 
-    <section class="settings-page">
+    <section class="settings-page page" id="settingsPage" hidden>
 
         <div class="settings-page__title">
             <h1>Settings</h1>
