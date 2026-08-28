@@ -5,6 +5,7 @@ init();
 
 function init() {
     startSettingsPage();
+    renderPlayingFieldCards();
 }
 
 
@@ -29,4 +30,29 @@ function startSettingsPage() {
             showPage(startPage, settingsPage);
         }
     });
+}
+
+
+function renderPlayingFieldCards() {
+    const playingFieldBoard = document.getElementById("playingFieldBoard");
+    if (playingFieldBoard) {
+        for (let cardIndex = 0; cardIndex < 16; cardIndex++) {
+            const memoryCard = document.createElement("button");
+            memoryCard.className = "memory-card";
+            memoryCard.innerHTML = `
+            <div class="memory-card__inner">
+                <div class="memory-card__face memory-card__face--front">
+                    <img class="memory-card__image"
+                    src="/img/settings-page/dev-logo.png"
+                    alt="Code vibes card">
+                </div>
+                <div class="memory-card__face memory-card__face--back">
+                    <img class="memory-card__image"
+                    src="/img/settings-page/git-logo.png"
+                    alt="Git card">
+                </div>
+            </div>`;
+            playingFieldBoard.appendChild(memoryCard);
+        }
+    }
 }

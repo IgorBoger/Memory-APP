@@ -229,6 +229,122 @@ body:not(.app-loading) {
     display: none;
 }
 
+.game-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.game-header__scoreboard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(74, 104, 99);
+}
+
+.game-header__score {
+    display: flex;
+    flex-direction: row;
+
+    >p {
+        font-family: "Red Rose", sans-serif;
+        font-weight: 700;
+        line-height: 100%;
+        letter-spacing: 0;
+        margin: 0;
+    }
+}
+
+.game-header__score--blue {
+    color: rgb(43, 177, 255);
+}
+
+.game-header__score--orange {
+    color: rgb(245, 142, 57);
+}
+
+.game-header__current-player {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    >p {
+        font-family: "Red Rose", sans-serif;
+        font-weight: 400;
+        line-height: 100%;
+        letter-spacing: 0;
+        white-space: nowrap;
+        margin: 0;
+        color: rgb(255, 255, 255);
+    }
+}
+
+.game-header__exit-button {
+    font-family: "Red Rose", sans-serif;
+    font-weight: 700;
+    line-height: 100%;
+    letter-spacing: 0;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: rgb(255, 255, 255);
+    background-color: rgba(77, 213, 188, 0.2);
+    border: 1px solid rgba(77, 213, 188);
+}
+
+.game-header--playing-field {
+    align-items: center;
+    padding: 8px 20px;
+
+    .game-header__scoreboard {
+        gap: 20px;
+        padding: 17px 20px;
+    }
+
+    .game-header__score {
+        align-items: center;
+        gap: 4px;
+
+        >img {
+            width: 24px;
+            height: 20px;
+            object-fit: cover;
+        }
+
+        >p {
+            font-size: 24px;
+        }
+    }
+
+    .game-header__current-player {
+        gap: 8px;
+        padding: 4px 8px;
+
+        >p {
+            font-size: 26px;
+        }
+
+        >img {
+            width: 24px;
+            height: 20px;
+            object-fit: cover;
+        }
+    }
+
+    .game-header__exit-button {
+        gap: 10px;
+        padding: 16px 24px;
+        font-size: 24px;
+
+        >img {
+            width: 24px;
+            height: 20px;
+            object-fit: cover;
+        }
+    }
+}
+
 
 .settings-page {
     display: flex;
@@ -524,5 +640,83 @@ body:not(.app-loading) {
     &__start-button:disabled>img {
         filter: grayscale(1);
         opacity: 0.45;
+    }
+}
+
+.playing-field {
+    &__stage {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        justify-content: space-between;
+    }
+
+    &__content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 36px;
+        padding: 24px 48px;
+        background-color: rgba(48, 49, 49);
+        width: 100%;
+        height: 100vh;
+        box-sizing: border-box;
+    }
+
+    &__board {
+        display: grid;
+        grid-template-columns: repeat(4, 120px);
+        grid-template-rows: repeat(4, 120px);
+        gap: 12px;
+        justify-content: center;
+        align-items: center;
+        justify-items: center;
+        box-sizing: border-box;
+        background-color: transparent;
+        width: 100%;
+        height: 100%;
+    }
+
+    .memory-card {
+        height: 100px;
+        aspect-ratio: 1/1;
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        perspective: 1000px;
+
+        &__inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 300ms ease-in-out;
+            border-radius: 10px;
+        }
+
+        &__face {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backface-visibility: hidden;
+            border-radius: 10px;
+
+            &--front {
+                // background-color: blue;
+            }
+
+            &--back {
+                background-color: green;
+                transform: rotateY(180deg);
+            }
+        }
+
+        &.is-flipped {
+            .memory-card__inner {
+                transform: rotateY(180deg);
+            }
+        }
     }
 }
