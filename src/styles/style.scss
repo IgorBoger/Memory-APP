@@ -518,6 +518,14 @@ body {
                     }
                 }
 
+                &__score--orange {
+                    order: 1;
+                }
+
+                &__score--blue {
+                    order: 2;
+                }
+
                 &__current-player {
                     >p {
                         font-family: "Orbitron", sans-serif;
@@ -611,6 +619,14 @@ body {
                     }
                 }
 
+                &__score--orange {
+                    order: 1;
+                }
+
+                &__score--blue {
+                    order: 2;
+                }
+
                 &__current-player {
                     >p {
                         color: rgba(30, 117, 148, 1);
@@ -660,6 +676,114 @@ body {
                     top: 80px;
                     transform: rotate(0deg);
                     box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.25);
+
+                    >img {
+                        width: 80px;
+                        height: 80px;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+
+        &--foods {
+            background-color: rgba(232, 226, 220, 1);
+
+            .settings-page {
+                &__preview-header {
+                    background-color: rgba(255, 255, 255);
+                    border-radius: 10px;
+                    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+
+                }
+
+                &__score-list {
+                    background-color: transparent;
+                    gap: 16px;
+                }
+
+                &__score {
+                    >img {
+                        width: 8px;
+                        height: 10px;
+                    }
+
+                    >p:first-of-type {
+                        display: none;
+                    }
+
+                    >p:last-of-type {
+                        font-family: "Figtree", sans-serif;
+                        font-size: 12px;
+                    }
+                }
+
+                &__score--orange {
+                    order: 1;
+                }
+
+                &__score--blue {
+                    order: 2;
+                }
+
+                &__current-player {
+                    >p {
+                        color: rgba(30, 117, 148, 1);
+                        font-family: "Hannotate SC", "Figtree", sans-serif;
+                        font-weight: 400;
+                        font-size: 10px;
+                        line-height: 100%;
+                        letter-spacing: 0;
+                    }
+
+                    >img {
+                        width: 16px;
+                        height: 16px;
+                    }
+                }
+
+                &__exit-button {
+                    width: 77px;
+                    height: 22px;
+                    padding: 0;
+                    border: none;
+                    background-color: transparent;
+
+                    >img {
+                        width: 77px;
+                        height: 22px;
+                        object-fit: contain;
+                    }
+
+                    >span {
+                        display: none;
+                    }
+                }
+
+                &__preview-card--primary {
+                    background-color: rgba(243, 131, 45, 1);
+                    width: 180px;
+                    height: 150px;
+                    left: 24px;
+                    top: 12px;
+                    transform: rotate(0deg);
+                    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.25);
+
+                    >img {
+                        width: 73px;
+                        height: 60px;
+                        object-fit: cover;
+                    }
+                }
+
+                &__preview-card--secondary {
+                    background-color: rgba(247, 230, 213, 1);
+                    width: 180px;
+                    height: 150px;
+                    left: 160px;
+                    top: 90px;
+                    transform: rotate(0deg);
+                    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.25);
 
                     >img {
                         width: 80px;
@@ -760,6 +884,7 @@ body {
         color: rgb(255, 255, 255);
         background-color: rgba(77, 213, 188, 0.2);
         border: 1px solid rgba(77, 213, 188);
+        cursor: pointer;
     }
 
     &__card-preview {

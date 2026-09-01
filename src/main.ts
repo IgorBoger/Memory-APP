@@ -118,6 +118,21 @@ const themePreviewData: Record<string, ThemePreview> = {
         exitIcon: "/img/settings-page/gaming-theme/da-projects/exit-game-icon.png",
         exitIconAlt: "Exit game",
     },
+    foods: {
+        previewClass: "settings-page__preview-content--foods",
+        primaryImage: "/img/settings-page/gaming-theme/foods/dev-card.png",
+        primaryAlt: "Foods code card",
+        secondaryImage: "/img/settings-page/gaming-theme/foods/food-card.png",
+        secondaryAlt: "Foods card",
+        blueLabelImage: "/img/settings-page/gaming-theme/foods/blue-label.png",
+        blueLabelAlt: "Blue player",
+        orangeLabelImage: "/img/settings-page/gaming-theme/foods/orange-label.png",
+        orangeLabelAlt: "Orange player",
+        currentPlayerIcon: "/img/settings-page/gaming-theme/foods/current-player-icon.png",
+        currentPlayerAlt: "Current player",
+        exitIcon: "/img/settings-page/gaming-theme/foods/exit-game-button.png",
+        exitIconAlt: "Exit game",
+    },
 };
 
 
