@@ -21,6 +21,14 @@
 }
 
 
+@font-face {
+    font-family: "Orbitron";
+    src: url("/fonts/Orbitron/static/Orbitron-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+}
+
+
 body {
     margin: 0;
     color: rgb(48, 49, 49);
@@ -412,6 +420,18 @@ body:not(.app-loading) {
             gap: 10px;
             cursor: pointer;
 
+            >span {
+                transition: font-weight 150ms ease-in-out;
+            }
+
+            &:hover>span {
+                font-weight: 700;
+            }
+
+            &:has(input[type="radio"]:checked)>span {
+                font-weight: 700;
+            }
+
             input[type="radio"] {
                 appearance: none;
                 width: 20px;
@@ -444,6 +464,46 @@ body:not(.app-loading) {
 
     }
 
+    &__theme-list:has(label:hover) {
+        label:has(input[type="radio"]:checked):not(:hover) {
+            .settings-page__option-indicator {
+                opacity: 0;
+            }
+
+            input[type="radio"]::before {
+                opacity: 0;
+            }
+
+            >span {
+                font-weight: 400;
+            }
+        }
+
+        label:hover {
+            .settings-page__option-indicator {
+                opacity: 1;
+            }
+
+            input[type="radio"]::before {
+                opacity: 1;
+            }
+
+            >span {
+                font-weight: 700;
+            }
+        }
+    }
+
+    &__option-indicator {
+        opacity: 0;
+        transition: opacity 150ms ease-in-out;
+    }
+
+    &__option-list>label:hover &__option-indicator,
+    &__option-list>label:has(input[type="radio"]:checked) &__option-indicator {
+        opacity: 1;
+    }
+
     &__preview {
         display: flex;
         flex-direction: column;
@@ -459,13 +519,111 @@ body:not(.app-loading) {
         justify-content: space-between;
         gap: 10px;
         padding: 17px 7px;
-        background: linear-gradient(225deg,
-                rgba(48, 49, 49, 1),
-                rgba(109, 109, 109, 1));
         width: 100%;
         height: 412px;
         box-sizing: border-box;
         border-radius: 16px;
+
+        &--code-vibes {
+            background: linear-gradient(225deg,
+                    rgb(48, 49, 49),
+                    rgb(109, 109, 109));
+        }
+
+        &--gaming {
+            background: linear-gradient(225deg,
+                    rgb(41, 79, 96),
+                    rgb(32, 134, 180));
+
+            .settings-page {
+                &__preview-header {
+                    background-color: rgba(83, 94, 118);
+                    border-radius: 10px;
+                    box-shadow: 3px 2px 10.1px 0 rgba(0, 0, 0, 0.2);
+                }
+
+                &__score-list {
+                    background-color: rgba(255, 255, 255);
+                    border-radius: 4px;
+                    gap: 16px;
+                }
+
+                &__score {
+                    >img {
+                        width: 10px;
+                        height: 12px;
+                    }
+
+                    >p:first-of-type {
+                        display: none;
+                    }
+
+                    >p:last-of-type {
+                        font-family: "Orbitron", sans-serif;
+                        font-size: 10px;
+                    }
+                }
+
+                &__current-player {
+                    >p {
+                        font-family: "Orbitron", sans-serif;
+                        font-size: 8px;
+                        letter-spacing: 0.7px;
+                    }
+
+                    >img {
+                        width: 16px;
+                        height: 16px;
+                    }
+                }
+
+                &__exit-button {
+                    border-radius: 7px;
+                    background-color: transparent;
+                    border: 1px solid rgba(231, 28, 79);
+                    gap: 10px;
+                }
+
+                &__card-preview {
+                    width: 360px;
+                    height: 270px;
+                }
+
+                &__preview-card--primary {
+                    background-color: rgb(246, 241, 243);
+                    border-radius: 19px;
+                    width: 170px;
+                    height: 200px;
+                    left: 168px;
+                    top: 50px;
+                    z-index: 0;
+                    transform: rotate(7.25deg);
+                    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+
+                    .settings-page__preview-card-image {
+                        width: 70%;
+                        height: 65%;
+                        object-fit: cover;
+                        transform: rotate(-7.25deg);
+                    }
+                }
+
+                &__preview-card--secondary {
+                    background: linear-gradient(225deg,
+                            rgba(237, 27, 118, 1),
+                            rgba(10, 40, 53, 1));
+                    border-radius: 19px;
+                    width: 170px;
+                    height: 220px;
+                    left: 20px;
+                    top: 10px;
+                    z-index: 1;
+                    transform: rotate(-5.42deg);
+                    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+                }
+            }
+
+        }
     }
 
     &__preview-header {
@@ -487,6 +645,7 @@ body:not(.app-loading) {
     &__score {
         display: flex;
         flex-direction: row;
+        align-items: center;
         gap: 4px;
 
         >img {
@@ -567,27 +726,34 @@ body:not(.app-loading) {
         height: 250px;
     }
 
-    &__dev {
+    &__preview-card {
         width: 180px;
         height: 180px;
-        object-fit: cover;
-        transform: rotate(-5.5deg);
-        z-index: 1;
         position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         box-shadow: 4px 4px 5.4px 0 rgba(0, 0, 0, 0.2);
-        left: 10px;
-        top: 10px;
+        overflow: hidden;
+
+        &--primary {
+            left: 10px;
+            top: 10px;
+            z-index: 1;
+            transform: rotate(-5.5deg);
+        }
+
+        &--secondary {
+            left: 150px;
+            top: 50px;
+            transform: rotate(12deg);
+        }
     }
 
-    &__git {
-        width: 180px;
-        height: 180px;
+    &__preview-card-image {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
-        transform: rotate(12deg);
-        position: absolute;
-        box-shadow: 4px 4px 5.4px 0 rgba(0, 0, 0, 0.2);
-        left: 150px;
-        top: 50px;
     }
 
     &__summary {

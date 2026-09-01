@@ -55,15 +55,19 @@
                         Game themes
                     </h2>
 
-                    <div class="settings-page__option-list">
+                    <div class="settings-page__option-list settings-page__theme-list">
                         <label>
                             <input type="radio" name="game-theme" value="code-vibes" checked>
-                            Code vibes theme
+                            <span>Code vibes theme</span>
+                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
+                                alt="">
                         </label>
 
                         <label>
                             <input type="radio" name="game-theme" value="gaming">
-                            Gaming theme
+                            <span>Gaming theme</span>
+                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
+                                alt="">
                         </label>
 
                         <label>
@@ -124,39 +128,51 @@
 
             <div class="settings-page__preview">
 
-                <div class="settings-page__preview-content">
+                <div class="settings-page__preview-content settings-page__preview-content--code-vibes"
+                    id="settingsPreview" data-theme-preview="code-vibes">
 
                     <div class="settings-page__preview-header">
 
                         <div class="settings-page__score-list">
                             <span class="settings-page__score settings-page__score--blue">
-                                <img src="/img/settings-page/blue-label.png" alt="">
+                                <img id="settingsPreviewBlueLabel"
+                                    src="/img/settings-page/gaming-theme/code-vibes/blue-label.png" alt="">
                                 <p>Blue</p>
                                 <p>0</p>
                             </span>
 
                             <span class="settings-page__score settings-page__score--orange">
-                                <img src="/img/settings-page/orange-label.png" alt="">
+                                <img id="settingsPreviewOrangeLabel"
+                                    src="/img/settings-page/gaming-theme/code-vibes/orange-label.png" alt="">
                                 <p>Orange</p>
                                 <p>0</p>
                             </span>
                         </div>
 
                         <span class="settings-page__current-player">
-                            <p>Current player</p>
-                            <img src="/img/settings-page/blue-label.png" alt="">
+                            <p>Current player:</p>
+                            <img id="settingsPreviewCurrentPlayerIcon"
+                                src="/img/settings-page/gaming-theme/code-vibes/blue-label.png" alt="">
                         </span>
 
                         <button type="button" class="settings-page__exit-button">
-                            <img src="/img/settings-page/exit-game.png" alt="">
+                            <img id="settingsPreviewExitIcon"
+                                src="/img/settings-page/gaming-theme/code-vibes/exit-game.png" alt="">
                             <span>Exit game</span>
                         </button>
                     </div>
 
 
                     <div class="settings-page__card-preview">
-                        <img class="settings-page__dev" src="/img/settings-page/dev-logo.png" alt="Code vibes card">
-                        <img class="settings-page__git" src="/img/settings-page/git-logo.png" alt="Git card">
+                        <div class="settings-page__preview-card settings-page__preview-card--primary">
+                            <img class="settings-page__preview-card-image" id="settingsPreviewPrimaryCard"
+                                src="/img/settings-page/gaming-theme/code-vibes/dev-logo.png" alt="Code vibes card">
+                        </div>
+
+                        <div class="settings-page__preview-card settings-page__preview-card--secondary">
+                            <img class="settings-page__preview-card-image" id="settingsPreviewSecondaryCard"
+                                src="/img/settings-page/gaming-theme/code-vibes/git-logo.png" alt="Git card">
+                        </div>
                     </div>
                 </div>
 
