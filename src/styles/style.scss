@@ -29,6 +29,14 @@
 }
 
 
+@font-face {
+    font-family: "Figtree";
+    src: url("/fonts/Figtree/static/Figtree-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+}
+
+
 body {
     margin: 0;
     color: rgb(48, 49, 49);
@@ -569,6 +577,97 @@ body {
                 }
             }
 
+        }
+
+        &--da-projects {
+            background-color: rgba(191, 229, 242);
+
+            .settings-page {
+                &__preview-header {
+                    background-color: rgba(255, 255, 255);
+                    border-radius: 10px;
+                    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+
+                }
+
+                &__score-list {
+                    background-color: transparent;
+                    gap: 16px;
+                }
+
+                &__score {
+                    >img {
+                        width: 8px;
+                        height: 10px;
+                    }
+
+                    >p:first-of-type {
+                        display: none;
+                    }
+
+                    >p:last-of-type {
+                        font-family: "Figtree", sans-serif;
+                        font-size: 12px;
+                    }
+                }
+
+                &__current-player {
+                    >p {
+                        color: rgba(30, 117, 148, 1);
+                        font-family: "Figtree", sans-serif;
+                        font-size: 8px;
+                    }
+
+                    >img {
+                        width: 16px;
+                        height: 16px;
+                    }
+                }
+
+                &__exit-button {
+                    border-radius: 5px;
+                    background-color: rgba(191, 229, 242, 1);
+                    color: rgba(30, 117, 148, 1);
+                    border: none;
+                    font-family: "Figtree", sans-serif;
+                    font-size: 10px;
+                    gap: 10px;
+                }
+
+                &__preview-card--primary {
+                    background-color: rgba(30, 117, 148, 1);
+                    border-radius: 13px;
+                    width: 180px;
+                    height: 150px;
+                    left: 10px;
+                    top: 16px;
+                    transform: rotate(0deg);
+                    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.25);
+
+                    >img {
+                        width: 73px;
+                        height: 60px;
+                        object-fit: cover;
+                    }
+                }
+
+                &__preview-card--secondary {
+                    background-color: rgba(240, 244, 245, 1);
+                    border-radius: 13px;
+                    width: 180px;
+                    height: 150px;
+                    left: 170px;
+                    top: 80px;
+                    transform: rotate(0deg);
+                    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.25);
+
+                    >img {
+                        width: 80px;
+                        height: 80px;
+                        object-fit: cover;
+                    }
+                }
+            }
         }
     }
 

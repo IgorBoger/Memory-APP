@@ -103,6 +103,21 @@ const themePreviewData: Record<string, ThemePreview> = {
         exitIcon: "/img/settings-page/gaming-theme/gaming/exit-game-icon.png",
         exitIconAlt: "Exit game",
     },
+    "da-projects": {
+        previewClass: "settings-page__preview-content--da-projects",
+        primaryImage: "/img/settings-page/gaming-theme/da-projects/dev-card.png",
+        primaryAlt: "DA Projects card",
+        secondaryImage: "/img/settings-page/gaming-theme/da-projects/project-card.png",
+        secondaryAlt: "DA Projects card back",
+        blueLabelImage: "/img/settings-page/gaming-theme/da-projects/blue-label.png",
+        blueLabelAlt: "Blue player",
+        orangeLabelImage: "/img/settings-page/gaming-theme/da-projects/orange-label.png",
+        orangeLabelAlt: "Orange player",
+        currentPlayerIcon: "/img/settings-page/gaming-theme/da-projects/current-player-icon.png",
+        currentPlayerAlt: "Current player",
+        exitIcon: "/img/settings-page/gaming-theme/da-projects/exit-game-icon.png",
+        exitIconAlt: "Exit game",
+    },
 };
 
 
