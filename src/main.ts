@@ -1,5 +1,3 @@
-// import './styles/style.scss';
-
 init();
 
 
@@ -94,7 +92,7 @@ const themePreviewData: Record<string, ThemePreview> = {
     },
     gaming: {
         previewClass: "settings-page__preview-content--gaming",
-        primaryImage: "/img/settings-page/gaming-theme/gaming/dice-icons.png",
+        primaryImage: "/img/settings-page/gaming-theme/gaming/dice-card.png",
         primaryAlt: "Gaming dice card",
         blueLabelImage: "/img/settings-page/gaming-theme/gaming/blue-label.png",
         blueLabelAlt: "Blue player",
