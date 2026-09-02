@@ -375,11 +375,7 @@ body {
             cursor: pointer;
 
             >span {
-                transition: font-weight 150ms ease-in-out;
-            }
-
-            &:hover>span {
-                font-weight: 700;
+                transition: font-weight 225ms ease-in-out;
             }
 
             &:has(input[type="radio"]:checked)>span {
@@ -396,6 +392,7 @@ body {
                 box-sizing: border-box;
                 position: relative;
                 cursor: pointer;
+                transition: border-color 225ms ease-in-out;
             }
 
             input[type="radio"]::before {
@@ -409,6 +406,7 @@ body {
                 left: 50%;
                 transform: translate(-50%, -50%);
                 opacity: 0;
+                transition: opacity 225ms ease-in-out;
             }
 
             input[type="radio"]:checked::before {
@@ -419,20 +417,6 @@ body {
     }
 
     &__theme-list:has(label:hover) {
-        label:has(input[type="radio"]:checked):not(:hover) {
-            .settings-page__option-indicator {
-                opacity: 0;
-            }
-
-            input[type="radio"]::before {
-                opacity: 0;
-            }
-
-            >span {
-                font-weight: 400;
-            }
-        }
-
         label:hover {
             .settings-page__option-indicator {
                 opacity: 1;
@@ -450,10 +434,9 @@ body {
 
     &__option-indicator {
         opacity: 0;
-        transition: opacity 150ms ease-in-out;
+        transition: opacity 225ms ease-in-out;
     }
 
-    &__option-list>label:hover &__option-indicator,
     &__option-list>label:has(input[type="radio"]:checked) &__option-indicator {
         opacity: 1;
     }
@@ -477,6 +460,11 @@ body {
         height: 412px;
         box-sizing: border-box;
         border-radius: 16px;
+        transition: opacity 225ms ease-in-out, filter 225ms ease-in-out, background 225ms ease-in-out;
+
+        &--is-changing {
+            opacity: 0.9;
+        }
 
         &--code-vibes {
             background: linear-gradient(225deg,
@@ -959,11 +947,14 @@ body {
         font-size: 20px;
         line-height: 100%;
         letter-spacing: 0;
+        cursor: pointer;
+        transition: transform 225ms ease-in-out, background-color 225ms ease-in-out, color 225ms ease-in-out;
 
         >img {
             width: 20px;
             height: 16px;
             object-fit: cover;
+            transition: transform 225ms ease-in-out, filter 225ms ease-in-out, opacity 225ms ease-in-out;
         }
     }
 
@@ -976,6 +967,14 @@ body {
     &__start-button:disabled>img {
         filter: grayscale(1);
         opacity: 0.45;
+    }
+
+    &__start-button:hover:not(:disabled) {
+        transform: scale(1.08);
+
+        >img {
+            transform: rotate(26deg);
+        }
     }
 }
 
@@ -1038,10 +1037,6 @@ body {
             align-items: center;
             backface-visibility: hidden;
             border-radius: 10px;
-
-            &--front {
-                // background-color: blue;
-            }
 
             &--back {
                 background-color: green;

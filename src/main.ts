@@ -4,6 +4,8 @@ init();
 function init() {
     startSettingsPage();
     setupThemePreview();
+    updateSettingsSummary();
+    setupSettingsSelection();
     renderPlayingFieldCards();
 }
 
@@ -137,6 +139,9 @@ const themePreviewData: Record<string, ThemePreview> = {
 
 
 let selectedTheme = "code-vibes";
+let currentPreviewTheme = "code-vibes";
+let pendingPreviewTheme: string | undefined;
+let previewFadeTimeout: number | undefined;
 
 function setupThemePreview() {
     const themeInputs = document.querySelectorAll<HTMLInputElement>('input[name="game-theme"]');
@@ -154,13 +159,39 @@ function setupThemePreview() {
 
         input.addEventListener("change", () => {
             selectedTheme = input.value;
-            updateSettingsPreview(selectedTheme);
+            if (currentPreviewTheme !== selectedTheme && pendingPreviewTheme !== selectedTheme) {
+                updateSettingsPreview(selectedTheme);
+            }
         });
     });
 }
 
 
 function updateSettingsPreview(theme: string) {
+    const settingsPreview = document.getElementById("settingsPreview");
+
+    if (!settingsPreview) {
+        return;
+    }
+
+    if (currentPreviewTheme === theme || pendingPreviewTheme === theme) {
+        return;
+    }
+
+    window.clearTimeout(previewFadeTimeout);
+    pendingPreviewTheme = theme;
+    settingsPreview.classList.add("settings-page__preview-content--is-changing");
+
+    previewFadeTimeout = window.setTimeout(() => {
+        applySettingsPreview(theme);
+        currentPreviewTheme = theme;
+        pendingPreviewTheme = undefined;
+        settingsPreview.classList.remove("settings-page__preview-content--is-changing");
+    }, 120);
+}
+
+
+function applySettingsPreview(theme: string) {
     const settingsPreview = document.getElementById("settingsPreview");
     const primaryCard = document.getElementById("settingsPreviewPrimaryCard") as HTMLImageElement;
     const secondaryCard = document.getElementById("settingsPreviewSecondaryCard") as HTMLImageElement;
@@ -199,4 +230,77 @@ function updateSettingsPreview(theme: string) {
     secondaryCard.hidden = true;
     secondaryCard.removeAttribute("src");
     secondaryCard.alt = "";
+}
+
+function updateSettingsSummary() {
+    const selectedTheme = document.querySelector<HTMLInputElement>('input[name="game-theme"]:checked')?.value;
+    const selectedPlayer = document.querySelector<HTMLInputElement>('input[name="player"]:checked')?.value;
+    const selectedBoardSize = document.querySelector<HTMLInputElement>('input[name="board-size"]:checked')?.value;
+
+    const summaryTheme = document.getElementById("settingsSummaryTheme");
+    const summaryPlayer = document.getElementById("settingsSummaryPlayer");
+    const summaryBoardSize = document.getElementById("settingsSummaryBoardSize");
+    const startButton = document.getElementById("start-game-button") as HTMLButtonElement;
+
+    if (summaryTheme) {
+        summaryTheme.textContent = getThemeSummaryText(selectedTheme);
+    }
+
+    if (summaryPlayer) {
+        summaryPlayer.textContent = getPlayerSummaryText(selectedPlayer);
+    }
+
+    if (summaryBoardSize) {
+        summaryBoardSize.textContent = getBoardSizeSummaryText(selectedBoardSize);
+    }
+
+    if (startButton) {
+        startButton.disabled = !(selectedTheme && selectedPlayer && selectedBoardSize);
+    }
+}
+
+function setupSettingsSelection() {
+    const settingsInputs = document.querySelectorAll<HTMLInputElement>(
+        'input[name="game-theme"], input[name="player"], input[name="board-size"]'
+    );
+
+    settingsInputs.forEach((input) => {
+        input.addEventListener("change", updateSettingsSummary);
+    });
+}
+
+
+function getThemeSummaryText(theme: string | undefined) {
+    if (theme === "code-vibes") {
+        return "Code Vibe theme";
+    }
+    if (theme === "gaming") {
+        return "Game theme";
+    }
+    if (theme === "da-projects") {
+        return "DA Project theme";
+    }
+    if (theme === "foods") {
+        return "Food theme";
+    }
+    return "Theme";
+}
+
+
+function getPlayerSummaryText(player: string | undefined) {
+    if (player === "blue") {
+        return "Blue Player";
+    }
+    if (player === "orange") {
+        return "Orange Player";
+    }
+    return "Player";
+}
+
+
+function getBoardSizeSummaryText(boardSize: string | undefined) {
+    if (!boardSize) {
+        return "Board size";
+    }
+    return "Board-" + boardSize + " Cards";
 }

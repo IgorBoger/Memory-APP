@@ -94,13 +94,17 @@
 
                     <div class="settings-page__option-list">
                         <label>
-                            <input type="radio" name="player" value="blue" checked>
-                            Blue
+                            <input type="radio" name="player" value="blue">
+                            <span>Blue</span>
+                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
+                                alt="">
                         </label>
 
                         <label>
                             <input type="radio" name="player" value="orange">
-                            Orange
+                            <span>Orange</span>
+                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
+                                alt="">
                         </label>
                     </div>
                 </div>
@@ -113,18 +117,24 @@
 
                     <div class="settings-page__option-list">
                         <label>
-                            <input type="radio" name="board-size" value="16" checked>
-                            16 cards
+                            <input type="radio" name="board-size" value="16">
+                            <span>16 cards</span>
+                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
+                                alt="">
                         </label>
 
                         <label>
                             <input type="radio" name="board-size" value="24">
-                            24 cards
+                            <span>24 cards</span>
+                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
+                                alt="">
                         </label>
 
                         <label>
                             <input type="radio" name="board-size" value="36">
-                            36 cards
+                            <span>36 cards</span>
+                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
+                                alt="">
                         </label>
                     </div>
                 </div>
@@ -183,11 +193,11 @@
 
                 <div class="settings-page__summary">
 
-                    <span>Theme </span>
+                    <span id="settingsSummaryTheme">Theme</span>
                     <img src="/img/settings-page/summary-divider.png" alt="">
-                    <span>Player</span>
+                    <span id="settingsSummaryPlayer">Player</span>
                     <img src="/img/settings-page/summary-divider.png" alt="">
-                    <span>Board size</span>
+                    <span id="settingsSummaryBoardSize">Board size</span>
 
                     <button class="settings-page__start-button" id="start-game-button" type="button" disabled>
                         <img src="/img/settings-page/start-game-icon.png" alt="">
