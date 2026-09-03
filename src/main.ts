@@ -6,7 +6,8 @@ function init() {
     setupThemePreview();
     updateSettingsSummary();
     setupSettingsSelection();
-    renderPlayingFieldCards();
+    startGame();
+    exitGame();
 }
 
 
@@ -34,22 +35,24 @@ function startSettingsPage() {
 }
 
 
-function renderPlayingFieldCards() {
+function renderPlayingFieldCards(selectedTheme: string, cardCount: number) {
     const playingFieldBoard = document.getElementById("playingFieldBoard");
     if (playingFieldBoard) {
-        for (let cardIndex = 0; cardIndex < 16; cardIndex++) {
+        playingFieldBoard.innerHTML = "";
+        for (let cardIndex = 0; cardIndex < cardCount; cardIndex++) {
             const memoryCard = document.createElement("button");
+            const gameTheme = gameThemeData[selectedTheme];
             memoryCard.className = "memory-card";
             memoryCard.innerHTML = `
             <div class="memory-card__inner">
                 <div class="memory-card__face memory-card__face--front">
                     <img class="memory-card__image"
-                    src="/img/settings-page/gaming-theme/code-vibes/dev-logo.png"
+                    src="${gameTheme.cardFrontImage}"
                     alt="Code vibes card">
                 </div>
                 <div class="memory-card__face memory-card__face--back">
                     <img class="memory-card__image"
-                    src="/img/settings-page/gaming-theme/code-vibes/git-logo.png"
+                    src="${gameTheme.cardBackImage}"
                     alt="Git card">
                 </div>
             </div>`;
@@ -134,6 +137,50 @@ const themePreviewData: Record<string, ThemePreview> = {
         currentPlayerAlt: "Current player",
         exitIcon: "/img/settings-page/gaming-theme/foods/exit-game-button.png",
         exitIconAlt: "Exit game",
+    },
+};
+
+
+type GameTheme = {
+    playingFieldClass: string;
+    blueLabelImage: string;
+    blueLabelAlt: string;
+    orangeLabelImage: string;
+    orangeLabelAlt: string;
+    currentPlayerBlueImage: string;
+    currentPlayerOrangeImage: string;
+    currentPlayerAlt: string;
+    exitIcon: string;
+    exitIconAlt: string;
+    cardFrontImage: string;
+    cardFrontAlt: string;
+    cardBackImage: string;
+    cardBackAlt: string;
+};
+
+
+const gameThemeData: Record<string, GameTheme> = {
+    "code-vibes": {
+        playingFieldClass: "playing-field--code-vibes",
+
+        blueLabelImage: "/img/game-field/blue-label.png",
+        blueLabelAlt: "Blue player score",
+
+        orangeLabelImage: "/img/game-field/orange-label.png",
+        orangeLabelAlt: "Orange player score",
+
+        currentPlayerBlueImage: "/img/game-field/blue-label.png",
+        currentPlayerOrangeImage: "/img/game-field/orange-label.png",
+        currentPlayerAlt: "Current player",
+
+        exitIcon: "/img/game-field/exit-game.png",
+        exitIconAlt: "Exit game",
+
+        cardFrontImage: "/img/settings-page/gaming-theme/code-vibes/dev-logo.png",
+        cardFrontAlt: "Code vibes card",
+
+        cardBackImage: "/img/settings-page/gaming-theme/code-vibes/git-logo.png",
+        cardBackAlt: "Git card",
     },
 };
 
@@ -232,6 +279,7 @@ function applySettingsPreview(theme: string) {
     secondaryCard.alt = "";
 }
 
+
 function updateSettingsSummary() {
     const selectedTheme = document.querySelector<HTMLInputElement>('input[name="game-theme"]:checked')?.value;
     const selectedPlayer = document.querySelector<HTMLInputElement>('input[name="player"]:checked')?.value;
@@ -240,7 +288,7 @@ function updateSettingsSummary() {
     const summaryTheme = document.getElementById("settingsSummaryTheme");
     const summaryPlayer = document.getElementById("settingsSummaryPlayer");
     const summaryBoardSize = document.getElementById("settingsSummaryBoardSize");
-    const startButton = document.getElementById("start-game-button") as HTMLButtonElement;
+    const startButton = document.getElementById("startGameBtn") as HTMLButtonElement;
 
     if (summaryTheme) {
         summaryTheme.textContent = getThemeSummaryText(selectedTheme);
@@ -303,4 +351,90 @@ function getBoardSizeSummaryText(boardSize: string | undefined) {
         return "Board size";
     }
     return "Board-" + boardSize + " Cards";
+}
+
+
+function startGame() {
+    const startButton = document.getElementById("startGameBtn");
+    const settingsPage = document.getElementById("settingsPage");
+    const playingField = document.getElementById("playingField");
+    startButton?.addEventListener("click", () => {
+        if (settingsPage && playingField) {
+            showPage(settingsPage, playingField);
+            const gameConfig = getGameConfig();
+            applyGameHeader(gameConfig);
+            renderPlayingFieldCards(gameConfig.selectedTheme, gameConfig.cardCount);
+            applyBoardSizeClass(gameConfig.cardCount);
+        }
+    });
+}
+
+
+function getInputData() {
+    const selectedTheme = document.querySelector<HTMLInputElement>('input[name="game-theme"]:checked')?.value;
+    const selectedPlayer = document.querySelector<HTMLInputElement>('input[name="player"]:checked')?.value;
+    const selectedBoardSize = document.querySelector<HTMLInputElement>('input[name="board-size"]:checked')?.value;
+    return {
+        selectedTheme,
+        selectedPlayer,
+        selectedBoardSize,
+    };
+}
+
+
+function getGameConfig() {
+    const { selectedTheme, selectedPlayer, selectedBoardSize } = getInputData();
+    const gameTheme = gameThemeData[selectedTheme ?? "code-vibes"];
+    const cardCount = Number(selectedBoardSize ?? 16);
+    const currentPlayer = selectedPlayer ?? "blue";
+    return {
+        selectedTheme: selectedTheme ?? "code-vibes",
+        currentPlayer,
+        cardCount,
+        gameTheme,
+    };
+}
+
+
+type GameConfig = ReturnType<typeof getGameConfig>;
+
+
+function applyGameHeader(gameConfig: GameConfig) {
+    const blueLabel = document.getElementById("gameHeaderBlueLabel") as HTMLImageElement;
+    const orangeLabel = document.getElementById("gameHeaderOrangeLabel") as HTMLImageElement;
+    const currentPlayerIcon = document.getElementById("gameHeaderCurrentPlayerIcon") as HTMLImageElement;
+    const exitIcon = document.getElementById("gameHeaderExitIcon") as HTMLImageElement;
+    blueLabel.src = gameConfig.gameTheme.blueLabelImage;
+    orangeLabel.src = gameConfig.gameTheme.orangeLabelImage;
+    exitIcon.src = gameConfig.gameTheme.exitIcon;
+    currentPlayerIcon.src =
+        gameConfig.currentPlayer === "orange"
+            ? gameConfig.gameTheme.currentPlayerOrangeImage
+            : gameConfig.gameTheme.currentPlayerBlueImage;
+}
+
+
+function applyBoardSizeClass(cardCount: number) {
+    const playingFieldBoard = document.getElementById("playingFieldBoard");
+    if (!playingFieldBoard) {
+        return;
+    }
+    playingFieldBoard.classList.remove(
+        "playing-field__board--size-16",
+        "playing-field__board--size-24",
+        "playing-field__board--size-36"
+    );
+    playingFieldBoard.classList.add(`playing-field__board--size-${cardCount}`);
+}
+
+
+function exitGame() {
+    const exitButton = document.getElementById("exitGameBtn");
+    const settingsPage = document.getElementById("settingsPage");
+    const playingField = document.getElementById("playingField");
+    exitButton?.addEventListener("click", () => {
+        if (settingsPage && playingField) {
+            showPage(playingField, settingsPage);
+        }
+    });
 }
