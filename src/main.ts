@@ -163,6 +163,7 @@ type GameTheme = {
     orangeLabelAlt: string;
     currentPlayer: CurrentPlayerDisplay;
     exitIcon: string;
+    exitIconHover?: string;
     exitIconAlt: string;
     cardFrontImage: string;
     cardFrontAlt: string;
@@ -213,6 +214,7 @@ const gameThemeData: Record<string, GameTheme> = {
         },
 
         exitIcon: "/img/game-field/gaming/exit-game-icon.png",
+        exitIconHover: "/img/game-field/gaming/exit-game-icon-hover.png",
         exitIconAlt: "Exit game",
 
         cardFrontImage: "/img/game-field/gaming/card-front.png",
@@ -220,6 +222,31 @@ const gameThemeData: Record<string, GameTheme> = {
 
         cardBackImage: "/img/game-field/gaming/card-back.png",
         cardBackAlt: "Gaming card back",
+    },
+    "da-projects": {
+        playingFieldClass: "playing-field--da-projects",
+
+        blueLabelImage: "/img/game-field/da-projects/blue-label.png",
+        blueLabelAlt: "Blue player score",
+
+        orangeLabelImage: "/img/game-field/da-projects/orange-label.png",
+        orangeLabelAlt: "Orange player score",
+
+        currentPlayer: {
+            type: "badge",
+            iconImage: "/img/game-field/da-projects/current-player-icon.png",
+            alt: "Current player",
+        },
+
+        exitIcon: "/img/game-field/da-projects/exit-game-icon.png",
+        exitIconHover: "/img/game-field/da-projects/exit-game-icon-hover.png",
+        exitIconAlt: "Exit game",
+
+        cardFrontImage: "/img/game-field/da-projects/card-front.png",
+        cardFrontAlt: "DA Projects card front",
+
+        cardBackImage: "/img/game-field/da-projects/card-back.png",
+        cardBackAlt: "DA Projects card back",
     }
 };
 
@@ -443,9 +470,12 @@ function applyGameHeader(gameConfig: GameConfig) {
     const blueLabel = document.getElementById("gameHeaderBlueLabel") as HTMLImageElement;
     const orangeLabel = document.getElementById("gameHeaderOrangeLabel") as HTMLImageElement;
     const exitIcon = document.getElementById("gameHeaderExitIcon") as HTMLImageElement;
+    const exitIconHover = document.getElementById("gameHeaderExitIconHover") as HTMLImageElement;
     blueLabel.src = gameConfig.gameTheme.blueLabelImage;
     orangeLabel.src = gameConfig.gameTheme.orangeLabelImage;
     exitIcon.src = gameConfig.gameTheme.exitIcon;
+    exitIcon.alt = gameConfig.gameTheme.exitIconAlt;
+    exitIconHover.src = gameConfig.gameTheme.exitIconHover ?? gameConfig.gameTheme.exitIcon;
     applyCurrentPlayer(gameConfig);
 }
 
