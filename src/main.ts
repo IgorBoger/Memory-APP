@@ -182,6 +182,28 @@ const gameThemeData: Record<string, GameTheme> = {
         cardBackImage: "/img/settings-page/gaming-theme/code-vibes/git-logo.png",
         cardBackAlt: "Git card",
     },
+    "gaming": {
+        playingFieldClass: "playing-field--gaming",
+
+        blueLabelImage: "/img/game-field/gaming/blue-label.png",
+        blueLabelAlt: "Blue player score",
+
+        orangeLabelImage: "/img/game-field/gaming/orange-label.png",
+        orangeLabelAlt: "Orange player score",
+
+        currentPlayerBlueImage: "/img/game-field/gaming/current-player-icon.png",
+        currentPlayerOrangeImage: "/img/game-field/gaming/current-player-icon.png",
+        currentPlayerAlt: "Current player",
+
+        exitIcon: "/img/game-field/gaming/exit-game-icon.png",
+        exitIconAlt: "Exit game",
+
+        cardFrontImage: "/img/game-field/gaming/card-front.png",
+        cardFrontAlt: "Gaming card front",
+
+        cardBackImage: "/img/game-field/gaming/card-back.png",
+        cardBackAlt: "Gaming card back",
+    }
 };
 
 
@@ -362,6 +384,7 @@ function startGame() {
         if (settingsPage && playingField) {
             showPage(settingsPage, playingField);
             const gameConfig = getGameConfig();
+            applyPlayingFieldTheme(gameConfig);
             applyGameHeader(gameConfig);
             renderPlayingFieldCards(gameConfig.selectedTheme, gameConfig.cardCount);
             applyBoardSizeClass(gameConfig.cardCount);
@@ -411,6 +434,20 @@ function applyGameHeader(gameConfig: GameConfig) {
         gameConfig.currentPlayer === "orange"
             ? gameConfig.gameTheme.currentPlayerOrangeImage
             : gameConfig.gameTheme.currentPlayerBlueImage;
+
+
+    const currentPlayerBadge = document.getElementById("gameHeaderCurrentPlayerBadge");
+
+    currentPlayerBadge?.classList.remove(
+        "game-header__current-player-icon--blue",
+        "game-header__current-player-icon--orange"
+    );
+
+    currentPlayerBadge?.classList.add(
+        gameConfig.currentPlayer === "orange"
+            ? "game-header__current-player-icon--orange"
+            : "game-header__current-player-icon--blue"
+    );
 }
 
 
@@ -425,6 +462,21 @@ function applyBoardSizeClass(cardCount: number) {
         "playing-field__board--size-36"
     );
     playingFieldBoard.classList.add(`playing-field__board--size-${cardCount}`);
+}
+
+function applyPlayingFieldTheme(gameConfig: GameConfig) {
+    const playingField = document.getElementById("playingField");
+    if (!playingField) {
+        return;
+    }
+    playingField.classList.remove(
+        "playing-field--code-vibes",
+        "playing-field--gaming",
+        "playing-field--da-projects",
+        "playing-field--foods"
+    );
+
+    playingField.classList.add(gameConfig.gameTheme.playingFieldClass);
 }
 
 
