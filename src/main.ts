@@ -141,15 +141,27 @@ const themePreviewData: Record<string, ThemePreview> = {
 };
 
 
+type CurrentPlayerDisplay =
+    | {
+        type: "image";
+        currentPlayerBlueImage: string;
+        currentPlayerOrangeImage: string;
+        currentPlayerAlt: string;
+    }
+    | {
+        type: "badge";
+        iconImage: string;
+        alt: string;
+    };
+
+
 type GameTheme = {
     playingFieldClass: string;
     blueLabelImage: string;
     blueLabelAlt: string;
     orangeLabelImage: string;
     orangeLabelAlt: string;
-    currentPlayerBlueImage: string;
-    currentPlayerOrangeImage: string;
-    currentPlayerAlt: string;
+    currentPlayer: CurrentPlayerDisplay;
     exitIcon: string;
     exitIconAlt: string;
     cardFrontImage: string;
@@ -163,17 +175,20 @@ const gameThemeData: Record<string, GameTheme> = {
     "code-vibes": {
         playingFieldClass: "playing-field--code-vibes",
 
-        blueLabelImage: "/img/game-field/blue-label.png",
+        blueLabelImage: "/img/game-field/code-vibes/blue-label.png",
         blueLabelAlt: "Blue player score",
 
-        orangeLabelImage: "/img/game-field/orange-label.png",
+        orangeLabelImage: "/img/game-field/code-vibes/orange-label.png",
         orangeLabelAlt: "Orange player score",
 
-        currentPlayerBlueImage: "/img/game-field/blue-label.png",
-        currentPlayerOrangeImage: "/img/game-field/orange-label.png",
-        currentPlayerAlt: "Current player",
+        currentPlayer: {
+            type: "image",
+            currentPlayerBlueImage: "/img/game-field/code-vibes/blue-label.png",
+            currentPlayerOrangeImage: "/img/game-field/code-vibes/orange-label.png",
+            currentPlayerAlt: "Current player",
+        },
 
-        exitIcon: "/img/game-field/exit-game.png",
+        exitIcon: "/img/game-field/code-vibes/exit-game.png",
         exitIconAlt: "Exit game",
 
         cardFrontImage: "/img/settings-page/gaming-theme/code-vibes/dev-logo.png",
@@ -191,9 +206,11 @@ const gameThemeData: Record<string, GameTheme> = {
         orangeLabelImage: "/img/game-field/gaming/orange-label.png",
         orangeLabelAlt: "Orange player score",
 
-        currentPlayerBlueImage: "/img/game-field/gaming/current-player-icon.png",
-        currentPlayerOrangeImage: "/img/game-field/gaming/current-player-icon.png",
-        currentPlayerAlt: "Current player",
+        currentPlayer: {
+            type: "badge",
+            iconImage: "/img/game-field/gaming/current-player-icon.png",
+            alt: "Current player",
+        },
 
         exitIcon: "/img/game-field/gaming/exit-game-icon.png",
         exitIconAlt: "Exit game",
@@ -425,29 +442,11 @@ type GameConfig = ReturnType<typeof getGameConfig>;
 function applyGameHeader(gameConfig: GameConfig) {
     const blueLabel = document.getElementById("gameHeaderBlueLabel") as HTMLImageElement;
     const orangeLabel = document.getElementById("gameHeaderOrangeLabel") as HTMLImageElement;
-    const currentPlayerIcon = document.getElementById("gameHeaderCurrentPlayerIcon") as HTMLImageElement;
     const exitIcon = document.getElementById("gameHeaderExitIcon") as HTMLImageElement;
     blueLabel.src = gameConfig.gameTheme.blueLabelImage;
     orangeLabel.src = gameConfig.gameTheme.orangeLabelImage;
     exitIcon.src = gameConfig.gameTheme.exitIcon;
-    currentPlayerIcon.src =
-        gameConfig.currentPlayer === "orange"
-            ? gameConfig.gameTheme.currentPlayerOrangeImage
-            : gameConfig.gameTheme.currentPlayerBlueImage;
-
-
-    const currentPlayerBadge = document.getElementById("gameHeaderCurrentPlayerBadge");
-
-    currentPlayerBadge?.classList.remove(
-        "game-header__current-player-icon--blue",
-        "game-header__current-player-icon--orange"
-    );
-
-    currentPlayerBadge?.classList.add(
-        gameConfig.currentPlayer === "orange"
-            ? "game-header__current-player-icon--orange"
-            : "game-header__current-player-icon--blue"
-    );
+    applyCurrentPlayer(gameConfig);
 }
 
 
@@ -489,4 +488,53 @@ function exitGame() {
             showPage(playingField, settingsPage);
         }
     });
+}
+
+
+function applyCurrentPlayer(gameConfig: GameConfig) {
+    if (gameConfig.gameTheme.currentPlayer.type === "image") {
+        applyCurrentPlayerImage(gameConfig);
+        return;
+    }
+    applyCurrentPlayerBadge(gameConfig);
+}
+
+
+function applyCurrentPlayerImage(gameConfig: GameConfig) {
+    const currentPlayer = gameConfig.gameTheme.currentPlayer;
+    if (currentPlayer.type !== "image") {
+        return;
+    }
+    const currentPlayerIcon = document.getElementById("gameHeaderCurrentPlayerIcon") as HTMLImageElement;
+    currentPlayerIcon.src =
+        gameConfig.currentPlayer === "orange"
+            ? currentPlayer.currentPlayerOrangeImage
+            : currentPlayer.currentPlayerBlueImage;
+    currentPlayerIcon.alt = currentPlayer.currentPlayerAlt;
+}
+
+
+function applyCurrentPlayerBadge(gameConfig: GameConfig) {
+    const currentPlayer = gameConfig.gameTheme.currentPlayer;
+    if (currentPlayer.type !== "badge") {
+        return;
+    }
+    const currentPlayerBadge = document.getElementById("gameHeaderCurrentPlayerBadge");
+    const currentPlayerIcon = document.getElementById("gameHeaderCurrentPlayerIcon") as HTMLImageElement;
+    currentPlayerIcon.src = currentPlayer.iconImage;
+    currentPlayerIcon.alt = currentPlayer.alt;
+    updateCurrentPlayerBadgeColor(currentPlayerBadge, gameConfig.currentPlayer);
+}
+
+
+function updateCurrentPlayerBadgeColor(currentPlayerBadge: HTMLElement | null, currentPlayer: string) {
+    currentPlayerBadge?.classList.remove(
+        "game-header__current-player-icon--blue",
+        "game-header__current-player-icon--orange"
+    );
+    currentPlayerBadge?.classList.add(
+        currentPlayer === "blue"
+            ? "game-header__current-player-icon--blue"
+            : "game-header__current-player-icon--orange"
+    );
 }
