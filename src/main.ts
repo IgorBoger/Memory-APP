@@ -247,6 +247,31 @@ const gameThemeData: Record<string, GameTheme> = {
 
         cardBackImage: "/img/game-field/da-projects/card-back.png",
         cardBackAlt: "DA Projects card back",
+    },
+    "foods": {
+        playingFieldClass: "playing-field--foods",
+
+        blueLabelImage: "/img/game-field/foods/blue-label.png",
+        blueLabelAlt: "Blue player score",
+
+        orangeLabelImage: "/img/game-field/foods/orange-label.png",
+        orangeLabelAlt: "Orange player score",
+
+        currentPlayer: {
+            type: "badge",
+            iconImage: "/img/game-field/foods/current-player-icon.png",
+            alt: "Current player",
+        },
+
+        exitIcon: "/img/game-field/foods/exit-game-icon.png",
+        exitIconHover: "/img/game-field/foods/exit-game-icon-hover.png",
+        exitIconAlt: "Exit game",
+
+        cardFrontImage: "/img/game-field/foods/card-front.png",
+        cardFrontAlt: "Foods card front",
+
+        cardBackImage: "/img/game-field/foods/card-back.png",
+        cardBackAlt: "Foods card back",
     }
 };
 
