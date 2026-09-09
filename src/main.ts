@@ -7,6 +7,7 @@ function init() {
     updateSettingsSummary();
     setupSettingsSelection();
     startGame();
+    initCard();
     exitGame();
 }
 
@@ -46,14 +47,16 @@ function renderPlayingFieldCards(selectedTheme: string, cardCount: number) {
             memoryCard.innerHTML = `
             <div class="memory-card__inner">
                 <div class="memory-card__face memory-card__face--front">
-                    <img class="memory-card__image"
+                    ${gameTheme.cardFrontImage
+                    ? `<img class="memory-card__image"
                     src="${gameTheme.cardFrontImage}"
-                    alt="Code vibes card">
+                    alt="${gameTheme.cardFrontAlt}">`
+                    : ""}
                 </div>
                 <div class="memory-card__face memory-card__face--back">
                     <img class="memory-card__image"
                     src="${gameTheme.cardBackImage}"
-                    alt="Git card">
+                    alt="${gameTheme.cardBackAlt}">
                 </div>
             </div>`;
             playingFieldBoard.appendChild(memoryCard);
@@ -82,10 +85,10 @@ type ThemePreview = {
 const themePreviewData: Record<string, ThemePreview> = {
     "code-vibes": {
         previewClass: "settings-page__preview-content--code-vibes",
-        primaryImage: "/img/settings-page/gaming-theme/code-vibes/dev-logo.png",
-        primaryAlt: "Code vibes card",
-        secondaryImage: "/img/settings-page/gaming-theme/code-vibes/git-logo.png",
-        secondaryAlt: "Git card",
+        primaryImage: "/img/settings-page/gaming-theme/code-vibes/card-front.png",
+        primaryAlt: "Card front with laptop and code symbol",
+        secondaryImage: "/img/settings-page/gaming-theme/code-vibes/card-back.png",
+        secondaryAlt: "Card back",
         blueLabelImage: "/img/settings-page/gaming-theme/code-vibes/blue-label.png",
         blueLabelAlt: "Blue player",
         orangeLabelImage: "/img/settings-page/gaming-theme/code-vibes/orange-label.png",
@@ -97,8 +100,8 @@ const themePreviewData: Record<string, ThemePreview> = {
     },
     gaming: {
         previewClass: "settings-page__preview-content--gaming",
-        primaryImage: "/img/settings-page/gaming-theme/gaming/dice-card.png",
-        primaryAlt: "Gaming dice card",
+        primaryImage: "/img/settings-page/gaming-theme/gaming/card-back.png",
+        primaryAlt: "Card back",
         blueLabelImage: "/img/settings-page/gaming-theme/gaming/blue-label.png",
         blueLabelAlt: "Blue player",
         orangeLabelImage: "/img/settings-page/gaming-theme/gaming/orange-label.png",
@@ -110,10 +113,10 @@ const themePreviewData: Record<string, ThemePreview> = {
     },
     "da-projects": {
         previewClass: "settings-page__preview-content--da-projects",
-        primaryImage: "/img/settings-page/gaming-theme/da-projects/dev-card.png",
-        primaryAlt: "DA Projects card",
-        secondaryImage: "/img/settings-page/gaming-theme/da-projects/project-card.png",
-        secondaryAlt: "DA Projects card back",
+        primaryImage: "/img/settings-page/gaming-theme/da-projects/card-front.png",
+        primaryAlt: "Card front with laptop and code symbol",
+        secondaryImage: "/img/settings-page/gaming-theme/da-projects/card-back.png",
+        secondaryAlt: "Card back",
         blueLabelImage: "/img/settings-page/gaming-theme/da-projects/blue-label.png",
         blueLabelAlt: "Blue player",
         orangeLabelImage: "/img/settings-page/gaming-theme/da-projects/orange-label.png",
@@ -125,10 +128,10 @@ const themePreviewData: Record<string, ThemePreview> = {
     },
     foods: {
         previewClass: "settings-page__preview-content--foods",
-        primaryImage: "/img/settings-page/gaming-theme/foods/dev-card.png",
-        primaryAlt: "Foods code card",
-        secondaryImage: "/img/settings-page/gaming-theme/foods/food-card.png",
-        secondaryAlt: "Foods card",
+        primaryImage: "/img/settings-page/gaming-theme/foods/card-front.png",
+        primaryAlt: "Card front with laptop and code symbol",
+        secondaryImage: "/img/settings-page/gaming-theme/foods/card-back.png",
+        secondaryAlt: "Card back",
         blueLabelImage: "/img/settings-page/gaming-theme/foods/blue-label.png",
         blueLabelAlt: "Blue player",
         orangeLabelImage: "/img/settings-page/gaming-theme/foods/orange-label.png",
@@ -165,7 +168,7 @@ type GameTheme = {
     exitIcon: string;
     exitIconHover?: string;
     exitIconAlt: string;
-    cardFrontImage: string;
+    cardFrontImage?: string;
     cardFrontAlt: string;
     cardBackImage: string;
     cardBackAlt: string;
@@ -192,11 +195,11 @@ const gameThemeData: Record<string, GameTheme> = {
         exitIcon: "/img/game-field/code-vibes/exit-game.png",
         exitIconAlt: "Exit game",
 
-        cardFrontImage: "/img/settings-page/gaming-theme/code-vibes/dev-logo.png",
-        cardFrontAlt: "Code vibes card",
+        cardFrontImage: "/img/game-field/code-vibes/card-front.png",
+        cardFrontAlt: "Card front with laptop and code symbol",
 
-        cardBackImage: "/img/settings-page/gaming-theme/code-vibes/git-logo.png",
-        cardBackAlt: "Git card",
+        cardBackImage: "/img/game-field/code-vibes/card-back.png",
+        cardBackAlt: "Card back",
     },
     "gaming": {
         playingFieldClass: "playing-field--gaming",
@@ -217,11 +220,10 @@ const gameThemeData: Record<string, GameTheme> = {
         exitIconHover: "/img/game-field/gaming/exit-game-icon-hover.png",
         exitIconAlt: "Exit game",
 
-        cardFrontImage: "/img/game-field/gaming/card-front.png",
-        cardFrontAlt: "Gaming card front",
+        cardFrontAlt: "Card front",
 
         cardBackImage: "/img/game-field/gaming/card-back.png",
-        cardBackAlt: "Gaming card back",
+        cardBackAlt: "Card back",
     },
     "da-projects": {
         playingFieldClass: "playing-field--da-projects",
@@ -243,10 +245,10 @@ const gameThemeData: Record<string, GameTheme> = {
         exitIconAlt: "Exit game",
 
         cardFrontImage: "/img/game-field/da-projects/card-front.png",
-        cardFrontAlt: "DA Projects card front",
+        cardFrontAlt: "Card front with laptop and code symbol",
 
         cardBackImage: "/img/game-field/da-projects/card-back.png",
-        cardBackAlt: "DA Projects card back",
+        cardBackAlt: "Card back",
     },
     "foods": {
         playingFieldClass: "playing-field--foods",
@@ -268,10 +270,10 @@ const gameThemeData: Record<string, GameTheme> = {
         exitIconAlt: "Exit game",
 
         cardFrontImage: "/img/game-field/foods/card-front.png",
-        cardFrontAlt: "Foods card front",
+        cardFrontAlt: "Card front with laptop and code symbol",
 
         cardBackImage: "/img/game-field/foods/card-back.png",
-        cardBackAlt: "Foods card back",
+        cardBackAlt: "Card back",
     }
 };
 
@@ -592,4 +594,17 @@ function updateCurrentPlayerBadgeColor(currentPlayerBadge: HTMLElement | null, c
             ? "game-header__current-player-icon--blue"
             : "game-header__current-player-icon--orange"
     );
+}
+
+
+function initCard() {
+    const fieldRef = document.getElementById("playingFieldBoard");
+    if (fieldRef) {
+        fieldRef.addEventListener("click", e => {
+            const card = (e.target as HTMLElement).closest(".memory-card");
+            if (card) {
+                card.classList.toggle("is-flipped");
+            }
+        });
+    }
 }

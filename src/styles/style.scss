@@ -1043,12 +1043,17 @@ body {
         width: 100%;
         height: 100vh;
         box-sizing: border-box;
+
+        &:has(> .playing-field__board--size-36) {
+            gap: 16px;
+        }
     }
 
     &__board {
         display: grid;
-        grid-template-rows: repeat(4, 120px);
-        gap: 12px;
+        grid-auto-rows: 120px;
+        align-content: start;
+        gap: 8px;
         justify-content: center;
         align-items: center;
         justify-items: center;
@@ -1056,23 +1061,82 @@ body {
         background-color: transparent;
         width: 100%;
         height: 100%;
+    }
 
+    .memory-card {
+        height: 120px;
+        aspect-ratio: 1/1;
+        background-color: transparent;
+        border: none;
+        border-radius: 12px;
+        padding: 0;
+        perspective: 1000px;
+        cursor: pointer;
 
-        &--size-16 {
-            grid-template-columns: repeat(4, 120px);
+        &__inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 300ms ease-in-out;
         }
 
-        &--size-24 {
-            grid-template-columns: repeat(6, 120px);
+        &__face {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backface-visibility: hidden;
+
+            &--back {
+                transform: rotateY(180deg);
+            }
         }
 
-        &--size-36 {
-            grid-template-columns: repeat(6, 120px);
+        &.is-flipped {
+            .memory-card__inner {
+                transform: rotateY(180deg);
+            }
         }
     }
 
-    &--gaming {
+    &--code-vibes {
+        .playing-field {
+            &__board {
+                &--size-16 {
+                    grid-template-columns: repeat(4, 120px);
+                    gap: 12px;
+                }
 
+                &--size-24,
+                &--size-36 {
+                    grid-template-columns: repeat(6, 120px);
+                }
+            }
+        }
+
+        .memory-card {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+
+            &__face {
+                &--front {
+                    background: linear-gradient(to bottom left,
+                            rgba(77, 213, 188, 1),
+                            rgba(40, 111, 98, 1));
+                }
+
+                &--back {
+                    background: rgb(232, 243, 240);
+                }
+            }
+        }
+
+    }
+
+    &--gaming {
         .playing-field__content {
             background-color: rgb(41, 79, 96);
 
@@ -1187,9 +1251,39 @@ body {
             }
         }
 
+        .playing-field {
+            &__board {
+                &--size-16 {
+                    grid-template-columns: repeat(4, 105px);
+                    gap: 12px;
+                }
+
+                &--size-24,
+                &--size-36 {
+                    grid-template-columns: repeat(6, 105px);
+                }
+            }
+        }
+
         .memory-card {
-            width: 105px;
-            height: 120px;
+            width: 100%;
+            height: 100%;
+            box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
+
+            &__face {
+                border-radius: 12px;
+
+                &--front {
+                    background: linear-gradient(to bottom left,
+                            rgba(237, 27, 118, 1),
+                            rgba(10, 40, 53, 1));
+                }
+
+                &--back {
+                    background: rgba(246, 241, 243, 1);
+                }
+            }
         }
     }
 
@@ -1285,8 +1379,7 @@ body {
 
                 &:hover {
                     background-color: rgba(30, 117, 148, 1);
-                    box-shadow:
-                        3px 3px 5px rgba(47, 46, 46, 0.2);
+                    box-shadow: 3px 3px 5px rgba(47, 46, 46, 0.2);
 
                     .game-header__exit-icon-image--default {
                         opacity: 0;
@@ -1311,18 +1404,47 @@ body {
             }
         }
 
+        .playing-field {
+            &__board {
+                grid-auto-rows: 100px;
+
+                &--size-16 {
+                    grid-template-columns: repeat(4, 120px);
+                    gap: 12px;
+                }
+
+                &--size-24,
+                &--size-36 {
+                    grid-template-columns: repeat(6, 120px);
+                }
+            }
+        }
+
         .memory-card {
-            width: 105px;
-            height: 120px;
+            width: 100%;
+            height: 100%;
+            border-radius: 13px;
+
+            &__face {
+                border-radius: 13px;
+
+                &--front {
+                    background-color: rgba(30, 117, 148, 1);
+                }
+
+                &--back {
+                    background: rgba(234, 242, 244, 1);
+
+                    >img {
+                        width: 70px;
+                        height: 70px;
+                    }
+                }
+            }
         }
     }
 
     &--foods {
-
-        .playing-field__content {
-            background-color: rgb(255, 255, 255);
-        }
-
         .game-header {
             background-color: rgba(240, 229, 217, 1);
             border-radius: 10px;
@@ -1410,8 +1532,7 @@ body {
                 overflow: hidden;
 
                 &:hover {
-                    box-shadow:
-                        3px 3px 5px rgba(47, 46, 46, 0.2);
+                    box-shadow: 3px 3px 5px rgba(47, 46, 46, 0.2);
 
                     .game-header__exit-icon-image--default {
                         opacity: 0;
@@ -1477,47 +1598,44 @@ body {
             }
         }
 
-        .memory-card {
-            width: 105px;
-            height: 120px;
-        }
-    }
+        .playing-field {
+            &__content {
+                background-color: rgb(255, 255, 255);
+            }
 
-    .memory-card {
-        height: 100px;
-        aspect-ratio: 1/1;
-        background-color: transparent;
-        border: none;
-        padding: 0;
-        perspective: 1000px;
+            &__board {
+                grid-auto-rows: 122px;
 
-        &__inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 300ms ease-in-out;
-            border-radius: 10px;
-        }
+                &--size-16 {
+                    grid-template-columns: repeat(4, 122px);
+                    gap: 12px;
+                }
 
-        &__face {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            backface-visibility: hidden;
-            border-radius: 10px;
-
-            &--back {
-                background-color: green;
-                transform: rotateY(180deg);
+                &--size-24,
+                &--size-36 {
+                    grid-template-columns: repeat(6, 122px);
+                }
             }
         }
 
-        &.is-flipped {
-            .memory-card__inner {
-                transform: rotateY(180deg);
+        .memory-card {
+            width: 100%;
+            height: 100%;
+
+            &__face {
+
+                &--front {
+                    background-color: rgba(243, 131, 45, 1);
+                }
+
+                &--back {
+                    background: rgba(244, 236, 228, 1);
+
+                    >img {
+                        width: 80px;
+                        height: 80px;
+                    }
+                }
             }
         }
     }
