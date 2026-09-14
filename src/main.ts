@@ -1,3 +1,186 @@
+type Player = "blue" | "orange";
+
+type CardMotif = {
+    id: string;
+    image: string;
+    alt: string;
+};
+
+type Card = {
+    // Jede Spielkarte hat eine eigene ID; zwei Karten teilen sich eine motifId.
+    id: number;
+    motifId: string;
+    image: string;
+    alt: string;
+    isMatched: boolean;
+};
+
+type GameState = {
+    cards: Card[];
+    flippedCardIds: number[];
+    currentPlayer: Player;
+    scores: Record<Player, number>;
+    isLocked: boolean;
+    status: "idle" | "playing" | "finished";
+};
+
+// Motivvorlagen für die Erstellung der Spielkartenpaare.
+const codeVibesMotifs: CardMotif[] = [
+    {
+        id: "angular",
+        image: "/img/game-field/code-vibes/cards/angular.png",
+        alt: "Angular icon",
+    },
+    {
+        id: "bootstrap",
+        image: "/img/game-field/code-vibes/cards/bootstrap.png",
+        alt: "Bootstrap icon",
+    },
+    {
+        id: "css",
+        image: "/img/game-field/code-vibes/cards/css.png",
+        alt: "CSS icon",
+    },
+    {
+        id: "django",
+        image: "/img/game-field/code-vibes/cards/django.png",
+        alt: "Django icon",
+    },
+    {
+        id: "firebase",
+        image: "/img/game-field/code-vibes/cards/firebase.png",
+        alt: "Firebase icon",
+    },
+    {
+        id: "git",
+        image: "/img/game-field/code-vibes/cards/git.png",
+        alt: "Git icon",
+    },
+    {
+        id: "github",
+        image: "/img/game-field/code-vibes/cards/github.png",
+        alt: "GitHub icon",
+    },
+    {
+        id: "html",
+        image: "/img/game-field/code-vibes/cards/html.png",
+        alt: "HTML icon",
+    },
+    {
+        id: "javascript",
+        image: "/img/game-field/code-vibes/cards/javascript.png",
+        alt: "JavaScript icon",
+    },
+    {
+        id: "node-js",
+        image: "/img/game-field/code-vibes/cards/node-js.png",
+        alt: "Node.js icon",
+    },
+    {
+        id: "python",
+        image: "/img/game-field/code-vibes/cards/python.png",
+        alt: "Python icon",
+    },
+    {
+        id: "react",
+        image: "/img/game-field/code-vibes/cards/react.png",
+        alt: "React icon",
+    },
+    {
+        id: "sass",
+        image: "/img/game-field/code-vibes/cards/sass.png",
+        alt: "Sass icon",
+    },
+    {
+        id: "sql",
+        image: "/img/game-field/code-vibes/cards/sql.png",
+        alt: "SQL icon",
+    },
+    {
+        id: "terminal",
+        image: "/img/game-field/code-vibes/cards/terminal.png",
+        alt: "Terminal icon",
+    },
+    {
+        id: "typescript",
+        image: "/img/game-field/code-vibes/cards/typescript.png",
+        alt: "TypeScript icon",
+    },
+    {
+        id: "vs-code",
+        image: "/img/game-field/code-vibes/cards/vs-code.png",
+        alt: "Visual Studio Code icon",
+    },
+    {
+        id: "vue",
+        image: "/img/game-field/code-vibes/cards/vue.png",
+        alt: "Vue icon",
+    },
+];
+
+
+function createInitialGameState(currentPlayer: Player): GameState {
+    return {
+        cards: [],
+        flippedCardIds: [],
+        currentPlayer,
+        scores: { blue: 0, orange: 0 },
+        isLocked: false,
+        status: "idle",
+    };
+}
+
+
+// Noch ohne Deck: "playing" wird erst mit der späteren Spiellogik gesetzt.
+let gameState: GameState = createInitialGameState("blue");
+
+
+function getPairCount(): number {
+    const cardCount = parseInt(document.querySelector<HTMLInputElement>
+        ('input[name="board-size"]:checked')?.value || "0", 10);
+    console.log(`Pair count: ${cardCount / 2}`);
+    return cardCount / 2;
+}
+
+
+function getCodeVibesMotifs() {
+    const pairCount = getPairCount();
+    const motifs = codeVibesMotifs.slice(0, pairCount);
+    return [...motifs, ...motifs];
+}
+
+
+function createShuffledCodeVibesDeck() {
+    const motifs = getCodeVibesMotifs();
+
+    const deck = motifs.map((motif, index): Card => {
+        return {
+            id: index,
+            motifId: motif.id,
+            image: motif.image,
+            alt: motif.alt,
+            isMatched: false,
+        };
+    });
+
+
+    shuffleCards(deck);
+
+
+return deck;
+}
+
+
+function shuffleCards(deck: Card[]): Card[] {
+
+    for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
+    return deck;
+}
+
+
 init();
 
 
@@ -36,11 +219,12 @@ function startSettingsPage() {
 }
 
 
-function renderPlayingFieldCards(selectedTheme: string, cardCount: number) {
+function renderPlayingFieldCards(selectedTheme: string, cards: Card[]) {
     const playingFieldBoard = document.getElementById("playingFieldBoard");
     if (playingFieldBoard) {
         playingFieldBoard.innerHTML = "";
-        for (let cardIndex = 0; cardIndex < cardCount; cardIndex++) {
+        for (let cardIndex = 0; cardIndex < cards.length; cardIndex++) {
+            const card = cards[cardIndex];
             const memoryCard = document.createElement("button");
             const gameTheme = gameThemeData[selectedTheme];
             memoryCard.className = "memory-card";
@@ -55,8 +239,9 @@ function renderPlayingFieldCards(selectedTheme: string, cardCount: number) {
                 </div>
                 <div class="memory-card__face memory-card__face--back">
                     <img class="memory-card__image"
-                    src="${gameTheme.cardBackImage}"
-                    alt="${gameTheme.cardBackAlt}">
+                    id="memoryCardBack${cardIndex}"
+                    src="${card.image}"
+                    alt="${card.alt}">
                 </div>
             </div>`;
             playingFieldBoard.appendChild(memoryCard);
@@ -198,7 +383,7 @@ const gameThemeData: Record<string, GameTheme> = {
         cardFrontImage: "/img/game-field/code-vibes/card-front.png",
         cardFrontAlt: "Card front with laptop and code symbol",
 
-        cardBackImage: "/img/game-field/code-vibes/card-back.png",
+        cardBackImage: "/img/game-field/code-vibes/cards/git.png",
         cardBackAlt: "Card back",
     },
     "gaming": {
@@ -455,9 +640,14 @@ function startGame() {
         if (settingsPage && playingField) {
             showPage(settingsPage, playingField);
             const gameConfig = getGameConfig();
+            gameState = createInitialGameState(gameConfig.currentPlayer);
             applyPlayingFieldTheme(gameConfig);
             applyGameHeader(gameConfig);
-            renderPlayingFieldCards(gameConfig.selectedTheme, gameConfig.cardCount);
+
+            gameState.cards = createShuffledCodeVibesDeck();
+            console.table(gameState.cards);
+            renderPlayingFieldCards(gameConfig.selectedTheme, gameState.cards);
+
             applyBoardSizeClass(gameConfig.cardCount);
         }
     });
@@ -480,7 +670,7 @@ function getGameConfig() {
     const { selectedTheme, selectedPlayer, selectedBoardSize } = getInputData();
     const gameTheme = gameThemeData[selectedTheme ?? "code-vibes"];
     const cardCount = Number(selectedBoardSize ?? 16);
-    const currentPlayer = selectedPlayer ?? "blue";
+    const currentPlayer: Player = selectedPlayer === "orange" ? "orange" : "blue";
     return {
         selectedTheme: selectedTheme ?? "code-vibes",
         currentPlayer,
