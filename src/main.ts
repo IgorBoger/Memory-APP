@@ -131,14 +131,12 @@ function createInitialGameState(currentPlayer: Player): GameState {
 }
 
 
-// Noch ohne Deck: "playing" wird erst mit der späteren Spiellogik gesetzt.
 let gameState: GameState = createInitialGameState("blue");
 
 
 function getPairCount(): number {
     const cardCount = parseInt(document.querySelector<HTMLInputElement>
         ('input[name="board-size"]:checked')?.value || "0", 10);
-    console.log(`Pair count: ${cardCount / 2}`);
     return cardCount / 2;
 }
 
@@ -167,7 +165,7 @@ function createShuffledCodeVibesDeck() {
     shuffleCards(deck);
 
 
-return deck;
+    return deck;
 }
 
 
@@ -228,6 +226,7 @@ function renderPlayingFieldCards(selectedTheme: string, cards: Card[]) {
             const memoryCard = document.createElement("button");
             const gameTheme = gameThemeData[selectedTheme];
             memoryCard.className = "memory-card";
+            memoryCard.dataset.cardId = String(card.id);
             memoryCard.innerHTML = `
             <div class="memory-card__inner">
                 <div class="memory-card__face memory-card__face--front">
@@ -246,6 +245,20 @@ function renderPlayingFieldCards(selectedTheme: string, cards: Card[]) {
             </div>`;
             playingFieldBoard.appendChild(memoryCard);
         }
+    }
+}
+
+
+function openCard(cardElement: HTMLElement) {
+    if (gameState.status !== "playing" || gameState.isLocked) return;
+    const cardId = Number(cardElement.dataset.cardId);
+    const card = gameState.cards.find(card => card.id === cardId);
+    if (!card || card.isMatched) return;
+    if (gameState.flippedCardIds.includes(cardId)) return;
+    gameState.flippedCardIds.push(cardId);
+    cardElement.classList.add("is-flipped");
+    if (gameState.flippedCardIds.length === 2) {
+        gameState.isLocked = true;
     }
 }
 
@@ -643,11 +656,9 @@ function startGame() {
             gameState = createInitialGameState(gameConfig.currentPlayer);
             applyPlayingFieldTheme(gameConfig);
             applyGameHeader(gameConfig);
-
             gameState.cards = createShuffledCodeVibesDeck();
-            console.table(gameState.cards);
+            gameState.status = "playing";
             renderPlayingFieldCards(gameConfig.selectedTheme, gameState.cards);
-
             applyBoardSizeClass(gameConfig.cardCount);
         }
     });
@@ -732,6 +743,7 @@ function exitGame() {
     const playingField = document.getElementById("playingField");
     exitButton?.addEventListener("click", () => {
         if (settingsPage && playingField) {
+            gameState.status = "idle";
             showPage(playingField, settingsPage);
         }
     });
@@ -792,8 +804,8 @@ function initCard() {
     if (fieldRef) {
         fieldRef.addEventListener("click", e => {
             const card = (e.target as HTMLElement).closest(".memory-card");
-            if (card) {
-                card.classList.toggle("is-flipped");
+            if (card instanceof HTMLElement) {
+                openCard(card);
             }
         });
     }

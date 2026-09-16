@@ -1,4 +1,5 @@
 private/
+/LERNPLAN.md
 node_modules/
 dist/
 .env
