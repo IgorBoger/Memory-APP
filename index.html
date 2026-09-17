@@ -180,7 +180,8 @@
                     <div class="settings-page__card-preview">
                         <div class="settings-page__preview-card settings-page__preview-card--primary">
                             <img class="settings-page__preview-card-image" id="settingsPreviewPrimaryCard"
-                                src="/img/settings-page/gaming-theme/code-vibes/card-front.png" alt="Card front with laptop and code symbol">
+                                src="/img/settings-page/gaming-theme/code-vibes/card-front.png"
+                                alt="Card front with laptop and code symbol">
                         </div>
 
                         <div class="settings-page__preview-card settings-page__preview-card--secondary">
@@ -242,8 +243,10 @@
 
                     <button type="button" class="game-header__exit-button" id="exitGameBtn">
                         <span class="game-header__exit-icon">
-                            <img class="game-header__exit-icon-image game-header__exit-icon-image--default" id="gameHeaderExitIcon" src="" alt="">
-                            <img class="game-header__exit-icon-image game-header__exit-icon-image--hover" id="gameHeaderExitIconHover" src="" alt="" aria-hidden="true">
+                            <img class="game-header__exit-icon-image game-header__exit-icon-image--default"
+                                id="gameHeaderExitIcon" src="" alt="">
+                            <img class="game-header__exit-icon-image game-header__exit-icon-image--hover"
+                                id="gameHeaderExitIconHover" src="" alt="" aria-hidden="true">
                         </span>
                         <span class="game-header__exit-label">Exit game</span>
                     </button>
@@ -256,6 +259,30 @@
 
             </div>
 
+        </div>
+    </section>
+
+    <section class="game-over game-over--code-vibes page page--active" id="gameOver" aria-labelledby="gameOverTitle"
+        hidden>
+        <div class="game-over__content">
+            <h1 id="gameOverTitle" class="game-over__title">
+                <img src="/img/game-field/code-vibes/game-over.png" alt="Game over">
+            </h1>
+            <div class="game-over__result">
+                <p class="game-over__subtitle">Final score</p>
+                <div class="game-over__scoreboard" aria-label="Final score">
+                    <span class="game-over__score game-over__score--blue">
+                        <img src="/img/game-field/code-vibes/blue-label.png" alt="Blue">
+                        <span>Blue</span>
+                        <strong id="gameOverBlueScore">0</strong>
+                    </span>
+                    <span class="game-over__score game-over__score--orange">
+                        <img src="/img/game-field/code-vibes/orange-label.png" alt="Orange">
+                        <span>Orange</span>
+                        <strong id="gameOverOrangeScore">0</strong>
+                    </span>
+                </div>
+            </div>
         </div>
     </section>
 

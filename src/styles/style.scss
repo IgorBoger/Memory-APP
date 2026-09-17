@@ -1682,3 +1682,87 @@ body {
         }
     }
 }
+
+.game-over {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    &__result {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 124px;
+    }
+
+    &__title {
+        margin: 0;
+        line-height: 0;
+
+        img {
+            display: block;
+            width: min(80vw, 997px);
+            height: auto;
+        }
+    }
+
+    &__subtitle {
+        margin: 0;
+        font-weight: 400;
+        font-size: 26px;
+        line-height: 100%;
+    }
+
+    &__scoreboard {
+        display: flex;
+        gap: 32px;
+        padding: 16px 20px;
+    }
+
+    &__score {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 100%;
+
+        img {
+            width: 24px;
+            height: 20px;
+            object-fit: cover;
+        }
+
+        strong {
+            font-weight: 700;
+        }
+
+    }
+
+    &--code-vibes {
+        background-color: rgb(48, 49, 49);
+        color: rgb(255, 255, 255);
+        font-family: "Red Rose", sans-serif;
+
+        .game-over__scoreboard {
+            background-color: rgba(77, 213, 188, 0.2);
+        }
+
+        .game-over__score--blue {
+            color: rgb(43, 177, 255);
+        }
+
+        .game-over__score--orange {
+            color: rgb(245, 142, 57);
+        }
+    }
+}

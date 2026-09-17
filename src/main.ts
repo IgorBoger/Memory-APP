@@ -270,30 +270,47 @@ function openCard(cardElement: HTMLElement, gameConfig: GameConfig) {
 function checkSelectedPair(gameConfig: GameConfig) {
     const firstCardId = gameState.flippedCardIds[0];
     const secondCardId = gameState.flippedCardIds[1];
-
     const firstCard = gameState.cards.find(card => card.id === firstCardId);
     const secondCard = gameState.cards.find(card => card.id === secondCardId);
-
     if (firstCard && secondCard && firstCard.motifId === secondCard.motifId) {
-        firstCard.isMatched = true;
-        secondCard.isMatched = true;
-        gameState.scores[gameState.currentPlayer]++;
-        updateScoreDisplay();
-        const firstCardElement = document.querySelector(
-            `#playingFieldBoard .memory-card[data-card-id="${firstCardId}"]`
-        );
-        const secondCardElement = document.querySelector(
-            `#playingFieldBoard .memory-card[data-card-id="${secondCardId}"]`
-        );
-        firstCardElement?.classList.add("is-matched");
-        secondCardElement?.classList.add("is-matched");
-        gameState.flippedCardIds = [];
-        gameState.isLocked = false;
+        handleMatchedPair(firstCard, secondCard);
     } else {
-        cardResetTimeout = window.setTimeout(() => {
-            cardResetTimeout = undefined;
-            closeSelectedCards(gameConfig);
-        }, 1000);
+        scheduleCardReset(gameConfig);
+    }
+}
+
+
+function handleMatchedPair(firstCard: Card, secondCard: Card) {
+    markCardAsMatched(firstCard);
+    markCardAsMatched(secondCard);
+    gameState.scores[gameState.currentPlayer]++;
+    updateScoreDisplay();
+    gameState.flippedCardIds = [];
+    gameState.isLocked = false;
+    checkGameOver();
+}
+
+
+function markCardAsMatched(card: Card) {
+    card.isMatched = true;
+    const cardElement = document.querySelector(
+        `#playingFieldBoard .memory-card[data-card-id="${card.id}"]`
+    );
+    cardElement?.classList.add("is-matched");
+}
+
+
+function scheduleCardReset(gameConfig: GameConfig) {
+    cardResetTimeout = window.setTimeout(() => {
+        cardResetTimeout = undefined;
+        closeSelectedCards(gameConfig);
+    }, 1000);
+}
+
+
+function checkGameOver() {
+    if (gameState.cards.length > 0 && gameState.cards.every(card => card.isMatched)) {
+        showGameOver();
     }
 }
 
@@ -341,6 +358,24 @@ function updateScoreDisplay() {
         orangeScore.textContent = String(gameState.scores.orange);
         fadeInElement(orangeScore);
     }
+}
+
+
+function showGameOver() {
+    const playingField = document.getElementById("playingField");
+    const gameOver = document.getElementById("gameOver");
+    if (!playingField || !gameOver) return;
+    updateFinalScoreDisplay();
+    gameState.status = "finished";
+    showPage(playingField, gameOver);
+}
+
+
+function updateFinalScoreDisplay() {
+    const blueScore = document.getElementById("gameOverBlueScore");
+    const orangeScore = document.getElementById("gameOverOrangeScore");
+    if (blueScore) blueScore.textContent = String(gameState.scores.blue);
+    if (orangeScore) orangeScore.textContent = String(gameState.scores.orange);
 }
 
 
