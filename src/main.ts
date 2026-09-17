@@ -252,7 +252,7 @@ function renderPlayingFieldCards(selectedTheme: string, cards: Card[]) {
 }
 
 
-function openCard(cardElement: HTMLElement) {
+function openCard(cardElement: HTMLElement, gameConfig: GameConfig) {
     if (gameState.status !== "playing" || gameState.isLocked) return;
     const cardId = Number(cardElement.dataset.cardId);
     const card = gameState.cards.find(card => card.id === cardId);
@@ -262,12 +262,12 @@ function openCard(cardElement: HTMLElement) {
     cardElement.classList.add("is-flipped");
     if (gameState.flippedCardIds.length === 2) {
         gameState.isLocked = true;
-        checkSelectedPair();
+        checkSelectedPair(gameConfig);
     }
 }
 
 
-function checkSelectedPair() {
+function checkSelectedPair(gameConfig: GameConfig) {
     const firstCardId = gameState.flippedCardIds[0];
     const secondCardId = gameState.flippedCardIds[1];
 
@@ -277,6 +277,8 @@ function checkSelectedPair() {
     if (firstCard && secondCard && firstCard.motifId === secondCard.motifId) {
         firstCard.isMatched = true;
         secondCard.isMatched = true;
+        gameState.scores[gameState.currentPlayer]++;
+        updateScoreDisplay();
         const firstCardElement = document.querySelector(
             `#playingFieldBoard .memory-card[data-card-id="${firstCardId}"]`
         );
@@ -290,13 +292,13 @@ function checkSelectedPair() {
     } else {
         cardResetTimeout = window.setTimeout(() => {
             cardResetTimeout = undefined;
-            closeSelectedCards();
+            closeSelectedCards(gameConfig);
         }, 1000);
     }
 }
 
 
-function closeSelectedCards() {
+function closeSelectedCards(gameConfig: GameConfig) {
     gameState.flippedCardIds.forEach(cardId => {
         const cardElement = document.querySelector(
             `#playingFieldBoard .memory-card[data-card-id="${cardId}"]`
@@ -304,8 +306,49 @@ function closeSelectedCards() {
         cardElement?.classList.remove("is-flipped");
     });
 
-    gameState.flippedCardIds = [];
-    gameState.isLocked = false;
+    cardResetTimeout = window.setTimeout(() => {
+        cardResetTimeout = undefined;
+        gameState.flippedCardIds = [];
+        switchPlayer(gameConfig);
+        gameState.isLocked = false;
+    }, 500);
+}
+
+
+function switchPlayer(gameConfig: GameConfig) {
+    if (gameState.currentPlayer === "blue") {
+        gameState.currentPlayer = "orange";
+    } else {
+        gameState.currentPlayer = "blue";
+    }
+    applyCurrentPlayer(gameConfig);
+    const badge = document.getElementById("gameHeaderCurrentPlayerBadge");
+    if (badge) {
+        fadeInElement(badge);
+    }
+}
+
+
+function updateScoreDisplay() {
+    const blueScore = document.getElementById("gameHeaderBlueScore");
+    const orangeScore = document.getElementById("gameHeaderOrangeScore");
+
+    if (blueScore && blueScore.textContent !== String(gameState.scores.blue)) {
+        blueScore.textContent = String(gameState.scores.blue);
+        fadeInElement(blueScore);
+    }
+    if (orangeScore && orangeScore.textContent !== String(gameState.scores.orange)) {
+        orangeScore.textContent = String(gameState.scores.orange);
+        fadeInElement(orangeScore);
+    }
+}
+
+
+function fadeInElement(element: HTMLElement) {
+    element.animate(
+        [{ opacity: 0 }, { opacity: 1 }],
+        { duration: 500, easing: "ease-in-out" }
+    );
 }
 
 
@@ -707,6 +750,7 @@ function startGame() {
             const gameConfig = getGameConfig();
             cancelCardReset();
             gameState = createInitialGameState(gameConfig.currentPlayer);
+            updateScoreDisplay();
             applyPlayingFieldTheme(gameConfig);
             applyGameHeader(gameConfig);
             gameState.cards = createShuffledCodeVibesDeck();
@@ -820,7 +864,7 @@ function applyCurrentPlayerImage(gameConfig: GameConfig) {
     }
     const currentPlayerIcon = document.getElementById("gameHeaderCurrentPlayerIcon") as HTMLImageElement;
     currentPlayerIcon.src =
-        gameConfig.currentPlayer === "orange"
+        gameState.currentPlayer === "orange"
             ? currentPlayer.currentPlayerOrangeImage
             : currentPlayer.currentPlayerBlueImage;
     currentPlayerIcon.alt = currentPlayer.currentPlayerAlt;
@@ -836,7 +880,7 @@ function applyCurrentPlayerBadge(gameConfig: GameConfig) {
     const currentPlayerIcon = document.getElementById("gameHeaderCurrentPlayerIcon") as HTMLImageElement;
     currentPlayerIcon.src = currentPlayer.iconImage;
     currentPlayerIcon.alt = currentPlayer.alt;
-    updateCurrentPlayerBadgeColor(currentPlayerBadge, gameConfig.currentPlayer);
+    updateCurrentPlayerBadgeColor(currentPlayerBadge, gameState.currentPlayer);
 }
 
 
@@ -859,7 +903,7 @@ function initCard() {
         fieldRef.addEventListener("click", e => {
             const card = (e.target as HTMLElement).closest(".memory-card");
             if (card instanceof HTMLElement) {
-                openCard(card);
+                openCard(card, getGameConfig());
             }
         });
     }
