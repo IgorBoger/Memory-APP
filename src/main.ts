@@ -1,19 +1,21 @@
 type Player = "blue" | "orange";
 
+
 type CardMotif = {
     id: string;
     image: string;
     alt: string;
 };
 
+
 type Card = {
-    // Jede Spielkarte hat eine eigene ID; zwei Karten teilen sich eine motifId.
     id: number;
     motifId: string;
     image: string;
     alt: string;
     isMatched: boolean;
 };
+
 
 type GameState = {
     cards: Card[];
@@ -24,7 +26,7 @@ type GameState = {
     status: "idle" | "playing" | "finished";
 };
 
-// Motivvorlagen für die Erstellung der Spielkartenpaare.
+
 const codeVibesMotifs: CardMotif[] = [
     {
         id: "angular",
@@ -132,6 +134,7 @@ function createInitialGameState(currentPlayer: Player): GameState {
 
 
 let gameState: GameState = createInitialGameState("blue");
+let cardResetTimeout: number | undefined;
 
 
 function getPairCount(): number {
@@ -259,7 +262,56 @@ function openCard(cardElement: HTMLElement) {
     cardElement.classList.add("is-flipped");
     if (gameState.flippedCardIds.length === 2) {
         gameState.isLocked = true;
+        checkSelectedPair();
     }
+}
+
+
+function checkSelectedPair() {
+    const firstCardId = gameState.flippedCardIds[0];
+    const secondCardId = gameState.flippedCardIds[1];
+
+    const firstCard = gameState.cards.find(card => card.id === firstCardId);
+    const secondCard = gameState.cards.find(card => card.id === secondCardId);
+
+    if (firstCard && secondCard && firstCard.motifId === secondCard.motifId) {
+        firstCard.isMatched = true;
+        secondCard.isMatched = true;
+        const firstCardElement = document.querySelector(
+            `#playingFieldBoard .memory-card[data-card-id="${firstCardId}"]`
+        );
+        const secondCardElement = document.querySelector(
+            `#playingFieldBoard .memory-card[data-card-id="${secondCardId}"]`
+        );
+        firstCardElement?.classList.add("is-matched");
+        secondCardElement?.classList.add("is-matched");
+        gameState.flippedCardIds = [];
+        gameState.isLocked = false;
+    } else {
+        cardResetTimeout = window.setTimeout(() => {
+            cardResetTimeout = undefined;
+            closeSelectedCards();
+        }, 1000);
+    }
+}
+
+
+function closeSelectedCards() {
+    gameState.flippedCardIds.forEach(cardId => {
+        const cardElement = document.querySelector(
+            `#playingFieldBoard .memory-card[data-card-id="${cardId}"]`
+        );
+        cardElement?.classList.remove("is-flipped");
+    });
+
+    gameState.flippedCardIds = [];
+    gameState.isLocked = false;
+}
+
+
+function cancelCardReset() {
+    window.clearTimeout(cardResetTimeout);
+    cardResetTimeout = undefined;
 }
 
 
@@ -653,6 +705,7 @@ function startGame() {
         if (settingsPage && playingField) {
             showPage(settingsPage, playingField);
             const gameConfig = getGameConfig();
+            cancelCardReset();
             gameState = createInitialGameState(gameConfig.currentPlayer);
             applyPlayingFieldTheme(gameConfig);
             applyGameHeader(gameConfig);
@@ -743,6 +796,7 @@ function exitGame() {
     const playingField = document.getElementById("playingField");
     exitButton?.addEventListener("click", () => {
         if (settingsPage && playingField) {
+            cancelCardReset();
             gameState.status = "idle";
             showPage(playingField, settingsPage);
         }

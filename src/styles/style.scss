@@ -1121,6 +1121,25 @@ body {
             height: 100%;
             border-radius: 0;
 
+            position: relative;
+
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                box-sizing: border-box;
+                border: 5px solid rgba(77, 213, 188, 1);
+                box-shadow: 6px 6px 8px 0 rgba(77, 213, 188, 0.3);
+                pointer-events: none;
+                z-index: 1;
+                opacity: 0;
+                transition: opacity 500ms ease-in-out 500ms;
+            }
+
+            &.is-matched::after {
+                opacity: 1;
+            }
+
             &__face {
                 &--front {
                     background: linear-gradient(to bottom left,
