@@ -368,6 +368,28 @@ function showGameOver() {
     updateFinalScoreDisplay();
     gameState.status = "finished";
     showPage(playingField, gameOver);
+    const winner = getWinningPlayer();
+    if (winner) {
+        window.setTimeout(() => showWinnerOverlay(winner, gameOver), 3000);
+    }
+}
+
+
+function getWinningPlayer(): Player | null {
+    if (gameState.scores.blue === gameState.scores.orange) return null;
+    return gameState.scores.blue > gameState.scores.orange ? "blue" : "orange";
+}
+
+
+function showWinnerOverlay(player: Player, currentPage: HTMLElement) {
+    const overlay = document.getElementById("winnerOverlay");
+    const title = document.getElementById("winnerPlayer");
+    const pawn = document.getElementById("winnerPawn") as HTMLImageElement | null;
+    if (!overlay || !title || !pawn) return;
+    overlay.dataset.player = player;
+    title.textContent = `${player.toUpperCase()} PLAYER`;
+    pawn.src = `/img/game-field/code-vibes/winner-pawn-${player}.png`;
+    showPage(currentPage, overlay);
 }
 
 

@@ -1683,6 +1683,83 @@ body {
     }
 }
 
+.winner {
+    position: relative;
+    height: 100dvh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: clamp(180px, 30vh, 330px) 24px 64px;
+    text-align: center;
+
+    &__confetti {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(84%, 1480px);
+        height: auto;
+        pointer-events: none;
+    }
+
+    &__content, &__heading {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__content { gap: 64px; }
+    &__heading { gap: 10px; }
+
+    &__subtitle {
+        margin: 0;
+        font-size: 40px;
+        font-weight: 400;
+        line-height: 100%;
+    }
+
+    &__player {
+        margin: 0;
+        font-size: 60px;
+        font-weight: 700;
+        line-height: 100%;
+    }
+
+    &__pawn { display: block; object-fit: contain; }
+
+    &__button {
+        padding: 16px 24px;
+        font-family: inherit;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 100%;
+        cursor: pointer;
+    }
+
+    &--code-vibes {
+        background-color: rgb(48, 49, 49);
+        color: white;
+        font-family: "Red Rose", sans-serif;
+
+        &[data-player="orange"] .winner__player { color: rgb(245, 142, 57); }
+        &[data-player="blue"] .winner__player { color: rgb(43, 177, 255); }
+
+        .winner__button {
+            color: white;
+            background-color: rgba(134, 233, 214, 0.2);
+            border: 1px solid rgba(77, 213, 188, 1);
+
+            &:hover { background-color: rgba(134, 233, 214, 0.3); }
+            &:focus-visible { outline: 2px solid white; outline-offset: 4px; }
+        }
+    }
+
+    @media (max-width: 600px) {
+        &__player { font-size: 40px; }
+        &__subtitle { font-size: 30px; }
+    }
+}
+
 .game-over {
     min-height: 100vh;
     display: flex;
