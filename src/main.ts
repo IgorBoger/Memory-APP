@@ -193,6 +193,8 @@ function init() {
     startGame();
     initCard();
     exitGame();
+    setupWinnerOverlay();
+    setupDrawOverlay();
 }
 
 
@@ -402,9 +404,32 @@ function showWinnerOverlay(player: Player, currentPage: HTMLElement) {
 }
 
 
+function setupWinnerOverlay() {
+    const overlay = document.getElementById("winnerOverlay");
+    const startPage = document.getElementById("startPage");
+    document.getElementById("winnerBackToStart")?.addEventListener("click", () => {
+        if (!overlay || !startPage) return;
+        cancelCardReset();
+        gameState = createInitialGameState("blue");
+        showPage(overlay, startPage);
+    });
+}
+
+
 function showDrawOverlay(currentPage: HTMLElement) {
     const overlay = document.getElementById("drawOverlay");
     if (overlay) showPage(currentPage, overlay);
+}
+
+function setupDrawOverlay() {
+    const overlay = document.getElementById("drawOverlay");
+    const startPage = document.getElementById("startPage");
+    document.getElementById("drawBackToStart")?.addEventListener("click", () => {
+        if (!overlay || !startPage) return;
+        cancelCardReset();
+        gameState = createInitialGameState("blue");
+        showPage(overlay, startPage);
+    });
 }
 
 
