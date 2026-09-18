@@ -368,9 +368,18 @@ function showGameOver() {
     updateFinalScoreDisplay();
     gameState.status = "finished";
     showPage(playingField, gameOver);
+    scheduleResultOverlay();
+}
+
+
+function scheduleResultOverlay() {
+    const gameOver = document.getElementById("gameOver");
+    if (!gameOver) return;
     const winner = getWinningPlayer();
     if (winner) {
         window.setTimeout(() => showWinnerOverlay(winner, gameOver), 3000);
+    } else {
+        window.setTimeout(() => showDrawOverlay(gameOver), 3000);
     }
 }
 
@@ -390,6 +399,12 @@ function showWinnerOverlay(player: Player, currentPage: HTMLElement) {
     title.textContent = `${player.toUpperCase()} PLAYER`;
     pawn.src = `/img/game-field/code-vibes/winner-pawn-${player}.png`;
     showPage(currentPage, overlay);
+}
+
+
+function showDrawOverlay(currentPage: HTMLElement) {
+    const overlay = document.getElementById("drawOverlay");
+    if (overlay) showPage(currentPage, overlay);
 }
 
 
