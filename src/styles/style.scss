@@ -1839,6 +1839,10 @@ body {
         margin: 0;
         line-height: 0;
 
+        &-text {
+            display: none;
+        }
+
         img {
             display: block;
             width: min(430px, 80vw);
@@ -1862,6 +1866,7 @@ body {
         font-family: "Red Rose", sans-serif;
 
     }
+
 }
 
 .game-over {
@@ -1944,6 +1949,67 @@ body {
 
         .game-over__score--orange {
             color: rgb(245, 142, 57);
+        }
+    }
+
+    &--gaming {
+        background-color: rgb(41, 79, 96);
+        color: white;
+        font-family: "Orbitron", sans-serif;
+
+        .game-over__title img {
+            display: none;
+        }
+
+        .game-over__title-text {
+            display: block;
+            color: rgba(237, 27, 118, 1);
+            font-size: 124px;
+            font-weight: 900;
+            line-height: 100%;
+            letter-spacing: 0.07em;
+        }
+
+        .game-over__content {
+            gap: 104px;
+        }
+
+        .game-over__subtitle {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 100%;
+            letter-spacing: 0.07em;
+        }
+
+        .game-over__scoreboard {
+            gap: 40px;
+            padding: 8px 16px;
+            background-color: rgb(255, 255, 255);
+            border-radius: 8px;
+        }
+
+        .game-over__score {
+            gap: 8px;
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 100%;
+        }
+
+        .game-over__score > span {
+            display: none;
+        }
+
+        .game-over__score img {
+            width: 22px;
+            height: 28px;
+        }
+
+        .game-over__score--blue {
+            color: rgb(9, 127, 197);
+        }
+
+        .game-over__score--orange {
+            color: rgb(234, 105, 0);
         }
     }
 }

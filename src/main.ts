@@ -461,10 +461,20 @@ function showGameOver() {
     const playingField = document.getElementById("playingField");
     const gameOver = document.getElementById("gameOver");
     if (!playingField || !gameOver) return;
+    applyGameOverTheme(gameOver, getGameConfig());
     updateFinalScoreDisplay();
     gameState.status = "finished";
     showPage(playingField, gameOver);
     scheduleResultOverlay();
+}
+
+function applyGameOverTheme(gameOver: HTMLElement, gameConfig: GameConfig) {
+    gameOver.classList.remove("game-over--code-vibes", "game-over--gaming", "game-over--da-projects", "game-over--foods");
+    gameOver.classList.add(`game-over--${gameConfig.selectedTheme}`);
+    const blueLabel = gameOver.querySelector<HTMLImageElement>(".game-over__score--blue img");
+    const orangeLabel = gameOver.querySelector<HTMLImageElement>(".game-over__score--orange img");
+    blueLabel?.setAttribute("src", gameConfig.gameTheme.blueLabelImage);
+    orangeLabel?.setAttribute("src", gameConfig.gameTheme.orangeLabelImage);
 }
 
 
