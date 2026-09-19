@@ -27,98 +27,192 @@ type GameState = {
 };
 
 
-const codeVibesMotifs: CardMotif[] = [
-    {
-        id: "angular",
-        image: "/img/game-field/code-vibes/cards/angular.png",
-        alt: "Angular icon",
-    },
-    {
-        id: "bootstrap",
-        image: "/img/game-field/code-vibes/cards/bootstrap.png",
-        alt: "Bootstrap icon",
-    },
-    {
-        id: "css",
-        image: "/img/game-field/code-vibes/cards/css.png",
-        alt: "CSS icon",
-    },
-    {
-        id: "django",
-        image: "/img/game-field/code-vibes/cards/django.png",
-        alt: "Django icon",
-    },
-    {
-        id: "firebase",
-        image: "/img/game-field/code-vibes/cards/firebase.png",
-        alt: "Firebase icon",
-    },
-    {
-        id: "git",
-        image: "/img/game-field/code-vibes/cards/git.png",
-        alt: "Git icon",
-    },
-    {
-        id: "github",
-        image: "/img/game-field/code-vibes/cards/github.png",
-        alt: "GitHub icon",
-    },
-    {
-        id: "html",
-        image: "/img/game-field/code-vibes/cards/html.png",
-        alt: "HTML icon",
-    },
-    {
-        id: "javascript",
-        image: "/img/game-field/code-vibes/cards/javascript.png",
-        alt: "JavaScript icon",
-    },
-    {
-        id: "node-js",
-        image: "/img/game-field/code-vibes/cards/node-js.png",
-        alt: "Node.js icon",
-    },
-    {
-        id: "python",
-        image: "/img/game-field/code-vibes/cards/python.png",
-        alt: "Python icon",
-    },
-    {
-        id: "react",
-        image: "/img/game-field/code-vibes/cards/react.png",
-        alt: "React icon",
-    },
-    {
-        id: "sass",
-        image: "/img/game-field/code-vibes/cards/sass.png",
-        alt: "Sass icon",
-    },
-    {
-        id: "sql",
-        image: "/img/game-field/code-vibes/cards/sql.png",
-        alt: "SQL icon",
-    },
-    {
-        id: "terminal",
-        image: "/img/game-field/code-vibes/cards/terminal.png",
-        alt: "Terminal icon",
-    },
-    {
-        id: "typescript",
-        image: "/img/game-field/code-vibes/cards/typescript.png",
-        alt: "TypeScript icon",
-    },
-    {
-        id: "vs-code",
-        image: "/img/game-field/code-vibes/cards/vs-code.png",
-        alt: "Visual Studio Code icon",
-    },
-    {
-        id: "vue",
-        image: "/img/game-field/code-vibes/cards/vue.png",
-        alt: "Vue icon",
-    },
-];
+const cardMotifsByTheme: Record<string, CardMotif[]> = {
+    "code-vibes": [
+        {
+            id: "angular",
+            image: "/img/game-field/code-vibes/cards/angular.png",
+            alt: "Angular icon",
+        },
+        {
+            id: "bootstrap",
+            image: "/img/game-field/code-vibes/cards/bootstrap.png",
+            alt: "Bootstrap icon",
+        },
+        {
+            id: "css",
+            image: "/img/game-field/code-vibes/cards/css.png",
+            alt: "CSS icon",
+        },
+        {
+            id: "django",
+            image: "/img/game-field/code-vibes/cards/django.png",
+            alt: "Django icon",
+        },
+        {
+            id: "firebase",
+            image: "/img/game-field/code-vibes/cards/firebase.png",
+            alt: "Firebase icon",
+        },
+        {
+            id: "git",
+            image: "/img/game-field/code-vibes/cards/git.png",
+            alt: "Git icon",
+        },
+        {
+            id: "github",
+            image: "/img/game-field/code-vibes/cards/github.png",
+            alt: "GitHub icon",
+        },
+        {
+            id: "html",
+            image: "/img/game-field/code-vibes/cards/html.png",
+            alt: "HTML icon",
+        },
+        {
+            id: "javascript",
+            image: "/img/game-field/code-vibes/cards/javascript.png",
+            alt: "JavaScript icon",
+        },
+        {
+            id: "node-js",
+            image: "/img/game-field/code-vibes/cards/node-js.png",
+            alt: "Node.js icon",
+        },
+        {
+            id: "python",
+            image: "/img/game-field/code-vibes/cards/python.png",
+            alt: "Python icon",
+        },
+        {
+            id: "react",
+            image: "/img/game-field/code-vibes/cards/react.png",
+            alt: "React icon",
+        },
+        {
+            id: "sass",
+            image: "/img/game-field/code-vibes/cards/sass.png",
+            alt: "Sass icon",
+        },
+        {
+            id: "sql",
+            image: "/img/game-field/code-vibes/cards/sql.png",
+            alt: "SQL icon",
+        },
+        {
+            id: "terminal",
+            image: "/img/game-field/code-vibes/cards/terminal.png",
+            alt: "Terminal icon",
+        },
+        {
+            id: "typescript",
+            image: "/img/game-field/code-vibes/cards/typescript.png",
+            alt: "TypeScript icon",
+        },
+        {
+            id: "vs-code",
+            image: "/img/game-field/code-vibes/cards/vs-code.png",
+            alt: "Visual Studio Code icon",
+        },
+        {
+            id: "vue",
+            image: "/img/game-field/code-vibes/cards/vue.png",
+            alt: "Vue icon",
+        },
+    ],
+    "gaming": [
+        {
+            id: "ace-of-diamonds",
+            image: "/img/game-field/gaming/cards/ace-of-diamonds.png",
+            alt: "Ace of diamonds playing card",
+        },
+        {
+            id: "banana",
+            image: "/img/game-field/gaming/cards/banana.png",
+            alt: "Banana wearing sunglasses",
+        },
+        {
+            id: "circle-guard",
+            image: "/img/game-field/gaming/cards/circle-guard.png",
+            alt: "Guard with a circle mask",
+        },
+        {
+            id: "creeper",
+            image: "/img/game-field/gaming/cards/creeper.png",
+            alt: "Creeper face",
+        },
+        {
+            id: "dice",
+            image: "/img/game-field/gaming/cards/dice.png",
+            alt: "Colorful dice",
+        },
+        {
+            id: "game-controller",
+            image: "/img/game-field/gaming/cards/game-controller.png",
+            alt: "Game controller",
+        },
+        {
+            id: "handheld-console",
+            image: "/img/game-field/gaming/cards/handheld-console.png",
+            alt: "Handheld game console",
+        },
+        {
+            id: "level-up-medal",
+            image: "/img/game-field/gaming/cards/level-up-medal.png",
+            alt: "Level up medal",
+        },
+        {
+            id: "maze",
+            image: "/img/game-field/gaming/cards/maze.png",
+            alt: "Circular maze",
+        },
+        {
+            id: "mushroom",
+            image: "/img/game-field/gaming/cards/mushroom.png",
+            alt: "Red and white mushroom",
+        },
+        {
+            id: "pac-man-and-ghost",
+            image: "/img/game-field/gaming/cards/pac-man-and-ghost.png",
+            alt: "Pac-Man and a ghost",
+        },
+        {
+            id: "pac-man",
+            image: "/img/game-field/gaming/cards/pac-man.png",
+            alt: "Pac-Man",
+        },
+        {
+            id: "play-button",
+            image: "/img/game-field/gaming/cards/play-button.png",
+            alt: "Play button",
+        },
+        {
+            id: "puzzle-pieces",
+            image: "/img/game-field/gaming/cards/puzzle-pieces.png",
+            alt: "Colorful puzzle pieces",
+        },
+        {
+            id: "snake",
+            image: "/img/game-field/gaming/cards/snake.png",
+            alt: "Snake game",
+        },
+        {
+            id: "square-guard",
+            image: "/img/game-field/gaming/cards/square-guard.png",
+            alt: "Guard with a square mask",
+        },
+        {
+            id: "star-coin",
+            image: "/img/game-field/gaming/cards/star-coin.png",
+            alt: "Gold coin with a star",
+        },
+        {
+            id: "triangle-guard",
+            image: "/img/game-field/gaming/cards/triangle-guard.png",
+            alt: "Guard with a triangle mask",
+        },
+    ],
+};
 
 
 function createInitialGameState(currentPlayer: Player): GameState {
@@ -144,15 +238,15 @@ function getPairCount(): number {
 }
 
 
-function getCodeVibesMotifs() {
+function getCardMotifs(selectedTheme: string) {
     const pairCount = getPairCount();
-    const motifs = codeVibesMotifs.slice(0, pairCount);
+    const motifs = cardMotifsByTheme[selectedTheme].slice(0, pairCount);
     return [...motifs, ...motifs];
 }
 
 
-function createShuffledCodeVibesDeck() {
-    const motifs = getCodeVibesMotifs();
+function createShuffledDeck(selectedTheme: string) {
+    const motifs = getCardMotifs(selectedTheme);
 
     const deck = motifs.map((motif, index): Card => {
         return {
@@ -612,7 +706,7 @@ const gameThemeData: Record<string, GameTheme> = {
 
         cardFrontAlt: "Card front",
 
-        cardBackImage: "/img/game-field/gaming/card-back.png",
+        cardBackImage: "/img/game-field/gaming/cards/dice.png",
         cardBackAlt: "Card back",
     },
     "da-projects": {
@@ -850,7 +944,7 @@ function startGame() {
             updateScoreDisplay();
             applyPlayingFieldTheme(gameConfig);
             applyGameHeader(gameConfig);
-            gameState.cards = createShuffledCodeVibesDeck();
+            gameState.cards = createShuffledDeck(gameConfig.selectedTheme);
             gameState.status = "playing";
             renderPlayingFieldCards(gameConfig.selectedTheme, gameState.cards);
             applyBoardSizeClass(gameConfig.cardCount);

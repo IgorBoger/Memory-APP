@@ -1313,6 +1313,25 @@ body {
             box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.25);
             border-radius: 12px;
 
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                box-sizing: border-box;
+                border: 3px solid rgba(237, 27, 118, 1);
+                border-radius: 12px;
+                box-shadow: 5px 5px 8px 0 rgba(237, 27, 118, 0.3);
+                pointer-events: none;
+                z-index: 1;
+                opacity: 0;
+                transition: opacity 500ms ease-in-out 500ms;
+            }
+
+            &.is-matched::after {
+                opacity: 1;
+            }
+
+
             &__face {
                 border-radius: 12px;
 
@@ -1701,15 +1720,21 @@ body {
         pointer-events: none;
     }
 
-    &__content, &__heading {
+    &__content,
+    &__heading {
         position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
 
-    &__content { gap: 64px; }
-    &__heading { gap: 10px; }
+    &__content {
+        gap: 64px;
+    }
+
+    &__heading {
+        gap: 10px;
+    }
 
     &__subtitle {
         margin: 0;
@@ -1725,7 +1750,10 @@ body {
         line-height: 100%;
     }
 
-    &__pawn { display: block; object-fit: contain; }
+    &__pawn {
+        display: block;
+        object-fit: contain;
+    }
 
     &__button {
         padding: 16px 24px;
@@ -1741,8 +1769,13 @@ body {
         color: white;
         font-family: "Red Rose", sans-serif;
 
-        &[data-player="orange"] .winner__player { color: rgb(245, 142, 57); }
-        &[data-player="blue"] .winner__player { color: rgb(43, 177, 255); }
+        &[data-player="orange"] .winner__player {
+            color: rgb(245, 142, 57);
+        }
+
+        &[data-player="blue"] .winner__player {
+            color: rgb(43, 177, 255);
+        }
 
         @at-root .winner--code-vibes .winner__button,
         .draw--code-vibes .draw__button {
@@ -1750,14 +1783,25 @@ body {
             background-color: rgba(134, 233, 214, 0.2);
             border: 1px solid rgba(77, 213, 188, 1);
 
-            &:hover { background-color: rgba(134, 233, 214, 0.3); }
-            &:focus-visible { outline: 2px solid white; outline-offset: 4px; }
+            &:hover {
+                background-color: rgba(134, 233, 214, 0.3);
+            }
+
+            &:focus-visible {
+                outline: 2px solid white;
+                outline-offset: 4px;
+            }
         }
     }
 
     @media (max-width: 600px) {
-        &__player { font-size: 40px; }
-        &__subtitle { font-size: 30px; }
+        &__player {
+            font-size: 40px;
+        }
+
+        &__subtitle {
+            font-size: 30px;
+        }
     }
 }
 
@@ -1795,10 +1839,18 @@ body {
         margin: 0;
         line-height: 0;
 
-        img { display: block; width: min(430px, 80vw); height: auto; }
+        img {
+            display: block;
+            width: min(430px, 80vw);
+            height: auto;
+        }
     }
 
-    &__scales { display: block; width: min(353px, 70vw); height: auto; }
+    &__scales {
+        display: block;
+        width: min(353px, 70vw);
+        height: auto;
+    }
 
     &__button {
         @extend .winner__button;
