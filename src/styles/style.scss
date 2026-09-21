@@ -1869,6 +1869,104 @@ body {
 
 }
 
+.winner--gaming,
+.draw--gaming {
+    background-color: rgb(41, 79, 96);
+    color: white;
+    font-family: "Orbitron", sans-serif;
+    display: flex;
+    padding: 48px 24px;
+
+    .winner__content,
+    .draw__content {
+        margin: auto;
+        gap: 64px;
+    }
+
+    .winner__heading,
+    .draw__heading {
+        gap: 8px;
+    }
+
+    .winner__confetti {
+        display: none;
+    }
+
+    .winner__subtitle,
+    .draw__subtitle {
+        font-weight: 700;
+        font-size: 28px;
+        line-height: 100%;
+        letter-spacing: 0.07em;
+    }
+
+    .winner__player {
+        font-weight: 700;
+        font-size: 64px;
+        line-height: 100%;
+        letter-spacing: 0.07em;
+        text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    &[data-player="blue"] .winner__player {
+        color: rgb(9, 127, 197);
+    }
+
+    &[data-player="orange"] .winner__player {
+        color: rgb(234, 105, 0);
+    }
+
+    .winner__pawn {
+        width: 298px;
+        height: auto;
+        max-width: 75vw;
+        filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
+    }
+
+    .draw__title img {
+        display: none;
+    }
+
+    .draw__title-text {
+        display: block;
+        color: rgba(237, 27, 118, 1);
+        font-weight: 700;
+        font-size: 128px;
+        line-height: 100%;
+        letter-spacing: 0.07em;
+        text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .draw__scales {
+        width: min(353px, 75vw);
+        filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
+    }
+
+    .winner__button,
+    .draw__button {
+        font-family: inherit;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 100%;
+        letter-spacing: 0.04em;
+        color: white;
+        padding: 12px 20px;
+        border: 2px solid rgba(231, 28, 79, 1);
+        border-radius: 10px;
+        background-color: rgba(237, 27, 118, 0.08);
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgb(68, 72, 99);
+        }
+
+        &:focus-visible {
+            outline: 2px solid white;
+            outline-offset: 4px;
+        }
+    }
+}
+
 .game-over {
     min-height: 100vh;
     display: flex;
@@ -1995,7 +2093,7 @@ body {
             line-height: 100%;
         }
 
-        .game-over__score > span {
+        .game-over__score>span {
             display: none;
         }
 

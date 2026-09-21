@@ -27,6 +27,40 @@ type GameState = {
 };
 
 
+type ResultTheme = {
+    winnerClass: string;
+    drawClass: string;
+    buttonText: string;
+    winnerTitles: Record<Player, string>;
+    winnerImages: Record<Player, string>;
+    drawImage: string;
+};
+
+const resultThemeData: Record<string, ResultTheme> = {
+    "code-vibes": {
+        winnerClass: "winner--code-vibes",
+        drawClass: "draw--code-vibes",
+        buttonText: "Back to start",
+        winnerTitles: { blue: "BLUE PLAYER", orange: "ORANGE PLAYER" },
+        winnerImages: {
+            blue: "/img/game-field/code-vibes/winner-pawn-blue.png",
+            orange: "/img/game-field/code-vibes/winner-pawn-orange.png",
+        },
+        drawImage: "/img/game-field/code-vibes/draw-scales.png",
+    },
+    "gaming": {
+        winnerClass: "winner--gaming",
+        drawClass: "draw--gaming",
+        buttonText: "Home",
+        winnerTitles: { blue: "Blue Player", orange: "Orange Player" },
+        winnerImages: {
+            blue: "/img/game-field/gaming/winner-trophy.png",
+            orange: "/img/game-field/gaming/winner-trophy.png",
+        },
+        drawImage: "/img/game-field/gaming/draw-scales.png",
+    },
+};
+
 const cardMotifsByTheme: Record<string, CardMotif[]> = {
     "code-vibes": [
         {
@@ -496,14 +530,32 @@ function getWinningPlayer(): Player | null {
 }
 
 
-function showWinnerOverlay(player: Player, currentPage: HTMLElement) {
-    const overlay = document.getElementById("winnerOverlay");
+function getResultTheme(theme: string): ResultTheme {
+    return resultThemeData[theme] ?? resultThemeData["code-vibes"];
+}
+
+function applyResultTheme(overlay: HTMLElement, theme: ResultTheme, kind: "winner" | "draw") {
+    const classKey = kind === "winner" ? "winnerClass" : "drawClass";
+    overlay.classList.remove(...Object.values(resultThemeData).map(data => data[classKey]));
+    overlay.classList.add(theme[classKey]);
+    const button = overlay.querySelector<HTMLButtonElement>("button");
+    if (button) button.textContent = theme.buttonText;
+}
+
+function applyWinnerContent(overlay: HTMLElement, player: Player, theme: ResultTheme) {
     const title = document.getElementById("winnerPlayer");
     const pawn = document.getElementById("winnerPawn") as HTMLImageElement | null;
-    if (!overlay || !title || !pawn) return;
     overlay.dataset.player = player;
-    title.textContent = `${player.toUpperCase()} PLAYER`;
-    pawn.src = `/img/game-field/code-vibes/winner-pawn-${player}.png`;
+    if (title) title.textContent = theme.winnerTitles[player];
+    if (pawn) pawn.src = theme.winnerImages[player];
+}
+
+function showWinnerOverlay(player: Player, currentPage: HTMLElement, theme = getGameConfig().selectedTheme) {
+    const overlay = document.getElementById("winnerOverlay");
+    if (!overlay) return;
+    const resultTheme = getResultTheme(theme);
+    applyResultTheme(overlay, resultTheme, "winner");
+    applyWinnerContent(overlay, player, resultTheme);
     showPage(currentPage, overlay);
 }
 
@@ -520,10 +572,19 @@ function setupWinnerOverlay() {
 }
 
 
-function showDrawOverlay(currentPage: HTMLElement) {
+function showDrawOverlay(currentPage: HTMLElement, theme = getGameConfig().selectedTheme) {
     const overlay = document.getElementById("drawOverlay");
-    if (overlay) showPage(currentPage, overlay);
+    if (!overlay) return;
+    const resultTheme = getResultTheme(theme);
+    applyResultTheme(overlay, resultTheme, "draw");
+    const scales = overlay.querySelector<HTMLImageElement>(".draw__scales");
+    if (scales) scales.src = resultTheme.drawImage;
+    showPage(currentPage, overlay);
 }
+
+
+
+
 
 function setupDrawOverlay() {
     const overlay = document.getElementById("drawOverlay");
