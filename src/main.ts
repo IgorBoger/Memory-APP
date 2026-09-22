@@ -367,6 +367,7 @@ function createInitialGameState(currentPlayer: Player): GameState {
 
 let gameState: GameState = createInitialGameState("blue");
 let cardResetTimeout: number | undefined;
+let gameOverTimeout: number | undefined;
 
 
 function getPairCount(): number {
@@ -544,7 +545,11 @@ function scheduleCardReset(gameConfig: GameConfig) {
 
 function checkGameOver() {
     if (gameState.cards.length > 0 && gameState.cards.every(card => card.isMatched)) {
-        showGameOver();
+        gameState.isLocked = true;
+        gameOverTimeout = window.setTimeout(() => {
+            gameOverTimeout = undefined;
+            showGameOver();
+        }, 1000);
     }
 }
 
@@ -670,7 +675,10 @@ function setupWinnerOverlay() {
     document.getElementById("winnerBackToStart")?.addEventListener("click", () => {
         if (!overlay || !startPage) return;
         cancelCardReset();
+        cancelGameOver();
         gameState = createInitialGameState("blue");
+        resetSettings();
+        updateSettingsSummary();
         showPage(overlay, startPage);
     });
 }
@@ -687,18 +695,30 @@ function showDrawOverlay(currentPage: HTMLElement, theme = getGameConfig().selec
 }
 
 
-
-
-
 function setupDrawOverlay() {
     const overlay = document.getElementById("drawOverlay");
     const startPage = document.getElementById("startPage");
     document.getElementById("drawBackToStart")?.addEventListener("click", () => {
         if (!overlay || !startPage) return;
         cancelCardReset();
+        cancelGameOver();
         gameState = createInitialGameState("blue");
+        resetSettings();
+        updateSettingsSummary();
         showPage(overlay, startPage);
     });
+}
+
+
+function resetSettings() {
+    const gameThemeInput = document.querySelector<HTMLInputElement>('input[name="game-theme"][value="code-vibes"]');
+    const gameSettingsInputs = document.querySelectorAll<HTMLInputElement>('input[name="player"], input[name="board-size"]');
+    gameSettingsInputs.forEach(input => {
+        input.checked = false;
+    });
+    if (gameThemeInput) gameThemeInput.checked = true;
+    selectedTheme = "code-vibes";
+    updateSettingsPreview(selectedTheme);
 }
 
 
@@ -721,6 +741,12 @@ function fadeInElement(element: HTMLElement) {
 function cancelCardReset() {
     window.clearTimeout(cardResetTimeout);
     cardResetTimeout = undefined;
+}
+
+
+function cancelGameOver() {
+    window.clearTimeout(gameOverTimeout);
+    gameOverTimeout = undefined;
 }
 
 
@@ -1115,6 +1141,7 @@ function startGame() {
             showPage(settingsPage, playingField);
             const gameConfig = getGameConfig();
             cancelCardReset();
+            cancelGameOver();
             gameState = createInitialGameState(gameConfig.currentPlayer);
             updateScoreDisplay();
             applyPlayingFieldTheme(gameConfig);
@@ -1207,6 +1234,7 @@ function exitGame() {
     exitButton?.addEventListener("click", () => {
         if (settingsPage && playingField) {
             cancelCardReset();
+            cancelGameOver();
             gameState.status = "idle";
             showPage(playingField, settingsPage);
         }
