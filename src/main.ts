@@ -246,6 +246,98 @@ const cardMotifsByTheme: Record<string, CardMotif[]> = {
             alt: "Guard with a triangle mask",
         },
     ],
+    "da-projects": [
+        {
+            id: "bowl",
+            image: "/img/game-field/da-projects/cards/bowl.png",
+            alt: "Red bowl",
+        },
+        {
+            id: "broccoli",
+            image: "/img/game-field/da-projects/cards/broccoli.png",
+            alt: "Green broccoli",
+        },
+        {
+            id: "chat-bubbles",
+            image: "/img/game-field/da-projects/cards/chat-bubbles.png",
+            alt: "Colorful chat bubbles",
+        },
+        {
+            id: "chef-hat",
+            image: "/img/game-field/da-projects/cards/chef-hat.png",
+            alt: "White chef hat",
+        },
+        {
+            id: "cherry-blossom",
+            image: "/img/game-field/da-projects/cards/cherry-blossom.png",
+            alt: "Pink cherry blossom",
+        },
+        {
+            id: "currency-exchange",
+            image: "/img/game-field/da-projects/cards/currency-exchange.png",
+            alt: "Currency exchange coins",
+        },
+        {
+            id: "egg-halves",
+            image: "/img/game-field/da-projects/cards/egg-halves.png",
+            alt: "Two egg halves",
+        },
+        {
+            id: "green-link-logo",
+            image: "/img/game-field/da-projects/cards/green-link-logo.png",
+            alt: "Green interlocking logo",
+        },
+        {
+            id: "join-logo",
+            image: "/img/game-field/da-projects/cards/join-logo.png",
+            alt: "Blue Join logo",
+        },
+        {
+            id: "noodle-bowl",
+            image: "/img/game-field/da-projects/cards/noodle-bowl.png",
+            alt: "Bowl of noodles with chopsticks",
+        },
+        {
+            id: "poke-ball",
+            image: "/img/game-field/da-projects/cards/poke-ball.png",
+            alt: "Red and white Poke Ball",
+        },
+        {
+            id: "purple-arrow",
+            image: "/img/game-field/da-projects/cards/purple-arrow.png",
+            alt: "Purple and blue arrow",
+        },
+        {
+            id: "shark-fin",
+            image: "/img/game-field/da-projects/cards/shark-fin.png",
+            alt: "Shark fin in ocean waves",
+        },
+        {
+            id: "shopping-basket",
+            image: "/img/game-field/da-projects/cards/shopping-basket.png",
+            alt: "Orange shopping basket",
+        },
+        {
+            id: "smiling-face",
+            image: "/img/game-field/da-projects/cards/smiling-face.png",
+            alt: "Yellow smiling face with a hat",
+        },
+        {
+            id: "sombrero",
+            image: "/img/game-field/da-projects/cards/sombrero.png",
+            alt: "Orange sombrero",
+        },
+        {
+            id: "tic-tac-toe",
+            image: "/img/game-field/da-projects/cards/tic-tac-toe.png",
+            alt: "Tic-tac-toe board",
+        },
+        {
+            id: "user-network",
+            image: "/img/game-field/da-projects/cards/user-network.png",
+            alt: "Purple user network",
+        },
+    ],
 };
 
 

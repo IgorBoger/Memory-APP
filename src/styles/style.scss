@@ -1486,6 +1486,23 @@ body {
             height: 100%;
             border-radius: 13px;
 
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                box-sizing: border-box;
+                border: 2px solid rgba(30, 117, 148, 1);
+                border-radius: 13px;
+                pointer-events: none;
+                z-index: 1;
+                opacity: 0;
+                transition: opacity 500ms ease-in-out 500ms;
+            }
+
+            &.is-matched::after {
+                opacity: 1;
+            }
+
             &__face {
                 border-radius: 13px;
 
