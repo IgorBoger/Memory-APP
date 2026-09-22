@@ -59,7 +59,19 @@ const resultThemeData: Record<string, ResultTheme> = {
         },
         drawImage: "/img/game-field/gaming/draw-scales.png",
     },
+    "da-projects": {
+        winnerClass: "winner--da-projects",
+        drawClass: "draw--da-projects",
+        buttonText: "Home",
+        winnerTitles: { blue: "Blue Player", orange: "Orange Player" },
+        winnerImages: {
+            blue: "/img/game-field/da-projects/winner-pawn-blue.png",
+            orange: "/img/game-field/da-projects/winner-pawn-orange.png",
+        },
+        drawImage: "/img/game-field/da-projects/draw-scales.png",
+    }
 };
+
 
 const cardMotifsByTheme: Record<string, CardMotif[]> = {
     "code-vibes": [

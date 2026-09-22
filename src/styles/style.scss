@@ -55,6 +55,13 @@
 
 @font-face {
     font-family: "Figtree";
+    src: url("/fonts/Figtree/static/Figtree-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Figtree";
     src: url("/fonts/Figtree/static/Figtree-Medium.ttf") format("truetype");
     font-weight: 500;
     font-style: normal;
@@ -1995,6 +2002,85 @@ body {
             outline: 2px solid white;
             outline-offset: 4px;
         }
+    }
+}
+
+.winner--da-projects,
+.draw--da-projects {
+    display: flex;
+    height: 100dvh;
+    overflow-y: auto;
+    padding: 48px 24px;
+    box-sizing: border-box;
+    background-color: rgb(30, 117, 148);
+    color: white;
+    font-family: "Figtree", sans-serif;
+
+    .winner__content, .draw__content {
+        margin: auto;
+        gap: 64px;
+    }
+
+    .winner__heading, .draw__heading { gap: 10px; }
+    .winner__confetti { display: none; }
+
+    .winner__subtitle, .draw__subtitle {
+        font-size: 40px;
+        font-weight: 400;
+        line-height: 100%;
+        letter-spacing: 0;
+        color: white;
+    }
+
+    .winner__player {
+        font-size: 80px;
+        font-weight: 700;
+        line-height: 100%;
+        letter-spacing: 0;
+        color: white;
+        text-shadow: none;
+    }
+
+    .winner__pawn {
+        width: 200px;
+        height: 250px;
+        object-fit: contain;
+        filter: none;
+        box-shadow: none;
+    }
+
+    .draw__title img { display: none; }
+    .draw__title-text {
+        display: block;
+        font-size: 128px;
+        font-weight: 800;
+        line-height: 100%;
+        letter-spacing: 0;
+        color: rgba(253, 91, 79, 1);
+        text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .draw__scales { filter: none; box-shadow: none; }
+
+    .winner__button, .draw__button {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 10px;
+        background-color: rgb(191, 229, 242);
+        color: rgb(30, 117, 148);
+        font-family: inherit;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 100%;
+        letter-spacing: 0;
+        text-decoration: none;
+        box-shadow: none;
+
+        &:focus-visible { outline: 2px solid white; outline-offset: 4px; }
     }
 }
 
