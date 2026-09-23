@@ -350,6 +350,98 @@ const cardMotifsByTheme: Record<string, CardMotif[]> = {
             alt: "Purple user network",
         },
     ],
+    "foods": [
+        {
+            id: "burger",
+            image: "/img/game-field/foods/cards/burger.png",
+            alt: "Cheeseburger",
+        },
+        {
+            id: "chocolate-bar",
+            image: "/img/game-field/foods/cards/chocolate-bar.png",
+            alt: "Chocolate bar",
+        },
+        {
+            id: "chocolate-pudding",
+            image: "/img/game-field/foods/cards/chocolate-pudding.png",
+            alt: "Chocolate pudding",
+        },
+        {
+            id: "corn-dog",
+            image: "/img/game-field/foods/cards/corn-dog.png",
+            alt: "Corn dog with mustard",
+        },
+        {
+            id: "cupcake",
+            image: "/img/game-field/foods/cards/cupcake.png",
+            alt: "Cupcake with pink frosting",
+        },
+        {
+            id: "custard-pudding",
+            image: "/img/game-field/foods/cards/custard-pudding.png",
+            alt: "Custard pudding",
+        },
+        {
+            id: "donut",
+            image: "/img/game-field/foods/cards/donut.png",
+            alt: "Donut with blue icing",
+        },
+        {
+            id: "french-fries",
+            image: "/img/game-field/foods/cards/french-fries.png",
+            alt: "French fries",
+        },
+        {
+            id: "fried-chicken",
+            image: "/img/game-field/foods/cards/fried-chicken.png",
+            alt: "Bucket of fried chicken",
+        },
+        {
+            id: "ice-cream",
+            image: "/img/game-field/foods/cards/ice-cream.png",
+            alt: "Ice cream cone",
+        },
+        {
+            id: "macarons",
+            image: "/img/game-field/foods/cards/macarons.png",
+            alt: "Colorful macarons",
+        },
+        {
+            id: "pizza",
+            image: "/img/game-field/foods/cards/pizza.png",
+            alt: "Pizza slices",
+        },
+        {
+            id: "pretzel",
+            image: "/img/game-field/foods/cards/pretzel.png",
+            alt: "Pretzel",
+        },
+        {
+            id: "salad",
+            image: "/img/game-field/foods/cards/salad.png",
+            alt: "Bowl of salad",
+        },
+        {
+            id: "sandwich",
+            image: "/img/game-field/foods/cards/sandwich.png",
+            alt: "Filled sandwich",
+        },
+        {
+            id: "sushi",
+            image: "/img/game-field/foods/cards/sushi.png",
+            alt: "Sushi rolls",
+        },
+        {
+            id: "taco",
+            image: "/img/game-field/foods/cards/taco.png",
+            alt: "Filled taco",
+        },
+        {
+            id: "wrap",
+            image: "/img/game-field/foods/cards/wrap.png",
+            alt: "Filled wrap",
+        },
+    ],
 };
 
 
@@ -855,8 +947,6 @@ type GameTheme = {
     exitIconAlt: string;
     cardFrontImage?: string;
     cardFrontAlt: string;
-    cardBackImage: string;
-    cardBackAlt: string;
 };
 
 
@@ -882,9 +972,6 @@ const gameThemeData: Record<string, GameTheme> = {
 
         cardFrontImage: "/img/game-field/code-vibes/card-front.png",
         cardFrontAlt: "Card front with laptop and code symbol",
-
-        cardBackImage: "/img/game-field/code-vibes/cards/git.png",
-        cardBackAlt: "Card back",
     },
     "gaming": {
         playingFieldClass: "playing-field--gaming",
@@ -906,9 +993,6 @@ const gameThemeData: Record<string, GameTheme> = {
         exitIconAlt: "Exit game",
 
         cardFrontAlt: "Card front",
-
-        cardBackImage: "/img/game-field/gaming/cards/dice.png",
-        cardBackAlt: "Card back",
     },
     "da-projects": {
         playingFieldClass: "playing-field--da-projects",
@@ -931,9 +1015,6 @@ const gameThemeData: Record<string, GameTheme> = {
 
         cardFrontImage: "/img/game-field/da-projects/card-front.png",
         cardFrontAlt: "Card front with laptop and code symbol",
-
-        cardBackImage: "/img/game-field/da-projects/card-back.png",
-        cardBackAlt: "Card back",
     },
     "foods": {
         playingFieldClass: "playing-field--foods",
@@ -956,9 +1037,6 @@ const gameThemeData: Record<string, GameTheme> = {
 
         cardFrontImage: "/img/game-field/foods/card-front.png",
         cardFrontAlt: "Card front with laptop and code symbol",
-
-        cardBackImage: "/img/game-field/foods/card-back.png",
-        cardBackAlt: "Card back",
     }
 };
 
