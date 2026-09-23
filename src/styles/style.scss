@@ -2325,4 +2325,71 @@ body {
             color: rgb(234, 105, 0);
         }
     }
+
+    &--foods {
+        background-color: rgba(243, 131, 45, 1);
+        color: white;
+        font-family: "Klee One", sans-serif;
+
+        .game-over__title img {
+            display: none;
+        }
+
+        .game-over__title-text {
+            display: block;
+            font-size: 130px;
+            font-weight: 600;
+            line-height: 100%;
+            letter-spacing: 0;
+            color: white;
+            text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .game-over__content {
+            gap: 104px;
+        }
+
+        .game-over__subtitle {
+            font-size: 42px;
+            font-weight: 600;
+            line-height: 100%;
+            letter-spacing: 0;
+            text-shadow: none;
+        }
+
+        .game-over__scoreboard {
+            background-color: white;
+            padding: 16px;
+            gap: 40px;
+            border-radius: 0;
+        }
+
+        .game-over__score {
+            font-family: "Red Rose", sans-serif;
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 100%;
+            gap: 8px;
+        }
+
+        .game-over__score>span {
+            display: none;
+        }
+
+        .game-over__score img {
+            width: 22px;
+            height: 28px;
+            object-fit: contain;
+        }
+
+        .game-over__score--orange {
+            color: rgb(234, 105, 0);
+            order: 1;
+        }
+
+        .game-over__score--blue {
+            color: rgb(9, 127, 197);
+            order: 2;
+        }
+    }
 }
