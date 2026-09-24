@@ -36,6 +36,22 @@ type ResultTheme = {
     drawImage: string;
 };
 
+type QuitPopupTheme = {
+    popupClass: string;
+    title: string;
+    backLabel: string;
+    exitLabel: string;
+};
+
+const quitPopupThemeData: Record<string, QuitPopupTheme> = {
+    "code-vibes": {
+        popupClass: "quit-popup--code-vibes",
+        title: "Are you sure you want to quit the game?",
+        backLabel: "Back to game",
+        exitLabel: "Exit game",
+    },
+};
+
 const resultThemeData: Record<string, ResultTheme> = {
     "code-vibes": {
         winnerClass: "winner--code-vibes",
@@ -529,6 +545,7 @@ function init() {
     startGame();
     initCard();
     exitGame();
+    setupQuitPopup();
     setupWinnerOverlay();
     setupDrawOverlay();
 }
@@ -1318,16 +1335,50 @@ function applyPlayingFieldTheme(gameConfig: GameConfig) {
 
 function exitGame() {
     const exitButton = document.getElementById("exitGameBtn");
+    exitButton?.addEventListener("click", () => {
+        openQuitPopup();
+    });
+}
+
+function setupQuitPopup() {
+    const popup = document.getElementById("quitPopup");
+    const backButton = document.getElementById("quitPopupBack");
+    const exitButton = document.getElementById("quitPopupExit");
+    if (!popup || !backButton || !exitButton) return;
+    backButton.addEventListener("click", closeQuitPopup);
+    popup.querySelector("[data-quit-popup-close]")?.addEventListener("click", closeQuitPopup);
+    exitButton.addEventListener("click", exitCurrentGame);
+}
+
+function openQuitPopup() {
+    const popup = document.getElementById("quitPopup");
+    if (!popup) return;
+    const theme = quitPopupThemeData[getGameConfig().selectedTheme] ?? quitPopupThemeData["code-vibes"];
+    popup.classList.remove("quit-popup--code-vibes");
+    popup.classList.add(theme.popupClass);
+    document.getElementById("quitPopupTitle")!.textContent = theme.title;
+    document.getElementById("quitPopupBack")!.textContent = theme.backLabel;
+    document.getElementById("quitPopupExit")!.textContent = theme.exitLabel;
+    popup.hidden = false;
+    requestAnimationFrame(() => popup.classList.add("quit-popup--is-open"));
+}
+
+function closeQuitPopup() {
+    const popup = document.getElementById("quitPopup");
+    if (!popup) return;
+    popup.classList.remove("quit-popup--is-open");
+    window.setTimeout(() => { popup.hidden = true; }, 200);
+}
+
+function exitCurrentGame() {
     const settingsPage = document.getElementById("settingsPage");
     const playingField = document.getElementById("playingField");
-    exitButton?.addEventListener("click", () => {
-        if (settingsPage && playingField) {
-            cancelCardReset();
-            cancelGameOver();
-            gameState.status = "idle";
-            showPage(playingField, settingsPage);
-        }
-    });
+    if (!settingsPage || !playingField) return;
+    closeQuitPopup();
+    cancelCardReset();
+    cancelGameOver();
+    gameState.status = "idle";
+    showPage(playingField, settingsPage);
 }
 
 
