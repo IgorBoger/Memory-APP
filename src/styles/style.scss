@@ -2604,43 +2604,99 @@ body {
     }
 
     &--code-vibes {
+        .quit-popup {
 
-        .quit-popup__title,
-        .quit-popup__button {
-            font-family: "Red Rose", sans-serif;
-            font-weight: 700;
-        }
+            &__title,
+            &__button {
+                font-family: "Red Rose", sans-serif;
+                font-weight: 700;
+            }
 
-        .quit-popup__title {
-            color: rgb(48, 49, 49);
-            font-size: 32px;
-            line-height: 40px;
-            letter-spacing: 0;
-        }
+            &__title {
+                color: rgb(48, 49, 49);
+                font-size: 32px;
+                line-height: 40px;
+                letter-spacing: 0;
+            }
 
-        .quit-popup__button {
-            font-size: 20px;
-            line-height: 100%;
-        }
+            &__button {
+                font-size: 20px;
+                line-height: 100%;
+            }
 
-        .quit-popup__button--back {
-            color: #fff;
-            background: rgba(102, 207, 188, 1);
-            border: 3px solid transparent;
-            transition:
-                background-color 225ms ease-in-out,
-                border-color 225ms ease-in-out;
+            &__button--back {
+                color: #fff;
+                background: rgba(102, 207, 188, 1);
+                border: 3px solid transparent;
+                transition:
+                    background-color 225ms ease-in-out,
+                    border-color 225ms ease-in-out;
 
-            &:hover {
-                background: rgba(102, 207, 188, 0.7);
-                border-color: rgba(58, 188, 164, 1);
+                &:hover {
+                    background: rgba(102, 207, 188, 0.7);
+                    border-color: rgba(58, 188, 164, 1);
+                }
+            }
+
+            &__button--exit {
+                color: rgba(77, 213, 188, 1);
+                background: rgba(134, 233, 214, 0.14);
+                border: 2px solid rgba(77, 213, 188, 1);
             }
         }
+    }
 
-        .quit-popup__button--exit {
-            color: rgba(77, 213, 188, 1);
-            background: rgba(134, 233, 214, 0.14);
-            border: 2px solid rgba(77, 213, 188, 1);
+    &--gaming {
+        .quit-popup {
+            &__panel {
+                gap: 54px;
+                background-color: rgba(240, 246, 249, 1);
+                border-radius: 24px;
+                padding: 40px;
+            }
+
+            &__title {
+                font-family: "Orbitron", sans-serif;
+                font-weight: 700;
+                font-size: 28px;
+                line-height: 40px;
+                letter-spacing: 0.02em;
+                color: rgba(41, 79, 96, 1);
+            }
+
+            &__actions {
+                gap: 24px;
+            }
+
+            &__button {
+                font-family: "Orbitron", sans-serif;
+                font-weight: 700;
+                font-size: 16px;
+                line-height: 100%;
+                letter-spacing: 0.04em;
+                padding: 12px 20px;
+                border-radius: 10px;
+                border: 2px solid rgba(231, 28, 79, 1);
+
+                &--back {
+                    color: rgba(255, 255, 255, 1);
+                    background-color: rgba(237, 27, 118, 1);
+                    transition:
+                        background-color 225ms ease-in-out,
+                        color 225ms ease-in-out;
+
+                    &:hover {
+                        background-color: rgba(242, 199, 218, 0.08);
+                        color: rgba(237, 27, 118, 1);
+                    }
+                }
+
+                &--exit {
+                    border-color: rgba(231, 28, 79, 1);
+                    color: rgba(237, 27, 118, 1);
+                    background-color: rgba(237, 27, 118, 0.08);
+                }
+            }
         }
     }
 }
