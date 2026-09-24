@@ -62,6 +62,12 @@ const quitPopupThemeData: Record<string, QuitPopupTheme> = {
         backLabel: "Back to game",
         exitLabel: "Exit game",
     },
+    "foods": {
+        popupClass: "quit-popup--foods",
+        title: "Are you sure you want to quit the game?",
+        backLabel: "No, back to game",
+        exitLabel: "Exit game",
+    },
 };
 
 const resultThemeData: Record<string, ResultTheme> = {
@@ -1366,7 +1372,7 @@ function openQuitPopup() {
     const popup = document.getElementById("quitPopup");
     if (!popup) return;
     const theme = quitPopupThemeData[getGameConfig().selectedTheme] ?? quitPopupThemeData["code-vibes"];
-    popup.classList.remove("quit-popup--code-vibes", "quit-popup--gaming", "quit-popup--da-projects");
+    popup.classList.remove(...Object.values(quitPopupThemeData).map(theme => theme.popupClass));
     popup.classList.add(theme.popupClass);
     document.getElementById("quitPopupTitle")!.textContent = theme.title;
     document.getElementById("quitPopupBack")!.textContent = theme.backLabel;

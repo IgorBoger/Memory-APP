@@ -2587,6 +2587,10 @@ body {
         max-width: 460px;
         text-align: center;
         color: rgba(41, 79, 96, 1);
+        font-weight: 700;
+        font-size: 28px;
+        line-height: 40px;
+        letter-spacing: 0;
     }
 
     &__actions {
@@ -2601,7 +2605,13 @@ body {
         align-items: center;
         justify-content: center;
         gap: 10px;
-        padding: 16px 24px;
+        padding: 12px 20px;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 100%;
+        letter-spacing: 0;
+        border: none;
+        border-radius: 10px;
         box-sizing: border-box;
         cursor: pointer;
     }
@@ -2616,19 +2626,17 @@ body {
             &__title,
             &__button {
                 font-family: "Red Rose", sans-serif;
-                font-weight: 700;
             }
 
             &__title {
                 color: rgb(48, 49, 49);
                 font-size: 32px;
-                line-height: 40px;
-                letter-spacing: 0;
             }
 
             &__button {
                 font-size: 20px;
-                line-height: 100%;
+                padding: 16px 24px;
+                border-radius: 0;
             }
 
             &__button--back {
@@ -2661,20 +2669,12 @@ body {
 
             &__title {
                 font-family: "Orbitron", sans-serif;
-                font-weight: 700;
-                font-size: 28px;
-                line-height: 40px;
                 letter-spacing: 0.02em;
             }
 
             &__button {
                 font-family: "Orbitron", sans-serif;
-                font-weight: 700;
-                font-size: 16px;
-                line-height: 100%;
                 letter-spacing: 0.04em;
-                padding: 12px 20px;
-                border-radius: 10px;
                 border: 2px solid rgba(231, 28, 79, 1);
 
                 &--back {
@@ -2704,21 +2704,9 @@ body {
             &__title,
             &__button {
                 font-family: "Figtree", sans-serif;
-                font-weight: 700;
-                letter-spacing: 0;
-            }
-
-            &__title {
-                font-size: 28px;
-                line-height: 40px;
             }
 
             &__button {
-                font-size: 16px;
-                line-height: 100%;
-                padding: 12px 20px;
-                border: none;
-                border-radius: 10px;
                 box-shadow: 3px 3px 5px 0 rgba(47, 46, 46, 0.2);
 
                 &--back {
@@ -2742,6 +2730,61 @@ body {
 
                     &:hover {
                         background-color: rgba(237, 91, 80, 1);
+                    }
+                }
+            }
+        }
+    }
+
+    &--foods {
+        .quit-popup {
+            &__panel {
+                transform: translateY(calc(50vh + 50%));
+                background-color: rgb(246, 246, 246);
+            }
+
+            &__title {
+                font-family: "Klee One", sans-serif;
+                font-weight: 600;
+                color: rgba(164, 82, 18, 1);
+            }
+
+            &__button {
+                position: relative;
+                font-family: "Delius Unicase", sans-serif;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    background-size: 100% 100%;
+                    background-repeat: no-repeat;
+                    pointer-events: none;
+                }
+
+                &--back {
+                    color: #fff;
+                    background-color: rgba(255, 171, 62, 1);
+                    transition:
+                        background-color 225ms ease-in-out,
+                        box-shadow 225ms ease-in-out;
+
+                    &:hover {
+                        background-color: rgba(243, 131, 45, 1);
+                        box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.2);
+                    }
+
+                    &::before {
+                        background-image: url("/img/game-field/foods/back-to-game-button-border.png");
+                    }
+                }
+
+                &--exit {
+                    color: rgb(243, 131, 45);
+                    background-color: rgba(255, 249, 242, 1);
+
+                    &::before {
+                        background-image: url("/img/game-field/foods/exit-game-icon-border.png");
                     }
                 }
             }
