@@ -69,6 +69,17 @@ const resultThemeData: Record<string, ResultTheme> = {
             orange: "/img/game-field/da-projects/winner-pawn-orange.png",
         },
         drawImage: "/img/game-field/da-projects/draw-scales.png",
+    },
+    "foods": {
+        winnerClass: "winner--foods",
+        drawClass: "draw--foods",
+        buttonText: "Home",
+        winnerTitles: { blue: "Blue Player", orange: "Orange Player" },
+        winnerImages: {
+            blue: "/img/game-field/foods/winner-pawn-blue.png",
+            orange: "/img/game-field/foods/winner-pawn-orange.png",
+        },
+        drawImage: "/img/game-field/foods/draw-scales.png",
     }
 };
 
