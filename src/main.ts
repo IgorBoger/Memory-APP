@@ -568,6 +568,7 @@ function startTimer(
 let gameState: GameState = createInitialGameState("blue");
 const cardResetTimer = createPausableTimer();
 const gameOverTimer = createPausableTimer();
+let resultOverlayTimeout: number | undefined;
 
 
 function getPairCount(): number {
@@ -596,17 +597,12 @@ function createShuffledDeck(selectedTheme: string) {
             isMatched: false,
         };
     });
-
-
     shuffleCards(deck);
-
-
     return deck;
 }
 
 
 function shuffleCards(deck: Card[]): Card[] {
-
     for (let i = deck.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [deck[i], deck[j]] = [deck[j], deck[i]];
@@ -785,7 +781,6 @@ function switchPlayer(gameConfig: GameConfig) {
 function updateScoreDisplay() {
     const blueScore = document.getElementById("gameHeaderBlueScore");
     const orangeScore = document.getElementById("gameHeaderOrangeScore");
-
     if (blueScore && blueScore.textContent !== String(gameState.scores.blue)) {
         blueScore.textContent = String(gameState.scores.blue);
         fadeInElement(blueScore);
@@ -808,6 +803,7 @@ function showGameOver() {
     scheduleResultOverlay();
 }
 
+
 function applyGameOverTheme(gameOver: HTMLElement, gameConfig: GameConfig) {
     gameOver.classList.remove("game-over--code-vibes", "game-over--gaming", "game-over--da-projects", "game-over--foods");
     gameOver.classList.add(`game-over--${gameConfig.selectedTheme}`);
@@ -821,12 +817,27 @@ function applyGameOverTheme(gameOver: HTMLElement, gameConfig: GameConfig) {
 function scheduleResultOverlay() {
     const gameOver = document.getElementById("gameOver");
     if (!gameOver) return;
+    cancelResultOverlay();
     const winner = getWinningPlayer();
+    resultOverlayTimeout = window.setTimeout(() => {
+        resultOverlayTimeout = undefined;
+        if (gameState.status !== "finished") return;
+        showResultOverlay(winner, gameOver);
+    }, 3000);
+}
+
+function showResultOverlay(winner: Player | null, gameOver: HTMLElement) {
     if (winner) {
-        window.setTimeout(() => showWinnerOverlay(winner, gameOver), 3000);
+        showWinnerOverlay(winner, gameOver);
     } else {
-        window.setTimeout(() => showDrawOverlay(gameOver), 3000);
+        showDrawOverlay(gameOver);
     }
+}
+
+
+function cancelResultOverlay() {
+    window.clearTimeout(resultOverlayTimeout);
+    resultOverlayTimeout = undefined;
 }
 
 
@@ -840,6 +851,7 @@ function getResultTheme(theme: string): ResultTheme {
     return resultThemeData[theme] ?? resultThemeData["code-vibes"];
 }
 
+
 function applyResultTheme(overlay: HTMLElement, theme: ResultTheme, kind: "winner" | "draw") {
     const classKey = kind === "winner" ? "winnerClass" : "drawClass";
     overlay.classList.remove(...Object.values(resultThemeData).map(data => data[classKey]));
@@ -848,6 +860,7 @@ function applyResultTheme(overlay: HTMLElement, theme: ResultTheme, kind: "winne
     if (button) button.textContent = theme.buttonText;
 }
 
+
 function applyWinnerContent(overlay: HTMLElement, player: Player, theme: ResultTheme) {
     const title = document.getElementById("winnerPlayer");
     const pawn = document.getElementById("winnerPawn") as HTMLImageElement | null;
@@ -855,6 +868,7 @@ function applyWinnerContent(overlay: HTMLElement, player: Player, theme: ResultT
     if (title) title.textContent = theme.winnerTitles[player];
     if (pawn) pawn.src = theme.winnerImages[player];
 }
+
 
 function showWinnerOverlay(player: Player, currentPage: HTMLElement, theme = getGameConfig().selectedTheme) {
     const overlay = document.getElementById("winnerOverlay");
@@ -1415,28 +1429,40 @@ function exitGame() {
     });
 }
 
+
 function setupQuitPopup() {
     const popup = document.getElementById("quitPopup");
     const backButton = document.getElementById("quitPopupBack");
     const exitButton = document.getElementById("quitPopupExit");
     if (!popup || !backButton || !exitButton) return;
-    backButton.addEventListener("click", closeQuitPopup);
-    popup.querySelector("[data-quit-popup-close]")?.addEventListener("click", closeQuitPopup);
+    backButton.addEventListener("click", resumeGame);
+    popup.querySelector("[data-quit-popup-close]")?.addEventListener("click", resumeGame);
     exitButton.addEventListener("click", exitCurrentGame);
 }
 
+
 function openQuitPopup() {
+    if (gameState.status !== "playing") return;
     const popup = document.getElementById("quitPopup");
     if (!popup) return;
-    const theme = quitPopupThemeData[getGameConfig().selectedTheme] ?? quitPopupThemeData["code-vibes"];
+    pauseTimer(cardResetTimer);
+    pauseTimer(gameOverTimer);
+    applyQuitPopupTheme(popup);
+    popup.hidden = false;
+    requestAnimationFrame(() => popup.classList.add("quit-popup--is-open"));
+}
+
+
+function applyQuitPopupTheme(popup: HTMLElement) {
+    const theme = quitPopupThemeData[getGameConfig().selectedTheme]
+        ?? quitPopupThemeData["code-vibes"];
     popup.classList.remove(...Object.values(quitPopupThemeData).map(theme => theme.popupClass));
     popup.classList.add(theme.popupClass);
     document.getElementById("quitPopupTitle")!.textContent = theme.title;
     document.getElementById("quitPopupBack")!.textContent = theme.backLabel;
     document.getElementById("quitPopupExit")!.textContent = theme.exitLabel;
-    popup.hidden = false;
-    requestAnimationFrame(() => popup.classList.add("quit-popup--is-open"));
 }
+
 
 function closeQuitPopup() {
     const popup = document.getElementById("quitPopup");
@@ -1445,6 +1471,17 @@ function closeQuitPopup() {
     window.setTimeout(() => { popup.hidden = true; }, 300);
 }
 
+
+function resumeGame() {
+    const popup = document.getElementById("quitPopup");
+    if (!popup?.classList.contains("quit-popup--is-open")) return;
+    closeQuitPopup();
+    if (gameState.status !== "playing") return;
+    resumeTimer(cardResetTimer);
+    resumeTimer(gameOverTimer);
+}
+
+
 function exitCurrentGame() {
     const settingsPage = document.getElementById("settingsPage");
     const playingField = document.getElementById("playingField");
@@ -1452,6 +1489,7 @@ function exitCurrentGame() {
     closeQuitPopup();
     cancelCardReset();
     cancelGameOver();
+    cancelResultOverlay();
     gameState.status = "idle";
     showPage(playingField, settingsPage);
 }
