@@ -1,0 +1,48 @@
+@media (max-width: 600px) {
+    .start-page {
+        min-height: 100dvh;
+        height: auto;
+        padding: 24px;
+        box-sizing: border-box;
+
+        &__title {
+            width: 100%;
+            text-align: center;
+        }
+
+        &__logo {
+            left: 0;
+            bottom: 8px;
+        }
+    }
+}
+
+@media (max-width: 360px) {
+    .start-page {
+        padding-inline: 16px;
+    }
+
+    .start-button {
+        padding-inline: 12px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .start-page {
+        isolation: isolate;
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0 0 auto;
+            width: 100%;
+            height: min(26vw, 360px);
+            background-image: url("/img/game-field/code-vibes/winner-confetti.png");
+            background-position: top center;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            pointer-events: none;
+            z-index: -1;
+        }
+    }
+}

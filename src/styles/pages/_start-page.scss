@@ -13,14 +13,14 @@
     &__intro {
         font-family: "Almarai", sans-serif;
         font-weight: 400;
-        font-size: 48px;
+        font-size: clamp(24px, 3.34vw, 48px);
         margin: 0;
     }
 
     &__heading {
         font-family: "Red Rose", sans-serif;
         font-weight: 700;
-        font-size: 140px;
+        font-size: clamp(36px, 9.73vw, 140px);
         margin: 0;
     }
 
@@ -28,8 +28,15 @@
         position: absolute;
         left: 0;
         bottom: 8px;
-    }
+        background-color: black;
+        width: clamp(200px, 25.5vw, 367px);
 
+        &-image {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+    }
 }
 
 .start-button {
@@ -37,19 +44,20 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: clamp(12px, 1.39vw, 20px);
     justify-content: space-between;
     background-color: #F0EA6E;
-    width: 250px;
-    height: 98px;
-    padding: 24px;
-    margin-top: 60px;
+    width: clamp(180px, 17.36vw, 250px);
+    height: clamp(72px, 6.81vw, 98px);
+    padding: clamp(16px, 1.67vw, 24px);
+    margin-top: clamp(40px, 4.17vw, 60px);
     position: relative;
     transition: transform 225ms ease-in-out, background-color 225ms ease-in-out;
+    z-index: 1;
 
     &__control-icon {
-        width: 44px;
-        height: 32px;
+        width: clamp(32px, 3.06vw, 44px);
+        height: auto;
         object-fit: cover;
         transition: transform 225ms ease-in-out;
     }
@@ -57,7 +65,7 @@
     &__text {
         font-family: "Red Rose", sans-serif;
         font-weight: 700;
-        font-size: 40px;
+        font-size: clamp(28px, 2.78vw, 40px);
         line-height: 100%;
         margin: 0;
         color: rgb(48, 49, 49);
@@ -65,22 +73,22 @@
 
     &__arrow {
         position: relative;
-        width: 36px;
-        height: 24px;
+        width: clamp(28px, 2.5vw, 36px);
+        height: clamp(20px, 1.67vw, 24px);
         display: inline-flex;
         align-items: center;
         justify-content: center;
     }
 
     &__arrow-image {
-        width: 33px;
+        width: clamp(26px, 2.29vw, 33px);
         opacity: 1;
         position: absolute;
         object-fit: cover;
         transition: opacity 225ms ease-in-out;
 
         &--hover {
-            width: 36px;
+            width: clamp(28px, 2.5vw, 36px);
             opacity: 0;
         }
     }
