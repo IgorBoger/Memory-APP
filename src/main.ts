@@ -502,9 +502,72 @@ function createInitialGameState(currentPlayer: Player): GameState {
 }
 
 
+type PausableTimer = {
+    timeoutId: number | undefined;
+    remaining: number;
+    startedAt: number;
+    action: (() => void) | undefined;
+};
+
+function createPausableTimer(): PausableTimer {
+    return {
+        timeoutId: undefined,
+        remaining: 0,
+        startedAt: 0,
+        action: undefined,
+    };
+}
+
+
+function cancelTimer(timer: PausableTimer) {
+    window.clearTimeout(timer.timeoutId);
+    timer.timeoutId = undefined;
+    timer.remaining = 0;
+    timer.action = undefined;
+}
+
+
+function finishTimer(timer: PausableTimer) {
+    const callback = timer.action;
+    cancelTimer(timer);
+    callback?.();
+}
+
+
+function resumeTimer(timer: PausableTimer) {
+    if (!timer.action || timer.timeoutId !== undefined) return;
+    timer.startedAt = performance.now();
+    timer.timeoutId = window.setTimeout(
+        () => finishTimer(timer),
+        timer.remaining
+    );
+}
+
+
+function pauseTimer(timer: PausableTimer) {
+    if (timer.timeoutId === undefined) return;
+    window.clearTimeout(timer.timeoutId);
+    timer.timeoutId = undefined;
+    const elapsed = performance.now() - timer.startedAt;
+    timer.remaining = Math.max(0, timer.remaining - elapsed);
+}
+
+
+function startTimer(
+    timer: PausableTimer,
+    callback: () => void,
+    delay: number
+) {
+    cancelTimer(timer);
+    timer.action = callback;
+    timer.remaining = delay;
+    resumeTimer(timer);
+}
+
+
 let gameState: GameState = createInitialGameState("blue");
-let cardResetTimeout: number | undefined;
-let gameOverTimeout: number | undefined;
+const cardResetTimer = createPausableTimer();
+const gameOverTimer = createPausableTimer();
 
 
 function getPairCount(): number {
@@ -674,8 +737,7 @@ function markCardAsMatched(card: Card) {
 
 
 function scheduleCardReset(gameConfig: GameConfig) {
-    cardResetTimeout = window.setTimeout(() => {
-        cardResetTimeout = undefined;
+    startTimer(cardResetTimer, () => {
         closeSelectedCards(gameConfig);
     }, 1000);
 }
@@ -684,8 +746,7 @@ function scheduleCardReset(gameConfig: GameConfig) {
 function checkGameOver() {
     if (gameState.cards.length > 0 && gameState.cards.every(card => card.isMatched)) {
         gameState.isLocked = true;
-        gameOverTimeout = window.setTimeout(() => {
-            gameOverTimeout = undefined;
+        startTimer(gameOverTimer, () => {
             showGameOver();
         }, 1000);
     }
@@ -699,9 +760,7 @@ function closeSelectedCards(gameConfig: GameConfig) {
         );
         cardElement?.classList.remove("is-flipped");
     });
-
-    cardResetTimeout = window.setTimeout(() => {
-        cardResetTimeout = undefined;
+    startTimer(cardResetTimer, () => {
         gameState.flippedCardIds = [];
         switchPlayer(gameConfig);
         gameState.isLocked = false;
@@ -877,14 +936,12 @@ function fadeInElement(element: HTMLElement) {
 
 
 function cancelCardReset() {
-    window.clearTimeout(cardResetTimeout);
-    cardResetTimeout = undefined;
+    cancelTimer(cardResetTimer);
 }
 
 
 function cancelGameOver() {
-    window.clearTimeout(gameOverTimeout);
-    gameOverTimeout = undefined;
+    cancelTimer(gameOverTimer);
 }
 
 
