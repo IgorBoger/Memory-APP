@@ -509,6 +509,7 @@ type PausableTimer = {
     action: (() => void) | undefined;
 };
 
+
 function createPausableTimer(): PausableTimer {
     return {
         timeoutId: undefined,
@@ -586,19 +587,14 @@ function getCardMotifs(selectedTheme: string) {
 
 
 function createShuffledDeck(selectedTheme: string) {
-    const motifs = getCardMotifs(selectedTheme);
-
-    const deck = motifs.map((motif, index): Card => {
-        return {
-            id: index,
-            motifId: motif.id,
-            image: motif.image,
-            alt: motif.alt,
-            isMatched: false,
-        };
-    });
+    const deck = getCardMotifs(selectedTheme).map(createCard);
     shuffleCards(deck);
     return deck;
+}
+
+
+function createCard(motif: CardMotif, index: number): Card {
+    return { id: index, motifId: motif.id, image: motif.image, alt: motif.alt, isMatched: false };
 }
 
 
@@ -654,33 +650,26 @@ function startSettingsPage() {
 
 function renderPlayingFieldCards(selectedTheme: string, cards: Card[]) {
     const playingFieldBoard = document.getElementById("playingFieldBoard");
-    if (playingFieldBoard) {
-        playingFieldBoard.innerHTML = "";
-        for (let cardIndex = 0; cardIndex < cards.length; cardIndex++) {
-            const card = cards[cardIndex];
-            const memoryCard = document.createElement("button");
-            const gameTheme = gameThemeData[selectedTheme];
-            memoryCard.className = "memory-card";
-            memoryCard.dataset.cardId = String(card.id);
-            memoryCard.innerHTML = `
-            <div class="memory-card__inner">
-                <div class="memory-card__face memory-card__face--front">
-                    ${gameTheme.cardFrontImage
-                    ? `<img class="memory-card__image"
-                    src="${gameTheme.cardFrontImage}"
-                    alt="${gameTheme.cardFrontAlt}">`
-                    : ""}
-                </div>
-                <div class="memory-card__face memory-card__face--back">
-                    <img class="memory-card__image"
-                    id="memoryCardBack${cardIndex}"
-                    src="${card.image}"
-                    alt="${card.alt}">
-                </div>
-            </div>`;
-            playingFieldBoard.appendChild(memoryCard);
-        }
-    }
+    if (!playingFieldBoard) return;
+    playingFieldBoard.replaceChildren(...cards.map((card, index) => createMemoryCard(selectedTheme, card, index)));
+}
+
+
+function createMemoryCard(selectedTheme: string, card: Card, index: number) {
+    const memoryCard = document.createElement("button");
+    const gameTheme = gameThemeData[selectedTheme];
+    memoryCard.className = "memory-card";
+    memoryCard.dataset.cardId = String(card.id);
+    memoryCard.innerHTML = createMemoryCardMarkup(gameTheme, card, index);
+    return memoryCard;
+}
+
+
+function createMemoryCardMarkup(theme: GameTheme, card: Card, index: number) {
+    const front = theme.cardFrontImage
+        ? `<img class="memory-card__image" src="${theme.cardFrontImage}" alt="${theme.cardFrontAlt}">` : "";
+    return `<div class="memory-card__inner"><div class="memory-card__face memory-card__face--front">${front}</div>` +
+        `<div class="memory-card__face memory-card__face--back"><img class="memory-card__image" id="memoryCardBack${index}" src="${card.image}" alt="${card.alt}"></div></div>`;
 }
 
 
@@ -1039,18 +1028,8 @@ const themePreviewData: Record<string, ThemePreview> = {
 
 
 type CurrentPlayerDisplay =
-    | {
-        type: "image";
-        currentPlayerBlueImage: string;
-        currentPlayerOrangeImage: string;
-        currentPlayerAlt: string;
-    }
-    | {
-        type: "badge";
-        iconImage: string;
-        alt: string;
-    };
-
+    | { type: "image"; currentPlayerBlueImage: string; currentPlayerOrangeImage: string; currentPlayerAlt: string }
+    | { type: "badge"; iconImage: string; alt: string };
 
 type GameTheme = {
     playingFieldClass: string;
@@ -1163,128 +1142,140 @@ let currentPreviewTheme = "code-vibes";
 let pendingPreviewTheme: string | undefined;
 let previewFadeTimeout: number | undefined;
 
+
 function setupThemePreview() {
     const themeInputs = document.querySelectorAll<HTMLInputElement>('input[name="game-theme"]');
+    themeInputs.forEach(setupThemeInput);
+}
 
-    themeInputs.forEach((input) => {
-        const optionLabel = input.closest("label");
 
-        optionLabel?.addEventListener("mouseenter", () => {
-            updateSettingsPreview(input.value);
-        });
+function setupThemeInput(input: HTMLInputElement) {
+    const label = input.closest("label");
+    label?.addEventListener("mouseenter", () => updateSettingsPreview(input.value));
+    label?.addEventListener("mouseleave", () => updateSettingsPreview(selectedTheme));
+    input.addEventListener("change", () => selectPreviewTheme(input.value));
+}
 
-        optionLabel?.addEventListener("mouseleave", () => {
-            updateSettingsPreview(selectedTheme);
-        });
 
-        input.addEventListener("change", () => {
-            selectedTheme = input.value;
-            if (currentPreviewTheme !== selectedTheme && pendingPreviewTheme !== selectedTheme) {
-                updateSettingsPreview(selectedTheme);
-            }
-        });
-    });
+function selectPreviewTheme(theme: string) {
+    selectedTheme = theme;
+    if (currentPreviewTheme !== theme && pendingPreviewTheme !== theme) updateSettingsPreview(theme);
 }
 
 
 function updateSettingsPreview(theme: string) {
     const settingsPreview = document.getElementById("settingsPreview");
+    if (!settingsPreview) return;
+    if (currentPreviewTheme === theme || pendingPreviewTheme === theme) return;
+    preparePreviewTransition(settingsPreview, theme);
+    previewFadeTimeout = window.setTimeout(() => finishPreviewTransition(theme, settingsPreview), 120);
+}
 
-    if (!settingsPreview) {
-        return;
-    }
 
-    if (currentPreviewTheme === theme || pendingPreviewTheme === theme) {
-        return;
-    }
-
+function preparePreviewTransition(preview: HTMLElement, theme: string) {
     window.clearTimeout(previewFadeTimeout);
     pendingPreviewTheme = theme;
-    settingsPreview.classList.add("settings-page__preview-content--is-changing");
+    preview.classList.add("settings-page__preview-content--is-changing");
+}
 
-    previewFadeTimeout = window.setTimeout(() => {
-        applySettingsPreview(theme);
-        currentPreviewTheme = theme;
-        pendingPreviewTheme = undefined;
-        settingsPreview.classList.remove("settings-page__preview-content--is-changing");
-    }, 120);
+
+function finishPreviewTransition(theme: string, preview: HTMLElement) {
+    applySettingsPreview(theme);
+    currentPreviewTheme = theme;
+    pendingPreviewTheme = undefined;
+    preview.classList.remove("settings-page__preview-content--is-changing");
 }
 
 
 function applySettingsPreview(theme: string) {
-    const settingsPreview = document.getElementById("settingsPreview");
-    const primaryCard = document.getElementById("settingsPreviewPrimaryCard") as HTMLImageElement;
-    const secondaryCard = document.getElementById("settingsPreviewSecondaryCard") as HTMLImageElement;
-    const blueLabel = document.getElementById("settingsPreviewBlueLabel") as HTMLImageElement;
-    const orangeLabel = document.getElementById("settingsPreviewOrangeLabel") as HTMLImageElement;
-    const currentPlayerIcon = document.getElementById("settingsPreviewCurrentPlayerIcon") as HTMLImageElement;
-    const exitIcon = document.getElementById("settingsPreviewExitIcon") as HTMLImageElement;
+    const { settingsPreview, primaryCard, secondaryCard, blueLabel, orangeLabel, currentPlayerIcon, exitIcon } = getPreviewElements();
     const themePreview = themePreviewData[theme] ?? themePreviewData["code-vibes"];
+    if (!settingsPreview || !primaryCard || !secondaryCard || !blueLabel ||
+        !orangeLabel || !currentPlayerIcon || !exitIcon) return;
+    applyPreviewTheme(settingsPreview, themePreview, theme);
+    setPreviewImages(themePreview, primaryCard, blueLabel, orangeLabel, currentPlayerIcon, exitIcon);
+    setSecondaryPreview(themePreview, secondaryCard);
+}
 
-    if (!settingsPreview || !primaryCard || !secondaryCard || !blueLabel || !orangeLabel || !currentPlayerIcon || !exitIcon) {
-        return;
-    }
 
-    settingsPreview.classList.remove(...Object.values(themePreviewData).map((preview) => preview.previewClass));
-    settingsPreview.classList.add(themePreview.previewClass);
-    settingsPreview.dataset.themePreview = themePreviewData[theme] ? theme : "code-vibes";
+function getPreviewElements() {
+    return {
+        settingsPreview: document.getElementById("settingsPreview"),
+        primaryCard: document.getElementById("settingsPreviewPrimaryCard") as HTMLImageElement,
+        secondaryCard: document.getElementById("settingsPreviewSecondaryCard") as HTMLImageElement,
+        blueLabel: document.getElementById("settingsPreviewBlueLabel") as HTMLImageElement,
+        orangeLabel: document.getElementById("settingsPreviewOrangeLabel") as HTMLImageElement,
+        currentPlayerIcon: document.getElementById("settingsPreviewCurrentPlayerIcon") as HTMLImageElement,
+        exitIcon: document.getElementById("settingsPreviewExitIcon") as HTMLImageElement,
+    };
+}
 
-    primaryCard.src = themePreview.primaryImage;
-    primaryCard.alt = themePreview.primaryAlt;
-    blueLabel.src = themePreview.blueLabelImage;
-    blueLabel.alt = themePreview.blueLabelAlt;
-    orangeLabel.src = themePreview.orangeLabelImage;
-    orangeLabel.alt = themePreview.orangeLabelAlt;
-    currentPlayerIcon.src = themePreview.currentPlayerIcon;
-    currentPlayerIcon.alt = themePreview.currentPlayerAlt;
-    exitIcon.src = themePreview.exitIcon;
-    exitIcon.alt = themePreview.exitIconAlt;
 
-    if (themePreview.secondaryImage && themePreview.secondaryAlt) {
-        secondaryCard.hidden = false;
-        secondaryCard.src = themePreview.secondaryImage;
-        secondaryCard.alt = themePreview.secondaryAlt;
-        return;
-    }
+function applyPreviewTheme(preview: HTMLElement, themeData: ThemePreview, theme: string) {
+    preview.classList.remove(...Object.values(themePreviewData).map(data => data.previewClass));
+    preview.classList.add(themeData.previewClass);
+    preview.dataset.themePreview = themePreviewData[theme] ? theme : "code-vibes";
+}
 
-    secondaryCard.hidden = true;
-    secondaryCard.removeAttribute("src");
-    secondaryCard.alt = "";
+
+function setPreviewImages(data: ThemePreview, primary: HTMLImageElement, blue: HTMLImageElement, orange: HTMLImageElement, player: HTMLImageElement, exit: HTMLImageElement) {
+    setImage(primary, data.primaryImage, data.primaryAlt);
+    setImage(blue, data.blueLabelImage, data.blueLabelAlt);
+    setImage(orange, data.orangeLabelImage, data.orangeLabelAlt);
+    setImage(player, data.currentPlayerIcon, data.currentPlayerAlt);
+    setImage(exit, data.exitIcon, data.exitIconAlt);
+}
+
+
+function setImage(image: HTMLImageElement, src: string, alt: string) {
+    image.src = src;
+    image.alt = alt;
+}
+
+
+function setSecondaryPreview(data: ThemePreview, card: HTMLImageElement) {
+    if (data.secondaryImage && data.secondaryAlt) return showSecondaryPreview(card, data.secondaryImage, data.secondaryAlt);
+    card.hidden = true;
+    card.removeAttribute("src");
+    card.alt = "";
+}
+
+
+function showSecondaryPreview(card: HTMLImageElement, src: string, alt: string) {
+    card.hidden = false;
+    setImage(card, src, alt);
 }
 
 
 function updateSettingsSummary() {
-    const selectedTheme = document.querySelector<HTMLInputElement>('input[name="game-theme"]:checked')?.value;
-    const selectedPlayer = document.querySelector<HTMLInputElement>('input[name="player"]:checked')?.value;
-    const selectedBoardSize = document.querySelector<HTMLInputElement>('input[name="board-size"]:checked')?.value;
-
-    const summaryTheme = document.getElementById("settingsSummaryTheme");
-    const summaryPlayer = document.getElementById("settingsSummaryPlayer");
-    const summaryBoardSize = document.getElementById("settingsSummaryBoardSize");
-    const startButton = document.getElementById("startGameBtn") as HTMLButtonElement;
-
-    if (summaryTheme) {
-        summaryTheme.textContent = getThemeSummaryText(selectedTheme);
-    }
-
-    if (summaryPlayer) {
-        summaryPlayer.textContent = getPlayerSummaryText(selectedPlayer);
-    }
-
-    if (summaryBoardSize) {
-        summaryBoardSize.textContent = getBoardSizeSummaryText(selectedBoardSize);
-    }
-
-    if (startButton) {
-        startButton.disabled = !(selectedTheme && selectedPlayer && selectedBoardSize);
-    }
+    const { selectedTheme, selectedPlayer, selectedBoardSize } = getInputData();
+    const { summaryTheme, summaryPlayer, summaryBoardSize, startButton } = getSummaryElements();
+    setSummaryText(summaryTheme, getThemeSummaryText(selectedTheme));
+    setSummaryText(summaryPlayer, getPlayerSummaryText(selectedPlayer));
+    setSummaryText(summaryBoardSize, getBoardSizeSummaryText(selectedBoardSize));
+    if (startButton) startButton.disabled = !(selectedTheme && selectedPlayer && selectedBoardSize);
 }
+
+
+function getSummaryElements() {
+    return {
+        summaryTheme: document.getElementById("settingsSummaryTheme"),
+        summaryPlayer: document.getElementById("settingsSummaryPlayer"),
+        summaryBoardSize: document.getElementById("settingsSummaryBoardSize"),
+        startButton: document.getElementById("startGameBtn") as HTMLButtonElement,
+    };
+}
+
+
+function setSummaryText(element: HTMLElement | null, text: string) {
+    if (element) element.textContent = text;
+}
+
 
 function setupSettingsSelection() {
     const settingsInputs = document.querySelectorAll<HTMLInputElement>(
         'input[name="game-theme"], input[name="player"], input[name="board-size"]'
     );
-
     settingsInputs.forEach((input) => {
         input.addEventListener("change", updateSettingsSummary);
     });
@@ -1292,19 +1283,7 @@ function setupSettingsSelection() {
 
 
 function getThemeSummaryText(theme: string | undefined) {
-    if (theme === "code-vibes") {
-        return "Code Vibe theme";
-    }
-    if (theme === "gaming") {
-        return "Game theme";
-    }
-    if (theme === "da-projects") {
-        return "DA Project theme";
-    }
-    if (theme === "foods") {
-        return "Food theme";
-    }
-    return "Theme";
+    return { "code-vibes": "Code Vibe theme", gaming: "Game theme", "da-projects": "DA Project theme", foods: "Food theme" }[theme ?? ""] ?? "Theme";
 }
 
 
@@ -1320,9 +1299,7 @@ function getPlayerSummaryText(player: string | undefined) {
 
 
 function getBoardSizeSummaryText(boardSize: string | undefined) {
-    if (!boardSize) {
-        return "Board size";
-    }
+    if (!boardSize) return "Board size";
     return "Board-" + boardSize + " Cards";
 }
 
@@ -1331,22 +1308,29 @@ function startGame() {
     const startButton = document.getElementById("startGameBtn");
     const settingsPage = document.getElementById("settingsPage");
     const playingField = document.getElementById("playingField");
-    startButton?.addEventListener("click", () => {
-        if (settingsPage && playingField) {
-            showPage(settingsPage, playingField);
-            const gameConfig = getGameConfig();
-            cancelCardReset();
-            cancelGameOver();
-            gameState = createInitialGameState(gameConfig.currentPlayer);
-            updateScoreDisplay();
-            applyPlayingFieldTheme(gameConfig);
-            applyGameHeader(gameConfig);
-            gameState.cards = createShuffledDeck(gameConfig.selectedTheme);
-            gameState.status = "playing";
-            renderPlayingFieldCards(gameConfig.selectedTheme, gameState.cards);
-            applyBoardSizeClass(gameConfig.cardCount);
-        }
-    });
+    startButton?.addEventListener("click", () => beginGame(settingsPage, playingField));
+}
+
+
+function beginGame(settingsPage: HTMLElement | null, playingField: HTMLElement | null) {
+    if (!settingsPage || !playingField) return;
+    const config = getGameConfig();
+    showPage(settingsPage, playingField);
+    resetGameForStart(config);
+    renderPlayingFieldCards(config.selectedTheme, gameState.cards);
+    applyBoardSizeClass(config.cardCount);
+}
+
+
+function resetGameForStart(config: GameConfig) {
+    cancelCardReset();
+    cancelGameOver();
+    gameState = createInitialGameState(config.currentPlayer);
+    updateScoreDisplay();
+    applyPlayingFieldTheme(config);
+    applyGameHeader(config);
+    gameState.cards = createShuffledDeck(config.selectedTheme);
+    gameState.status = "playing";
 }
 
 
@@ -1406,18 +1390,16 @@ function applyBoardSizeClass(cardCount: number) {
     playingFieldBoard.classList.add(`playing-field__board--size-${cardCount}`);
 }
 
+
 function applyPlayingFieldTheme(gameConfig: GameConfig) {
     const playingField = document.getElementById("playingField");
-    if (!playingField) {
-        return;
-    }
+    if (!playingField) return;
     playingField.classList.remove(
         "playing-field--code-vibes",
         "playing-field--gaming",
         "playing-field--da-projects",
         "playing-field--foods"
     );
-
     playingField.classList.add(gameConfig.gameTheme.playingFieldClass);
 }
 
@@ -1462,9 +1444,19 @@ function openQuitPopup(trigger: HTMLElement) {
     const backButton = document.getElementById("quitPopupBack") as HTMLButtonElement | null;
     if (!popup || !backButton) return;
     quitPopupTrigger = trigger;
+    pauseGameTimers();
+    applyQuitPopupTheme(popup);
+    showQuitPopup(popup, backButton);
+}
+
+
+function pauseGameTimers() {
     pauseTimer(cardResetTimer);
     pauseTimer(gameOverTimer);
-    applyQuitPopupTheme(popup);
+}
+
+
+function showQuitPopup(popup: HTMLElement, backButton: HTMLButtonElement) {
     popup.hidden = false;
     requestAnimationFrame(() => {
         popup.classList.add("quit-popup--is-open");
@@ -1530,9 +1522,7 @@ function applyCurrentPlayer(gameConfig: GameConfig) {
 
 function applyCurrentPlayerImage(gameConfig: GameConfig) {
     const currentPlayer = gameConfig.gameTheme.currentPlayer;
-    if (currentPlayer.type !== "image") {
-        return;
-    }
+    if (currentPlayer.type !== "image") return;
     const currentPlayerIcon = document.getElementById("gameHeaderCurrentPlayerIcon") as HTMLImageElement;
     currentPlayerIcon.src =
         gameState.currentPlayer === "orange"
@@ -1544,9 +1534,7 @@ function applyCurrentPlayerImage(gameConfig: GameConfig) {
 
 function applyCurrentPlayerBadge(gameConfig: GameConfig) {
     const currentPlayer = gameConfig.gameTheme.currentPlayer;
-    if (currentPlayer.type !== "badge") {
-        return;
-    }
+    if (currentPlayer.type !== "badge") return;
     const currentPlayerBadge = document.getElementById("gameHeaderCurrentPlayerBadge");
     const currentPlayerIcon = document.getElementById("gameHeaderCurrentPlayerIcon") as HTMLImageElement;
     currentPlayerIcon.src = currentPlayer.iconImage;
