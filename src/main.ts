@@ -1425,31 +1425,51 @@ function applyPlayingFieldTheme(gameConfig: GameConfig) {
 function exitGame() {
     const exitButton = document.getElementById("exitGameBtn");
     exitButton?.addEventListener("click", () => {
-        openQuitPopup();
+        openQuitPopup(exitButton);
     });
 }
 
 
 function setupQuitPopup() {
     const popup = document.getElementById("quitPopup");
+    const panel = popup?.querySelector<HTMLElement>(".quit-popup__panel");
     const backButton = document.getElementById("quitPopupBack");
     const exitButton = document.getElementById("quitPopupExit");
-    if (!popup || !backButton || !exitButton) return;
+    if (!popup || !panel || !backButton || !exitButton) return;
     backButton.addEventListener("click", resumeGame);
     popup.querySelector("[data-quit-popup-close]")?.addEventListener("click", resumeGame);
     exitButton.addEventListener("click", exitCurrentGame);
+    popup.addEventListener("keydown", event => handleQuitPopupKeydown(event, panel));
+}
+
+function handleQuitPopupKeydown(event: KeyboardEvent, panel: HTMLElement) {
+    if (event.key === "Escape") return event.preventDefault(), resumeGame();
+    if (event.key !== "Tab") return;
+    const items = panel.querySelectorAll<HTMLElement>("button:not([disabled]), [href], [tabindex]:not([tabindex='-1'])");
+    const first = items[0], last = items[items.length - 1];
+    if (!first || !last) return;
+    if (event.shiftKey && document.activeElement === first) event.preventDefault(), last.focus();
+    if (!event.shiftKey && document.activeElement === last) event.preventDefault(), first.focus();
 }
 
 
-function openQuitPopup() {
+let quitPopupTrigger: HTMLElement | null = null;
+
+
+function openQuitPopup(trigger: HTMLElement) {
     if (gameState.status !== "playing") return;
     const popup = document.getElementById("quitPopup");
-    if (!popup) return;
+    const backButton = document.getElementById("quitPopupBack") as HTMLButtonElement | null;
+    if (!popup || !backButton) return;
+    quitPopupTrigger = trigger;
     pauseTimer(cardResetTimer);
     pauseTimer(gameOverTimer);
     applyQuitPopupTheme(popup);
     popup.hidden = false;
-    requestAnimationFrame(() => popup.classList.add("quit-popup--is-open"));
+    requestAnimationFrame(() => {
+        popup.classList.add("quit-popup--is-open");
+        backButton.focus();
+    });
 }
 
 
@@ -1468,7 +1488,11 @@ function closeQuitPopup() {
     const popup = document.getElementById("quitPopup");
     if (!popup) return;
     popup.classList.remove("quit-popup--is-open");
-    window.setTimeout(() => { popup.hidden = true; }, 300);
+    window.setTimeout(() => {
+        popup.hidden = true;
+        quitPopupTrigger?.focus();
+        quitPopupTrigger = null;
+    }, 300);
 }
 
 
