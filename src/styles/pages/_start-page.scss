@@ -1,0 +1,103 @@
+.start-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgb(47, 49, 49);
+
+    &__title {
+        color: white;
+    }
+
+    &__intro {
+        font-family: "Almarai", sans-serif;
+        font-weight: 400;
+        font-size: 48px;
+        margin: 0;
+    }
+
+    &__heading {
+        font-family: "Red Rose", sans-serif;
+        font-weight: 700;
+        font-size: 140px;
+        margin: 0;
+    }
+
+    &__logo {
+        position: absolute;
+        left: 0;
+        bottom: 8px;
+    }
+
+}
+
+.start-button {
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: space-between;
+    background-color: #F0EA6E;
+    width: 250px;
+    height: 98px;
+    padding: 24px;
+    margin-top: 60px;
+    position: relative;
+    transition: transform 225ms ease-in-out, background-color 225ms ease-in-out;
+
+    &__control-icon {
+        width: 44px;
+        height: 32px;
+        object-fit: cover;
+        transition: transform 225ms ease-in-out;
+    }
+
+    &__text {
+        font-family: "Red Rose", sans-serif;
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 100%;
+        margin: 0;
+        color: rgb(48, 49, 49);
+    }
+
+    &__arrow {
+        position: relative;
+        width: 36px;
+        height: 24px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__arrow-image {
+        width: 33px;
+        opacity: 1;
+        position: absolute;
+        object-fit: cover;
+        transition: opacity 225ms ease-in-out;
+
+        &--hover {
+            width: 36px;
+            opacity: 0;
+        }
+    }
+
+    &:hover {
+        transform: scale(1.08);
+
+        .start-button__control-icon {
+            transform: rotate(26deg);
+        }
+
+        .start-button__arrow-image:not(.start-button__arrow-image--hover) {
+            opacity: 0;
+        }
+
+        .start-button__arrow-image--hover {
+            opacity: 1;
+        }
+    }
+}
