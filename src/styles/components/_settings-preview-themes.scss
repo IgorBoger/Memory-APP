@@ -1,0 +1,238 @@
+.settings-page__preview-content--gaming,
+.settings-page__preview-content--da-projects,
+.settings-page__preview-content--foods {
+    .settings-page {
+        &__score-name {
+            display: none;
+        }
+
+        &__score--orange {
+            order: 1;
+        }
+
+        &__score--blue {
+            order: 2;
+        }
+
+        &__current-player-icon {
+            width: 16px;
+            height: 16px;
+        }
+    }
+}
+
+.settings-page__preview-content--da-projects,
+.settings-page__preview-content--foods {
+    .settings-page {
+        &__preview-header {
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+            box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        &__score-list {
+            background-color: transparent;
+            gap: 16px;
+        }
+
+        &__score-icon {
+            width: 8px;
+            height: 10px;
+        }
+
+        &__score-value {
+            font-family: "Figtree", sans-serif;
+            font-size: 12px;
+        }
+
+        &__preview-card--primary .settings-page__preview-card-image {
+            width: 73px;
+            height: 60px;
+            object-fit: cover;
+        }
+
+        &__preview-card--secondary .settings-page__preview-card-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+        }
+    }
+}
+
+.settings-page__preview-content--code-vibes {
+    background: linear-gradient(225deg, rgb(48, 49, 49), rgb(109, 109, 109));
+}
+
+.settings-page__preview-content--gaming {
+    background: linear-gradient(225deg, rgb(41, 79, 96), rgb(32, 134, 180));
+
+    .settings-page {
+        &__preview-header {
+            background-color: rgb(83, 94, 118);
+            border-radius: 10px;
+            box-shadow: 3px 2px 10.1px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        &__score-list {
+            background-color: rgb(255, 255, 255);
+            border-radius: 4px;
+            gap: 16px;
+        }
+
+        &__score-icon {
+            width: 10px;
+            height: 12px;
+        }
+
+        &__score-value {
+            font-family: "Orbitron", sans-serif;
+            font-size: 10px;
+        }
+
+        &__current-player-label {
+            font-family: "Orbitron", sans-serif;
+            font-size: 8px;
+            letter-spacing: 0.7px;
+        }
+
+        &__exit-button {
+            border-radius: 7px;
+            background-color: transparent;
+            border: 1px solid rgb(231, 28, 79);
+            gap: 10px;
+        }
+
+        &__card-preview {
+            width: 360px;
+            height: 270px;
+        }
+
+        &__preview-card--primary,
+        &__preview-card--secondary {
+            border-radius: 19px;
+            width: 170px;
+            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+        }
+
+        &__preview-card--primary {
+            background-color: rgb(246, 241, 243);
+            height: 200px;
+            left: 168px;
+            top: 50px;
+            z-index: 0;
+            transform: rotate(7.25deg);
+        }
+
+        &__preview-card--primary .settings-page__preview-card-image {
+            width: 70%;
+            height: 65%;
+            object-fit: cover;
+            transform: rotate(-7.25deg);
+        }
+
+        &__preview-card--secondary {
+            background: linear-gradient(225deg, rgb(237, 27, 118), rgb(10, 40, 53));
+            height: 220px;
+            left: 20px;
+            top: 10px;
+            z-index: 1;
+            transform: rotate(-5.42deg);
+        }
+    }
+}
+
+.settings-page__preview-content--da-projects {
+    background-color: rgb(191, 229, 242);
+
+    .settings-page {
+        &__current-player-label {
+            color: rgb(30, 117, 148);
+            font-family: "Figtree", sans-serif;
+            font-size: 8px;
+        }
+
+        &__exit-button {
+            border-radius: 5px;
+            background-color: rgb(191, 229, 242);
+            color: rgb(30, 117, 148);
+            border: none;
+            font-family: "Figtree", sans-serif;
+            font-size: 10px;
+            gap: 10px;
+        }
+
+        &__preview-card--primary,
+        &__preview-card--secondary {
+            border-radius: 13px;
+            width: 180px;
+            height: 150px;
+            transform: rotate(0deg);
+            box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.25);
+        }
+
+        &__preview-card--primary {
+            background-color: rgb(30, 117, 148);
+            left: 10px;
+            top: 16px;
+        }
+
+        &__preview-card--secondary {
+            background-color: rgb(240, 244, 245);
+            left: 170px;
+            top: 80px;
+        }
+    }
+}
+
+.settings-page__preview-content--foods {
+    background-color: rgb(232, 226, 220);
+
+    .settings-page {
+        &__current-player-label {
+            color: rgb(30, 117, 148);
+            font-family: "Hannotate SC", "Figtree", sans-serif;
+            font-weight: 400;
+            font-size: 10px;
+            line-height: 100%;
+            letter-spacing: 0;
+        }
+
+        &__exit-button {
+            width: 77px;
+            height: 22px;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+        }
+
+        &__exit-icon {
+            width: 77px;
+            height: 22px;
+            object-fit: contain;
+        }
+
+        &__exit-label {
+            display: none;
+        }
+
+        &__preview-card--primary,
+        &__preview-card--secondary {
+            width: 180px;
+            height: 150px;
+            transform: rotate(0deg);
+            box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.25);
+        }
+
+        &__preview-card--primary {
+            background-color: rgb(243, 131, 45);
+            left: 24px;
+            top: 12px;
+        }
+
+        &__preview-card--secondary {
+            background-color: rgb(247, 230, 213);
+            left: 160px;
+            top: 90px;
+        }
+    }
+}
