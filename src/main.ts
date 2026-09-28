@@ -7,6 +7,7 @@ import type {
 
 
 import { cardMotifsByTheme } from "./card-data";
+import { setupSettingsGroups, updateSettingsGroupLabels } from "./settings-groups";
 
 import {
     gameThemeData, quitPopupThemeData,
@@ -133,6 +134,7 @@ init();
 
 function init() {
     startSettingsPage();
+    setupSettingsGroups();
     setupThemePreview();
     updateSettingsSummary();
     setupSettingsSelection();
@@ -574,6 +576,7 @@ function showSecondaryPreview(card: HTMLImageElement, src: string, alt: string) 
 
 
 function updateSettingsSummary() {
+    updateSettingsGroupLabels();
     const { selectedTheme, selectedPlayer, selectedBoardSize } = getInputData();
     const { summaryTheme, summaryPlayer, summaryBoardSize, startButton } = getSummaryElements();
     setSummaryText(summaryTheme, getThemeSummaryText(selectedTheme));

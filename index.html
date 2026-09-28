@@ -28,13 +28,14 @@
 
             <span class="start-button__arrow">
                 <img class="start-button__arrow-image" src="/img/legacy-start-page/start-arrow.png" alt="">
-                <img class="start-button__arrow-image start-button__arrow-image--hover" src="/img/legacy-start-page/start-arrow-hover.png"
-                    alt="">
+                <img class="start-button__arrow-image start-button__arrow-image--hover"
+                    src="/img/legacy-start-page/start-arrow-hover.png" alt="">
             </span>
         </button>
 
         <div class="start-page__logo">
-            <img class="start-page__logo-image" src="/img/legacy-start-page/overlay-controller.png" alt="Memory-APP Logo">
+            <img class="start-page__logo-image" src="/img/legacy-start-page/overlay-controller.png"
+                alt="Memory-APP Logo">
         </div>
 
     </main>
@@ -51,13 +52,24 @@
             <div class="settings-page__options">
                 <fieldset class="settings-page__option-group">
                     <legend class="settings-page__option-title">
-                        <img class="settings-page__option-title-icon" src="/img/settings-page/game-themes.png" alt="">
-                        Game themes
+                        <button class="settings-page__group-toggle" type="button" aria-expanded="true"
+                            aria-controls="gameThemesOptions" disabled>
+                            <span class="settings-page__option-title-icon-wrapper">
+                                <img class="settings-page__option-title-icon" src="/img/settings-page/game-themes.png"
+                                    alt="">
+                                <span class="settings-page__group-arrow" aria-hidden="true"></span>
+                            </span>
+                            <span>
+                                <span class="settings-page__option-title-text">Game themes</span>
+                                <span class="settings-page__group-value" id="settingsGameThemesValue"></span>
+                            </span>
+                        </button>
                     </legend>
 
-                    <div class="settings-page__option-list settings-page__theme-list">
+                    <div class="settings-page__option-list settings-page__theme-list" id="gameThemesOptions">
                         <label class="settings-page__option">
-                            <input class="settings-page__option-input" type="radio" name="game-theme" value="code-vibes" checked>
+                            <input class="settings-page__option-input" type="radio" name="game-theme" value="code-vibes"
+                                checked>
                             <span class="settings-page__option-label">Code vibes theme</span>
                             <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
                                 alt="">
@@ -71,7 +83,8 @@
                         </label>
 
                         <label class="settings-page__option">
-                            <input class="settings-page__option-input" type="radio" name="game-theme" value="da-projects">
+                            <input class="settings-page__option-input" type="radio" name="game-theme"
+                                value="da-projects">
                             <span class="settings-page__option-label">DA projects theme</span>
                             <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
                                 alt="">
@@ -88,11 +101,22 @@
 
                 <fieldset class="settings-page__option-group">
                     <legend class="settings-page__option-title">
-                        <img class="settings-page__option-title-icon" src="/img/settings-page/choose-player.png" alt="">
-                        Choose player
+                        <button class="settings-page__group-toggle" type="button" aria-expanded="true"
+                            aria-controls="settingsPlayerOptions" disabled>
+                            <span class="settings-page__option-title-icon-wrapper">
+                                <img class="settings-page__option-title-icon" src="/img/settings-page/choose-player.png"
+                                    alt="">
+                                <span class="settings-page__group-arrow" aria-hidden="true"></span>
+                            </span>
+
+                            <span>
+                                <span class="settings-page__option-title-text">Choose player</span>
+                                <span class="settings-page__group-value" id="settingsPlayerValue"></span>
+                            </span>
+                        </button>
                     </legend>
 
-                    <div class="settings-page__option-list">
+                    <div class="settings-page__option-list" id="settingsPlayerOptions">
                         <label class="settings-page__option">
                             <input class="settings-page__option-input" type="radio" name="player" value="blue">
                             <span class="settings-page__option-label">Blue</span>
@@ -111,11 +135,21 @@
 
                 <fieldset class="settings-page__option-group">
                     <legend class="settings-page__option-title">
-                        <img class="settings-page__option-title-icon" src="/img/settings-page/board-size.png" alt="">
-                        Board size
+                        <button class="settings-page__group-toggle" type="button" aria-expanded="true"
+                            aria-controls="settingsBoardOptions" disabled>
+                            <span class="settings-page__option-title-icon-wrapper">
+                                <img class="settings-page__option-title-icon" src="/img/settings-page/board-size.png"
+                                    alt="">
+                                <span class="settings-page__group-arrow" aria-hidden="true"></span>
+                            </span>
+                            <span>
+                                <span class="settings-page__option-title-text">Board size</span>
+                                <span class="settings-page__group-value" id="settingsBoardValue"></span>
+                            </span>
+                        </button>
                     </legend>
 
-                    <div class="settings-page__option-list">
+                    <div class="settings-page__option-list" id="settingsBoardOptions">
                         <label class="settings-page__option">
                             <input class="settings-page__option-input" type="radio" name="board-size" value="16">
                             <span class="settings-page__option-label">16 cards</span>
@@ -267,8 +301,10 @@
         <div class="quit-popup__panel" role="dialog" aria-modal="true" aria-labelledby="quitPopupTitle">
             <h2 class="quit-popup__title" id="quitPopupTitle">Are you sure you want to quit the game?</h2>
             <div class="quit-popup__actions">
-                <button class="quit-popup__button quit-popup__button--back" id="quitPopupBack" type="button">Back to game</button>
-                <button class="quit-popup__button quit-popup__button--exit" id="quitPopupExit" type="button">Exit game</button>
+                <button class="quit-popup__button quit-popup__button--back" id="quitPopupBack" type="button">Back to
+                    game</button>
+                <button class="quit-popup__button quit-popup__button--exit" id="quitPopupExit" type="button">Exit
+                    game</button>
             </div>
         </div>
     </div>
@@ -321,7 +357,8 @@
                 </h1>
             </div>
             <div class="draw__image-box">
-                <img class="draw__scales" src="/img/game-field/code-vibes/draw-scales.png" alt="" width="353" height="283">
+                <img class="draw__scales" src="/img/game-field/code-vibes/draw-scales.png" alt="" width="353"
+                    height="283">
             </div>
             <button class="draw__button" id="drawBackToStart" type="button">Back to start</button>
         </div>

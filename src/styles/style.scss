@@ -4,6 +4,7 @@
 @use "pages/settings-page";
 @use "components/settings-preview";
 @use "components/settings-preview-themes";
+@use "pages/settings-page-responsive";
 
 body {
     margin: 0;
@@ -1936,5 +1937,3 @@ body {
         }
     }
 }
-
-
