@@ -1,0 +1,176 @@
+.playing-field {
+    &--da-projects {
+        .playing-field {
+            &__content {
+                background-color: rgb(255, 255, 255);
+            }
+        }
+
+        .game-header {
+            background-color: rgba(240, 243, 244, 1);
+            border-radius: 10px;
+            box-shadow: none;
+            padding: 24px;
+
+            &__scoreboard {
+                background-color: rgb(255, 255, 255);
+                border-radius: 10px;
+                gap: 40px;
+                padding: 9px 16px;
+            }
+
+            &__score {
+                gap: 4px;
+
+                > img {
+                    width: 20px;
+                    height: 25px;
+                }
+
+                > p:first-of-type {
+                    display: none;
+                }
+
+                > p:last-of-type {
+                    font-family: "Figtree", sans-serif;
+                    font-size: 30px;
+                }
+
+                &--blue {
+                    color: rgba(9, 127, 197, 1);
+                    order: 2;
+                }
+
+                &--orange {
+                    color: rgba(234, 105, 0, 1);
+                    order: 1;
+                }
+            }
+
+            &__current-player {
+                gap: 18px;
+                padding: 0;
+
+                > p {
+                    font-family: "Figtree", sans-serif;
+                    font-weight: 700;
+                    font-size: 32px;
+                    color: rgba(30, 117, 148, 1);
+                }
+
+                > img {
+                    width: 25px;
+                    height: 32px;
+                }
+            }
+
+            &__current-player-icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                border-radius: 8px;
+                padding: 4px 8px;
+
+                &--blue {
+                    background-color: rgb(31, 170, 252);
+                }
+
+                &--orange {
+                    background-color: rgb(243, 131, 45);
+                }
+            }
+
+            &__exit-button {
+                border-radius: 10px;
+                background-color: rgba(191, 229, 242, 1);
+                border: none;
+                padding: 12px 20px;
+                gap: 10px;
+                transition: background-color 225ms ease-in-out, box-shadow 225ms ease-in-out;
+
+                &:hover {
+                    background-color: rgba(30, 117, 148, 1);
+                    box-shadow: 3px 3px 5px rgba(47, 46, 46, 0.2);
+
+                    .game-header__exit-icon-image--default {
+                        opacity: 0;
+                    }
+
+                    .game-header__exit-icon-image--hover {
+                        opacity: 1;
+                        filter: drop-shadow(3px 3px 4.5px rgba(0, 0, 0, 0.35));
+                    }
+
+                    > .game-header__exit-label {
+                        color: rgba(255, 255, 255, 1);
+                    }
+                }
+
+                > .game-header__exit-label {
+                    font-family: "Figtree", sans-serif;
+                    font-size: 20px;
+                    color: rgba(30, 117, 148, 1);
+                    transition: color 225ms ease-in-out;
+                }
+            }
+        }
+
+        .playing-field {
+            &__board {
+                grid-auto-rows: 100px;
+
+                &--size-16 {
+                    grid-template-columns: repeat(4, 120px);
+                    gap: 12px;
+                }
+
+                &--size-24,
+                &--size-36 {
+                    grid-template-columns: repeat(6, 120px);
+                }
+            }
+        }
+
+        .memory-card {
+            width: 100%;
+            height: 100%;
+            border-radius: 13px;
+
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                box-sizing: border-box;
+                border: 2px solid rgba(30, 117, 148, 1);
+                border-radius: 13px;
+                pointer-events: none;
+                z-index: 1;
+                opacity: 0;
+                transition: opacity 500ms ease-in-out 500ms;
+            }
+
+            &.is-matched::after {
+                opacity: 1;
+            }
+
+            &__face {
+                border-radius: 13px;
+
+                &--front {
+                    background-color: rgba(30, 117, 148, 1);
+                }
+
+                &--back {
+                    background: rgba(234, 242, 244, 1);
+
+                    > img {
+                        width: 70px;
+                        height: 70px;
+                    }
+                }
+            }
+        }
+    }
+}
