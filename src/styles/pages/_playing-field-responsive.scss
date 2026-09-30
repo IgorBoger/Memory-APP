@@ -1,0 +1,249 @@
+.playing-field {
+    overflow-y: auto;
+
+    &__stage {
+        min-height: 100%;
+    }
+
+    & &__content {
+        min-height: 100vh;
+        min-height: 100dvh;
+        height: auto;
+    }
+
+    .game-header--playing-field {
+        box-sizing: border-box;
+        flex-shrink: 0;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    & &__board {
+        --card-width: 120px;
+        --card-ratio: 1;
+        --columns: 6;
+        grid-template-columns: repeat(var(--columns), minmax(0, var(--card-width)));
+        grid-auto-rows: auto;
+        height: auto;
+
+        &--size-16 {
+            --columns: 4;
+        }
+    }
+
+    &--gaming &__board {
+        --card-width: 105px;
+        --card-ratio: 105 / 120;
+    }
+
+    &--da-projects &__board {
+        --card-ratio: 120 / 100;
+    }
+
+    &--foods &__board {
+        --card-width: 122px;
+    }
+
+    .memory-card {
+        width: 100%;
+        height: auto;
+        min-width: 0;
+        aspect-ratio: var(--card-ratio);
+
+        &__face>img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+    }
+}
+
+@media (max-width: 1100px) {
+    .playing-field {
+        & &__content {
+            padding: 24px;
+            gap: 24px;
+        }
+
+        .game-header--playing-field {
+            padding: 12px;
+            gap: 12px;
+
+            .game-header {
+                &__scoreboard {
+                    padding: 8px 12px;
+                    gap: 12px;
+                }
+
+                &__current-player {
+                    gap: 8px;
+
+                    >p {
+                        font-size: 22px;
+                    }
+                }
+
+                &__exit-button {
+                    min-height: 44px;
+                    padding: 10px 12px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 800px) {
+
+    .playing-field .game-header--playing-field {
+        padding: 12px 6px;
+        gap: 8px;
+
+        .game-header {
+
+            &__scoreboard {
+                padding: 8px 12px;
+                gap: 6px;
+            }
+
+            &__score {
+                gap: 2px;
+            }
+
+            &__exit-icon-image,
+            &__current-player-icon>img,
+            &__score>img {
+                width: 20px;
+                height: 20px;
+                object-fit: contain;
+            }
+
+            &__blue-score-label,
+            &__orange-score-label {
+                display: none;
+            }
+
+            &__exit-button,
+            &__current-player>p,
+            &__score>p {
+                font-size: 20px;
+            }
+
+            &__current-player,
+            &__exit-button {
+                gap: 6px;
+            }
+
+            &__exit-icon {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .playing-field {
+        & &__content {
+            padding: 16px;
+            gap: 16px;
+        }
+
+        & &__board {
+            gap: 6px;
+        }
+
+        .game-header--playing-field {
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr) auto;
+            gap: 4px;
+            padding: 6px;
+            align-items: stretch;
+
+            .game-header {
+                &__scoreboard {
+                    box-sizing: border-box;
+                    min-height: 40px;
+                    padding: 6px;
+                    gap: 6px;
+                    align-items: center;
+                }
+
+                &__score {
+                    gap: 3px;
+
+                    >img {
+                        width: 16px;
+                        height: 16px;
+                        object-fit: contain;
+                    }
+
+                    >p:last-child {
+                        font-size: 16px;
+                        text-align: center;
+                    }
+                }
+
+                &__current-player {
+                    min-width: 0;
+                    flex-direction: column;
+                    justify-content: center;
+                    gap: 4px;
+                    padding: 0;
+
+                    >p {
+                        font-size: 12px;
+                        line-height: 1.2;
+                        letter-spacing: 0;
+                        white-space: normal;
+                        text-align: center;
+                    }
+                }
+
+                &__current-player-icon {
+                    width: 16px;
+                    height: 16px;
+
+                    >img {
+                        max-width: 100%;
+                        max-height: 100%;
+                        object-fit: contain;
+                    }
+                }
+
+                &__exit-button {
+                    justify-content: center;
+                    gap: 4px;
+                    padding: 8px 6px;
+                    font-size: 12px;
+                    min-height: 40px;
+                }
+
+                &__exit-icon {
+                    width: 16px;
+                    height: 16px;
+                }
+
+                &__exit-icon-image {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                &__exit-label {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 360px) {
+    .playing-field {
+        & &__content {
+            padding: 12px;
+        }
+
+        & &__board {
+            gap: 4px;
+        }
+    }
+}
