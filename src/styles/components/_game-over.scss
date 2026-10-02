@@ -1,0 +1,287 @@
+.game-over {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    &__result {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 124px;
+    }
+
+    &__title {
+        margin: 0;
+        line-height: 0;
+    }
+
+    &__title-image {
+        display: block;
+        width: min(80vw, 997px);
+        height: auto;
+    }
+
+    &__title-text {
+        display: none;
+    }
+
+    &__subtitle {
+        margin: 0;
+        font-weight: 400;
+        font-size: 26px;
+        line-height: 100%;
+    }
+
+    &__scoreboard {
+        display: flex;
+        gap: 32px;
+        padding: 16px 20px;
+    }
+
+    &__score {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 100%;
+    }
+
+    &__score-icon {
+        width: 24px;
+        height: 20px;
+        object-fit: cover;
+    }
+
+    &__score-value {
+        font-weight: 700;
+    }
+
+    &--code-vibes {
+        background-color: rgb(48, 49, 49);
+        color: rgb(255, 255, 255);
+        font-family: "Red Rose", sans-serif;
+
+        .game-over {
+            &__scoreboard {
+                background-color: rgba(77, 213, 188, 0.2);
+            }
+
+            &__score {
+                &--blue {
+                    color: rgb(43, 177, 255);
+                }
+
+                &--orange {
+                    color: rgb(245, 142, 57);
+                }
+            }
+        }
+    }
+
+    &--gaming {
+        background-color: rgb(41, 79, 96);
+        color: white;
+        font-family: "Orbitron", sans-serif;
+
+        .game-over {
+            &__title-image {
+                display: none;
+            }
+
+            &__title-text {
+                display: block;
+                color: rgba(237, 27, 118, 1);
+                font-size: 124px;
+                font-weight: 900;
+                line-height: 100%;
+                letter-spacing: 0.07em;
+            }
+
+            &__content {
+                gap: 104px;
+            }
+
+            &__subtitle {
+                font-size: 28px;
+                font-weight: 700;
+                line-height: 100%;
+                letter-spacing: 0.07em;
+            }
+
+            &__scoreboard {
+                gap: 40px;
+                padding: 8px 16px;
+                background-color: rgb(255, 255, 255);
+                border-radius: 8px;
+            }
+
+            &__score {
+                gap: 8px;
+                font-size: 40px;
+                font-weight: 700;
+                line-height: 100%;
+
+                &--blue {
+                    color: rgb(9, 127, 197);
+                }
+
+                &--orange {
+                    color: rgb(234, 105, 0);
+                }
+            }
+
+            &__score-label {
+                display: none;
+            }
+
+            &__score-icon {
+                width: 22px;
+                height: 28px;
+            }
+        }
+    }
+
+    &--da-projects {
+        background-color: rgb(30, 117, 148);
+        color: white;
+        font-family: "Figtree", sans-serif;
+
+        .game-over {
+            &__title-image {
+                display: none;
+            }
+
+            &__title-text {
+                display: block;
+                color: rgba(253, 91, 79, 1);
+                text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+                font-size: 130px;
+                font-weight: 800;
+                line-height: 100%;
+                letter-spacing: 0;
+            }
+
+            &__content {
+                gap: 104px;
+            }
+
+            &__subtitle {
+                font-size: 40px;
+                font-weight: 500;
+                line-height: 100%;
+                letter-spacing: 0;
+                color: rgba(255, 255, 255, 1);
+            }
+
+            &__scoreboard {
+                gap: 40px;
+                padding: 16px;
+                background-color: rgb(255, 255, 255);
+                border-radius: 10px;
+            }
+
+            &__score {
+                gap: 8px;
+                font-size: 40px;
+                font-weight: 700;
+                line-height: 100%;
+
+                &--blue {
+                    color: rgb(9, 127, 197);
+                }
+
+                &--orange {
+                    color: rgb(234, 105, 0);
+                }
+            }
+
+            &__score-label {
+                display: none;
+            }
+
+            &__score-icon {
+                width: 22px;
+                height: 28px;
+            }
+        }
+    }
+
+    &--foods {
+        background-color: rgba(243, 131, 45, 1);
+        color: white;
+        font-family: "Klee One", sans-serif;
+
+        .game-over {
+            &__title-image {
+                display: none;
+            }
+
+            &__title-text {
+                display: block;
+                font-size: 130px;
+                font-weight: 600;
+                line-height: 100%;
+                letter-spacing: 0;
+                color: white;
+                text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+            }
+
+            &__content {
+                gap: 104px;
+            }
+
+            &__subtitle {
+                font-size: 42px;
+                font-weight: 600;
+                line-height: 100%;
+                letter-spacing: 0;
+                text-shadow: none;
+            }
+
+            &__scoreboard {
+                background-color: white;
+                padding: 16px;
+                gap: 40px;
+                border-radius: 0;
+            }
+
+            &__score {
+                font-family: "Red Rose", sans-serif;
+                font-size: 40px;
+                font-weight: 700;
+                line-height: 100%;
+                gap: 8px;
+
+                &--orange {
+                    color: rgb(234, 105, 0);
+                    order: 1;
+                }
+
+                &--blue {
+                    color: rgb(9, 127, 197);
+                    order: 2;
+                }
+            }
+
+            &__score-label {
+                display: none;
+            }
+
+            &__score-icon {
+                width: 22px;
+                height: 28px;
+                object-fit: contain;
+            }
+        }
+    }
+}
