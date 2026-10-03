@@ -4,7 +4,7 @@ const groups = [
     { name: "board-size", target: "settingsBoardValue" }
 ];
 
-const mobileLayout = window.matchMedia("(max-width: 600px)");
+const mobileLayout = window.matchMedia("(max-width: 800px)");
 let buttons: HTMLButtonElement[] = [];
 let activeButton: HTMLButtonElement | null = null;
 
