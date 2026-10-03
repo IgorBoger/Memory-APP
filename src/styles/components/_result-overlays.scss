@@ -1,0 +1,382 @@
+.winner,
+.draw {
+    height: 100dvh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    text-align: center;
+    color: white;
+
+    &__content,
+    &__heading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__heading {
+        gap: 10px;
+    }
+
+    &__content {
+        margin: auto;
+        gap: 64px;
+    }
+
+    &__subtitle {
+        margin: 0;
+        font-weight: 400;
+        font-size: 40px;
+        line-height: 100%;
+        letter-spacing: 0;
+    }
+}
+
+.winner {
+    display: flex;
+    flex-direction: column;
+    padding: 48px 24px;
+
+    &__confetti {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(88%, 1480px);
+        height: auto;
+        pointer-events: none;
+    }
+
+    &__content,
+    &__heading {
+        position: relative;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    &__player {
+        margin: 0;
+        font-size: 80px;
+        font-weight: 700;
+        line-height: 100%;
+        letter-spacing: 0;
+        overflow-wrap: anywhere;
+    }
+
+    &__pawn {
+        display: block;
+        width: auto;
+        height: 250px;
+        max-width: 100%;
+        object-fit: contain;
+        flex-shrink: 0;
+    }
+}
+
+.draw {
+    display: flex;
+    padding: 48px 24px;
+
+    &__title {
+        margin: 0;
+        line-height: 0;
+    }
+
+    &__title-text {
+        display: none;
+    }
+
+    &__title-image {
+        display: block;
+        width: min(430px, 80vw);
+        height: auto;
+    }
+
+    &__scales {
+        display: block;
+        width: 353px;
+        height: auto;
+    }
+}
+
+.winner,
+.draw {
+    &__button {
+        padding: 16px 24px;
+        font-family: inherit;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 100%;
+        cursor: pointer;
+        color: white;
+
+        &:focus-visible {
+            outline: 2px solid white;
+            outline-offset: 4px;
+        }
+    }
+
+    &__image-box {
+        display: contents;
+    }
+
+    &--code-vibes {
+        background-color: rgb(48, 49, 49);
+        font-family: "Red Rose", sans-serif;
+
+        .winner {
+            &__content {
+                margin-top: 300px;
+            }
+
+            &__player {
+                font-size: 60px;
+            }
+        }
+
+        .winner,
+        .draw {
+            &__button {
+                background-color: rgba(134, 233, 214, 0.2);
+                border: 1px solid rgba(77, 213, 188, 1);
+
+                &:hover {
+                    background-color: rgba(134, 233, 214, 0.3);
+                }
+            }
+        }
+
+        &[data-player="orange"] {
+            .winner {
+                &__player {
+                    color: rgb(245, 142, 57);
+                }
+            }
+        }
+
+        &[data-player="blue"] {
+            .winner {
+                &__player {
+                    color: rgb(43, 177, 255);
+                }
+            }
+        }
+    }
+
+    &--gaming,
+    &--da-projects,
+    &--foods {
+        .winner {
+            &__confetti {
+                display: none;
+            }
+        }
+
+        .draw {
+            &__title-image {
+                display: none;
+            }
+
+            &__title-text {
+                display: block;
+                line-height: 100%;
+            }
+        }
+
+        .winner,
+        .draw {
+            &__button {
+                padding: 12px 20px;
+                border-radius: 10px;
+            }
+        }
+    }
+
+    &--gaming {
+        background-color: rgb(41, 79, 96);
+        font-family: "Orbitron", sans-serif;
+
+        .winner,
+        .draw {
+            &__subtitle {
+                font-weight: 700;
+                font-size: 28px;
+                letter-spacing: 0.07em;
+            }
+
+            &__button {
+                font-size: 20px;
+                letter-spacing: 0.04em;
+                border: 2px solid rgba(231, 28, 79, 1);
+                background-color: rgba(237, 27, 118, 0.08);
+
+                &:hover {
+                    background-color: rgb(68, 72, 99);
+                }
+            }
+        }
+
+        .winner {
+            &__player {
+                font-size: 64px;
+                letter-spacing: 0.07em;
+                text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+            }
+
+            &__pawn {
+                height: 344px;
+                filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
+            }
+        }
+
+        .draw {
+            &__title-text {
+                color: rgba(237, 27, 118, 1);
+                font-weight: 700;
+                font-size: 128px;
+                letter-spacing: 0.07em;
+                text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+            }
+
+            &__scales {
+                filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
+            }
+        }
+
+        &[data-player="blue"] {
+            .winner {
+                &__player {
+                    color: rgb(9, 127, 197);
+                }
+            }
+        }
+
+        &[data-player="orange"] {
+            .winner {
+                &__player {
+                    color: rgb(234, 105, 0);
+                }
+            }
+        }
+    }
+
+    &--da-projects {
+        background-color: rgb(30, 117, 148);
+        font-family: "Figtree", sans-serif;
+
+        .winner,
+        .draw {
+            &__button {
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                border: none;
+                background-color: rgb(191, 229, 242);
+                color: rgb(30, 117, 148);
+                font-size: 20px;
+                letter-spacing: 0;
+                text-decoration: none;
+                box-shadow: none;
+            }
+        }
+
+        .winner {
+            &__player {
+                text-shadow: none;
+            }
+
+            &__pawn {
+                filter: none;
+                box-shadow: none;
+            }
+        }
+
+        .draw {
+            &__title-text {
+                font-size: 128px;
+                font-weight: 800;
+                letter-spacing: 0;
+                color: rgba(253, 91, 79, 1);
+                text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+            }
+
+            &__scales {
+                filter: none;
+                box-shadow: none;
+            }
+        }
+    }
+
+    &--foods {
+        background-color: rgb(246, 246, 246);
+        font-family: "Klee One", sans-serif;
+        color: rgba(164, 82, 18, 1);
+
+        .winner,
+        .draw {
+            &__subtitle {
+                font-weight: 600;
+                text-shadow: none;
+            }
+
+            &__image-box {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-shrink: 0;
+                width: 353px;
+                height: auto;
+                aspect-ratio: 312 / 283;
+                background-color: rgba(247, 230, 213, 1);
+                box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
+            }
+
+            &__button {
+                border: none;
+                font-family: "Delius Unicase", sans-serif;
+                font-size: 16px;
+                letter-spacing: 0;
+                background-color: rgb(243, 131, 45);
+                box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+
+                &:focus-visible {
+                    outline-color: rgb(164, 82, 18);
+                }
+            }
+        }
+
+        .winner {
+            &__player {
+                font-weight: 600;
+                color: rgba(164, 82, 18, 1);
+                text-shadow: none;
+            }
+
+            &__pawn {
+                height: auto;
+                width: 55%;
+                filter: none;
+            }
+        }
+
+        .draw {
+            &__subtitle {
+                color: rgb(243, 131, 45);
+            }
+
+            &__title-text {
+                font-size: 128px;
+                font-weight: 600;
+                letter-spacing: 0;
+                color: rgb(243, 131, 45);
+                text-shadow: none;
+            }
+
+            &__scales {
+                width: 263px;
+                height: auto;
+                object-fit: contain;
+            }
+        }
+    }
+}
