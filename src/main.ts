@@ -487,14 +487,21 @@ function setupThemeInput(input: HTMLInputElement) {
 
 function selectPreviewTheme(theme: string) {
     selectedTheme = theme;
-    if (currentPreviewTheme !== theme && pendingPreviewTheme !== theme) updateSettingsPreview(theme);
+    updateSettingsPreview(theme);
 }
 
 
 function updateSettingsPreview(theme: string) {
     const settingsPreview = document.getElementById("settingsPreview");
     if (!settingsPreview) return;
-    if (currentPreviewTheme === theme || pendingPreviewTheme === theme) return;
+    if (pendingPreviewTheme === theme) return;
+    if (currentPreviewTheme === theme) {
+        window.clearTimeout(previewFadeTimeout);
+        previewFadeTimeout = undefined;
+        pendingPreviewTheme = undefined;
+        settingsPreview.classList.remove("settings-page__preview-content--is-changing");
+        return;
+    }
     preparePreviewTransition(settingsPreview, theme);
     previewFadeTimeout = window.setTimeout(() => finishPreviewTransition(theme, settingsPreview), 120);
 }
@@ -508,6 +515,7 @@ function preparePreviewTransition(preview: HTMLElement, theme: string) {
 
 
 function finishPreviewTransition(theme: string, preview: HTMLElement) {
+    previewFadeTimeout = undefined;
     applySettingsPreview(theme);
     currentPreviewTheme = theme;
     pendingPreviewTheme = undefined;
