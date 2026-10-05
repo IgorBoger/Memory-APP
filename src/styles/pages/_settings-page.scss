@@ -3,7 +3,7 @@
     flex-direction: column;
     height: 100dvh;
     box-sizing: border-box;
-    padding: 80px;
+    padding: clamp(24px, 5.56vw, 80px);
 
     &__title {
         font-family: "Red Rose", sans-serif;
@@ -18,13 +18,17 @@
     &__content {
         display: flex;
         flex-direction: row;
+        align-items: stretch;
+        justify-content: space-between;
     }
 
     &__options {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         gap: 16px;
-        width: 50%;
+        flex: 1;
+        min-width: 0;
     }
 
     &__option-group {
@@ -40,7 +44,7 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        margin: 36px 0 16px;
+        margin: 36px 0 12px;
         font-family: "Almarai", sans-serif;
         font-weight: 700;
         font-size: 24px;
@@ -58,7 +62,7 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        margin-bottom: 8px;
+        margin-top: 12px;
         font-family: "Almarai", sans-serif;
         font-weight: 400;
         font-size: 20px;
@@ -121,8 +125,9 @@
     &__preview {
         display: flex;
         flex-direction: column;
-        gap: 16px;
-        width: 50%;
         justify-content: space-between;
+        align-items: flex-end;
+        gap: 16px;
+        width: 640px;
     }
 }

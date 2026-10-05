@@ -120,3 +120,10 @@
         font-size: 14px;
     }
 }
+
+@media (min-width: 1001px) and (max-width: 1250px) {
+    .settings-page__summary-value,
+    .settings-page__start-button {
+        font-size: 18px;
+    }
+}

@@ -1,3 +1,9 @@
+@media (min-width: 1440px) {
+    .playing-field .playing-field__content {
+        padding-inline: max(80px, calc((100% - 1280px) / 2));
+    }
+}
+
 .playing-field {
     overflow-y: auto;
 

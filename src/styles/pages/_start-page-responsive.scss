@@ -1,3 +1,7 @@
+.start-page__content {
+    display: contents;
+}
+
 @media (max-width: 600px) {
     .start-page {
         min-height: 100dvh;
@@ -24,5 +28,24 @@
 
     .start-button {
         padding-inline: 12px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .start-page {
+        box-sizing: border-box;
+        padding-inline: 80px;
+
+        &__content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 100%;
+            max-width: 1280px;
+            height: 100%;
+            margin-inline: auto;
+        }
     }
 }
