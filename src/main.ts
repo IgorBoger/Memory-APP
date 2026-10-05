@@ -859,7 +859,7 @@ function applyCurrentPlayerImage(gameConfig: GameConfig) {
         gameState.currentPlayer === "orange"
             ? currentPlayer.currentPlayerOrangeImage
             : currentPlayer.currentPlayerBlueImage;
-    currentPlayerIcon.alt = currentPlayer.currentPlayerAlt;
+    currentPlayerIcon.alt = gameState.currentPlayer === "orange" ? "Orange" : "Blue";
 }
 
 
@@ -869,7 +869,7 @@ function applyCurrentPlayerBadge(gameConfig: GameConfig) {
     const currentPlayerBadge = document.getElementById("gameHeaderCurrentPlayerBadge");
     const currentPlayerIcon = document.getElementById("gameHeaderCurrentPlayerIcon") as HTMLImageElement;
     currentPlayerIcon.src = currentPlayer.iconImage;
-    currentPlayerIcon.alt = currentPlayer.alt;
+    currentPlayerIcon.alt = gameState.currentPlayer === "orange" ? "Orange" : "Blue";
     updateCurrentPlayerBadgeColor(currentPlayerBadge, gameState.currentPlayer);
 }
 

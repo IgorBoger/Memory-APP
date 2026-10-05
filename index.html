@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory-APP</title>
-
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="stylesheet" href="src/styles/style.scss">
     <script type="module" src="/src/main.ts"></script>
 </head>
@@ -14,365 +14,367 @@
 
 
 
-    <main class="start-page page page--active" id="startPage">
-        <div class="start-page__content">
+    <main>
+        <section class="start-page page page--active" id="startPage" aria-labelledby="startTitle">
+            <div class="start-page__content">
 
-            <div class="start-page__title">
-                <p class="start-page__intro">It's play time.</p>
-                <h1 class="start-page__heading">Ready to play?</h1>
+                <div class="start-page__title">
+                    <p class="start-page__intro">It's play time.</p>
+                    <h1 class="start-page__heading" id="startTitle">Ready to play?</h1>
+                </div>
+
+
+                <button class="start-button" id="playButton" type="button">
+                    <img class="start-button__control-icon" src="/img/legacy-start-page/btn-controller.png" alt="">
+                    <span class="start-button__text">Play</span>
+
+                    <span class="start-button__arrow">
+                        <img class="start-button__arrow-image" src="/img/legacy-start-page/start-arrow.png" alt="">
+                        <img class="start-button__arrow-image start-button__arrow-image--hover"
+                            src="/img/legacy-start-page/start-arrow-hover.png" alt="">
+                    </span>
+                </button>
+
+                <div class="start-page__logo">
+                    <img class="start-page__logo-image" src="/img/legacy-start-page/overlay-controller.png"
+                        alt="Memory-APP Logo">
+                </div>
+
+            </div>
+        </section>
+
+        <section class="settings-page page" id="settingsPage" hidden>
+
+            <div class="settings-page__header">
+                <h1 class="settings-page__title">Settings</h1>
+                <img class="settings-page__title-underline" src="/img/settings-page/settings-underline.png" alt="">
             </div>
 
+            <div class="settings-page__content">
 
-            <button class="start-button" id="playButton" type="button">
-                <img class="start-button__control-icon" src="/img/legacy-start-page/btn-controller.png" alt="">
-                <span class="start-button__text">Play</span>
+                <div class="settings-page__options">
+                    <fieldset class="settings-page__option-group">
+                        <legend class="settings-page__option-title">
+                            <button class="settings-page__group-toggle" type="button" aria-expanded="true"
+                                aria-controls="gameThemesOptions" disabled>
+                                <span class="settings-page__option-title-icon-wrapper">
+                                    <img class="settings-page__option-title-icon" src="/img/settings-page/game-themes.png"
+                                        alt="">
+                                    <span class="settings-page__group-arrow" aria-hidden="true"></span>
+                                </span>
+                                <span>
+                                    <span class="settings-page__option-title-text">Game themes</span>
+                                    <span class="settings-page__group-value" id="settingsGameThemesValue"></span>
+                                </span>
+                            </button>
+                        </legend>
 
-                <span class="start-button__arrow">
-                    <img class="start-button__arrow-image" src="/img/legacy-start-page/start-arrow.png" alt="">
-                    <img class="start-button__arrow-image start-button__arrow-image--hover"
-                        src="/img/legacy-start-page/start-arrow-hover.png" alt="">
-                </span>
-            </button>
-
-            <div class="start-page__logo">
-                <img class="start-page__logo-image" src="/img/legacy-start-page/overlay-controller.png"
-                    alt="Memory-APP Logo">
-            </div>
-
-        </div>
-    </main>
-
-    <section class="settings-page page" id="settingsPage" hidden>
-
-        <div class="settings-page__header">
-            <h1 class="settings-page__title">Settings</h1>
-            <img class="settings-page__title-underline" src="/img/settings-page/settings-underline.png" alt="">
-        </div>
-
-        <div class="settings-page__content">
-
-            <div class="settings-page__options">
-                <fieldset class="settings-page__option-group">
-                    <legend class="settings-page__option-title">
-                        <button class="settings-page__group-toggle" type="button" aria-expanded="true"
-                            aria-controls="gameThemesOptions" disabled>
-                            <span class="settings-page__option-title-icon-wrapper">
-                                <img class="settings-page__option-title-icon" src="/img/settings-page/game-themes.png"
+                        <div class="settings-page__option-list settings-page__theme-list" id="gameThemesOptions">
+                            <label class="settings-page__option">
+                                <input class="settings-page__option-input" type="radio" name="game-theme" value="code-vibes"
+                                    autocomplete="off" checked>
+                                <span class="settings-page__option-label">Code vibes theme</span>
+                                <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
                                     alt="">
-                                <span class="settings-page__group-arrow" aria-hidden="true"></span>
-                            </span>
-                            <span>
-                                <span class="settings-page__option-title-text">Game themes</span>
-                                <span class="settings-page__group-value" id="settingsGameThemesValue"></span>
-                            </span>
-                        </button>
-                    </legend>
+                            </label>
 
-                    <div class="settings-page__option-list settings-page__theme-list" id="gameThemesOptions">
-                        <label class="settings-page__option">
-                            <input class="settings-page__option-input" type="radio" name="game-theme" value="code-vibes"
-                                autocomplete="off" checked>
-                            <span class="settings-page__option-label">Code vibes theme</span>
-                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
-                                alt="">
-                        </label>
-
-                        <label class="settings-page__option">
-                            <input class="settings-page__option-input" type="radio" name="game-theme" value="gaming"
-                                autocomplete="off">
-                            <span class="settings-page__option-label">Gaming theme</span>
-                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
-                                alt="">
-                        </label>
-
-                        <label class="settings-page__option">
-                            <input class="settings-page__option-input" type="radio" name="game-theme"
-                                value="da-projects" autocomplete="off">
-                            <span class="settings-page__option-label">DA projects theme</span>
-                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
-                                alt="">
-                        </label>
-
-                        <label class="settings-page__option">
-                            <input class="settings-page__option-input" type="radio" name="game-theme" value="foods"
-                                autocomplete="off">
-                            <span class="settings-page__option-label">Foods theme</span>
-                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
-                                alt="">
-                        </label>
-                    </div>
-                </fieldset>
-
-                <fieldset class="settings-page__option-group">
-                    <legend class="settings-page__option-title">
-                        <button class="settings-page__group-toggle" type="button" aria-expanded="true"
-                            aria-controls="settingsPlayerOptions" disabled>
-                            <span class="settings-page__option-title-icon-wrapper">
-                                <img class="settings-page__option-title-icon" src="/img/settings-page/choose-player.png"
+                            <label class="settings-page__option">
+                                <input class="settings-page__option-input" type="radio" name="game-theme" value="gaming"
+                                    autocomplete="off">
+                                <span class="settings-page__option-label">Gaming theme</span>
+                                <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
                                     alt="">
-                                <span class="settings-page__group-arrow" aria-hidden="true"></span>
-                            </span>
+                            </label>
 
-                            <span>
-                                <span class="settings-page__option-title-text">Choose player</span>
-                                <span class="settings-page__group-value" id="settingsPlayerValue"></span>
-                            </span>
-                        </button>
-                    </legend>
-
-                    <div class="settings-page__option-list" id="settingsPlayerOptions">
-                        <label class="settings-page__option">
-                            <input class="settings-page__option-input" type="radio" name="player" value="blue"
-                                autocomplete="off">
-                            <span class="settings-page__option-label">Blue</span>
-                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
-                                alt="">
-                        </label>
-
-                        <label class="settings-page__option">
-                            <input class="settings-page__option-input" type="radio" name="player" value="orange"
-                                autocomplete="off">
-                            <span class="settings-page__option-label">Orange</span>
-                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
-                                alt="">
-                        </label>
-                    </div>
-                </fieldset>
-
-                <fieldset class="settings-page__option-group">
-                    <legend class="settings-page__option-title">
-                        <button class="settings-page__group-toggle" type="button" aria-expanded="true"
-                            aria-controls="settingsBoardOptions" disabled>
-                            <span class="settings-page__option-title-icon-wrapper">
-                                <img class="settings-page__option-title-icon" src="/img/settings-page/board-size.png"
+                            <label class="settings-page__option">
+                                <input class="settings-page__option-input" type="radio" name="game-theme"
+                                    value="da-projects" autocomplete="off">
+                                <span class="settings-page__option-label">DA projects theme</span>
+                                <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
                                     alt="">
-                                <span class="settings-page__group-arrow" aria-hidden="true"></span>
-                            </span>
-                            <span>
-                                <span class="settings-page__option-title-text">Board size</span>
-                                <span class="settings-page__group-value" id="settingsBoardValue"></span>
-                            </span>
-                        </button>
-                    </legend>
+                            </label>
 
-                    <div class="settings-page__option-list" id="settingsBoardOptions">
-                        <label class="settings-page__option">
-                            <input class="settings-page__option-input" type="radio" name="board-size" value="16"
-                                autocomplete="off">
-                            <span class="settings-page__option-label">16 cards</span>
-                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
-                                alt="">
-                        </label>
+                            <label class="settings-page__option">
+                                <input class="settings-page__option-input" type="radio" name="game-theme" value="foods"
+                                    autocomplete="off">
+                                <span class="settings-page__option-label">Foods theme</span>
+                                <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
+                                    alt="">
+                            </label>
+                        </div>
+                    </fieldset>
 
-                        <label class="settings-page__option">
-                            <input class="settings-page__option-input" type="radio" name="board-size" value="24"
-                                autocomplete="off">
-                            <span class="settings-page__option-label">24 cards</span>
-                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
-                                alt="">
-                        </label>
+                    <fieldset class="settings-page__option-group">
+                        <legend class="settings-page__option-title">
+                            <button class="settings-page__group-toggle" type="button" aria-expanded="true"
+                                aria-controls="settingsPlayerOptions" disabled>
+                                <span class="settings-page__option-title-icon-wrapper">
+                                    <img class="settings-page__option-title-icon" src="/img/settings-page/choose-player.png"
+                                        alt="">
+                                    <span class="settings-page__group-arrow" aria-hidden="true"></span>
+                                </span>
 
-                        <label class="settings-page__option">
-                            <input class="settings-page__option-input" type="radio" name="board-size" value="36"
-                                autocomplete="off">
-                            <span class="settings-page__option-label">36 cards</span>
-                            <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
-                                alt="">
-                        </label>
-                    </div>
-                </fieldset>
-            </div>
+                                <span>
+                                    <span class="settings-page__option-title-text">Choose player</span>
+                                    <span class="settings-page__group-value" id="settingsPlayerValue"></span>
+                                </span>
+                            </button>
+                        </legend>
 
-            <div class="settings-page__preview">
+                        <div class="settings-page__option-list" id="settingsPlayerOptions">
+                            <label class="settings-page__option">
+                                <input class="settings-page__option-input" type="radio" name="player" value="blue"
+                                    autocomplete="off">
+                                <span class="settings-page__option-label">Blue</span>
+                                <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
+                                    alt="">
+                            </label>
 
-                <div class="settings-page__preview-content settings-page__preview-content--code-vibes"
-                    id="settingsPreview" data-theme-preview="code-vibes">
+                            <label class="settings-page__option">
+                                <input class="settings-page__option-input" type="radio" name="player" value="orange"
+                                    autocomplete="off">
+                                <span class="settings-page__option-label">Orange</span>
+                                <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
+                                    alt="">
+                            </label>
+                        </div>
+                    </fieldset>
 
-                    <div class="settings-page__preview-header">
+                    <fieldset class="settings-page__option-group">
+                        <legend class="settings-page__option-title">
+                            <button class="settings-page__group-toggle" type="button" aria-expanded="true"
+                                aria-controls="settingsBoardOptions" disabled>
+                                <span class="settings-page__option-title-icon-wrapper">
+                                    <img class="settings-page__option-title-icon" src="/img/settings-page/board-size.png"
+                                        alt="">
+                                    <span class="settings-page__group-arrow" aria-hidden="true"></span>
+                                </span>
+                                <span>
+                                    <span class="settings-page__option-title-text">Board size</span>
+                                    <span class="settings-page__group-value" id="settingsBoardValue"></span>
+                                </span>
+                            </button>
+                        </legend>
 
-                        <div class="settings-page__score-list">
-                            <div class="settings-page__score settings-page__score--blue">
-                                <img class="settings-page__score-icon" id="settingsPreviewBlueLabel"
+                        <div class="settings-page__option-list" id="settingsBoardOptions">
+                            <label class="settings-page__option">
+                                <input class="settings-page__option-input" type="radio" name="board-size" value="16"
+                                    autocomplete="off">
+                                <span class="settings-page__option-label">16 cards</span>
+                                <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
+                                    alt="">
+                            </label>
+
+                            <label class="settings-page__option">
+                                <input class="settings-page__option-input" type="radio" name="board-size" value="24"
+                                    autocomplete="off">
+                                <span class="settings-page__option-label">24 cards</span>
+                                <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
+                                    alt="">
+                            </label>
+
+                            <label class="settings-page__option">
+                                <input class="settings-page__option-input" type="radio" name="board-size" value="36"
+                                    autocomplete="off">
+                                <span class="settings-page__option-label">36 cards</span>
+                                <img class="settings-page__option-indicator" src="/img/settings-page/option-indicator.png"
+                                    alt="">
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="settings-page__preview">
+
+                    <div class="settings-page__preview-content settings-page__preview-content--code-vibes"
+                        id="settingsPreview" data-theme-preview="code-vibes">
+
+                        <div class="settings-page__preview-header">
+
+                            <div class="settings-page__score-list">
+                                <div class="settings-page__score settings-page__score--blue">
+                                    <img class="settings-page__score-icon" id="settingsPreviewBlueLabel"
+                                        src="/img/settings-page/gaming-theme/code-vibes/blue-label.png" alt="">
+                                    <p class="settings-page__score-name">Blue</p>
+                                    <p class="settings-page__score-value">0</p>
+                                </div>
+
+                                <div class="settings-page__score settings-page__score--orange">
+                                    <img class="settings-page__score-icon" id="settingsPreviewOrangeLabel"
+                                        src="/img/settings-page/gaming-theme/code-vibes/orange-label.png" alt="">
+                                    <p class="settings-page__score-name">Orange</p>
+                                    <p class="settings-page__score-value">0</p>
+                                </div>
+                            </div>
+
+                            <div class="settings-page__current-player">
+                                <p class="settings-page__current-player-label">Current player:</p>
+                                <img class="settings-page__current-player-icon" id="settingsPreviewCurrentPlayerIcon"
                                     src="/img/settings-page/gaming-theme/code-vibes/blue-label.png" alt="">
-                                <p class="settings-page__score-name">Blue</p>
-                                <p class="settings-page__score-value">0</p>
                             </div>
 
-                            <div class="settings-page__score settings-page__score--orange">
-                                <img class="settings-page__score-icon" id="settingsPreviewOrangeLabel"
-                                    src="/img/settings-page/gaming-theme/code-vibes/orange-label.png" alt="">
-                                <p class="settings-page__score-name">Orange</p>
-                                <p class="settings-page__score-value">0</p>
+                            <button type="button" class="settings-page__exit-button">
+                                <img class="settings-page__exit-icon" id="settingsPreviewExitIcon"
+                                    src="/img/settings-page/gaming-theme/code-vibes/exit-game.png" alt="">
+                                <span class="settings-page__exit-label">Exit game</span>
+                            </button>
+                        </div>
+
+
+                        <div class="settings-page__card-preview">
+                            <div class="settings-page__preview-card settings-page__preview-card--primary">
+                                <img class="settings-page__preview-card-image" id="settingsPreviewPrimaryCard"
+                                    src="/img/settings-page/gaming-theme/code-vibes/card-front.png"
+                                    alt="Card front with laptop and code symbol">
+                            </div>
+
+                            <div class="settings-page__preview-card settings-page__preview-card--secondary">
+                                <img class="settings-page__preview-card-image" id="settingsPreviewSecondaryCard"
+                                    src="/img/settings-page/gaming-theme/code-vibes/card-back.png" alt="Card back">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="settings-page__summary">
+
+                        <span class="settings-page__summary-value" id="settingsSummaryTheme">Theme</span>
+                        <img class="settings-page__summary-divider" src="/img/settings-page/summary-divider.png" alt="">
+                        <span class="settings-page__summary-value" id="settingsSummaryPlayer">Player</span>
+                        <img class="settings-page__summary-divider" src="/img/settings-page/summary-divider.png" alt="">
+                        <span class="settings-page__summary-value" id="settingsSummaryBoardSize">Board size</span>
+
+                        <button class="settings-page__start-button" id="startGameBtn" type="button" disabled>
+                            <img class="settings-page__start-icon" src="/img/settings-page/start-game-icon.png" alt="">
+                            <span class="settings-page__start-label">Start</span>
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="playing-field page" id="playingField" hidden>
+            <div class="playing-field__stage">
+
+                <div class="playing-field__content">
+
+                    <div class="game-header game-header--playing-field" id="gameHeader">
+
+                        <div class="game-header__scoreboard">
+                            <div class="game-header__score game-header__score--blue">
+                                <img id="gameHeaderBlueLabel" src="/img/game-field/code-vibes/blue-label.png" alt="">
+                                <p class="game-header__blue-score-label">Blue</p>
+                                <p id="gameHeaderBlueScore"></p>
+                            </div>
+
+                            <div class="game-header__score game-header__score--orange">
+                                <img id="gameHeaderOrangeLabel" src="/img/game-field/code-vibes/orange-label.png" alt="">
+                                <p class="game-header__orange-score-label">Orange</p>
+                                <p id="gameHeaderOrangeScore"></p>
                             </div>
                         </div>
 
-                        <div class="settings-page__current-player">
-                            <p class="settings-page__current-player-label">Current player:</p>
-                            <img class="settings-page__current-player-icon" id="settingsPreviewCurrentPlayerIcon"
-                                src="/img/settings-page/gaming-theme/code-vibes/blue-label.png" alt="">
+                        <div class="game-header__current-player" aria-live="polite" aria-atomic="true">
+                            <p>Current player:</p>
+                            <span class="game-header__current-player-icon" id="gameHeaderCurrentPlayerBadge">
+                                <img id="gameHeaderCurrentPlayerIcon" src="/img/game-field/code-vibes/blue-label.png" alt="Blue">
+                            </span>
                         </div>
 
-                        <button type="button" class="settings-page__exit-button">
-                            <img class="settings-page__exit-icon" id="settingsPreviewExitIcon"
-                                src="/img/settings-page/gaming-theme/code-vibes/exit-game.png" alt="">
-                            <span class="settings-page__exit-label">Exit game</span>
+                        <button type="button" class="game-header__exit-button" id="exitGameBtn">
+                            <span class="game-header__exit-icon">
+                                <img class="game-header__exit-icon-image game-header__exit-icon-image--default"
+                                    id="gameHeaderExitIcon" src="/img/game-field/code-vibes/exit-game.png" alt="">
+                                <img class="game-header__exit-icon-image game-header__exit-icon-image--hover"
+                                    id="gameHeaderExitIconHover" src="/img/game-field/code-vibes/exit-game.png" alt="" aria-hidden="true">
+                            </span>
+                            <span class="game-header__exit-label">Exit game</span>
                         </button>
                     </div>
 
+                    <div class="playing-field__board" id="playingFieldBoard">
 
-                    <div class="settings-page__card-preview">
-                        <div class="settings-page__preview-card settings-page__preview-card--primary">
-                            <img class="settings-page__preview-card-image" id="settingsPreviewPrimaryCard"
-                                src="/img/settings-page/gaming-theme/code-vibes/card-front.png"
-                                alt="Card front with laptop and code symbol">
-                        </div>
-
-                        <div class="settings-page__preview-card settings-page__preview-card--secondary">
-                            <img class="settings-page__preview-card-image" id="settingsPreviewSecondaryCard"
-                                src="/img/settings-page/gaming-theme/code-vibes/card-back.png" alt="Card back">
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="settings-page__summary">
-
-                    <span class="settings-page__summary-value" id="settingsSummaryTheme">Theme</span>
-                    <img class="settings-page__summary-divider" src="/img/settings-page/summary-divider.png" alt="">
-                    <span class="settings-page__summary-value" id="settingsSummaryPlayer">Player</span>
-                    <img class="settings-page__summary-divider" src="/img/settings-page/summary-divider.png" alt="">
-                    <span class="settings-page__summary-value" id="settingsSummaryBoardSize">Board size</span>
-
-                    <button class="settings-page__start-button" id="startGameBtn" type="button" disabled>
-                        <img class="settings-page__start-icon" src="/img/settings-page/start-game-icon.png" alt="">
-                        <span class="settings-page__start-label">Start</span>
-                    </button>
-
-                </div>
-
-            </div>
-        </div>
-
-    </section>
-
-
-    <section class="playing-field page" id="playingField" hidden>
-        <div class="playing-field__stage">
-
-            <div class="playing-field__content">
-
-                <div class="game-header game-header--playing-field" id="gameHeader">
-
-                    <div class="game-header__scoreboard">
-                        <span class="game-header__score game-header__score--blue">
-                            <img id="gameHeaderBlueLabel" src="" alt="">
-                            <p class="game-header__blue-score-label">Blue</p>
-                            <p id="gameHeaderBlueScore"></p>
-                        </span>
-
-                        <span class="game-header__score game-header__score--orange">
-                            <img id="gameHeaderOrangeLabel" src="" alt="">
-                            <p class="game-header__orange-score-label">Orange</p>
-                            <p id="gameHeaderOrangeScore"></p>
-                        </span>
                     </div>
 
-                    <span class="game-header__current-player">
-                        <p>Current player:</p>
-                        <span class="game-header__current-player-icon" id="gameHeaderCurrentPlayerBadge">
-                            <img id="gameHeaderCurrentPlayerIcon" src="" alt="">
-                        </span>
-                    </span>
-
-                    <button type="button" class="game-header__exit-button" id="exitGameBtn">
-                        <span class="game-header__exit-icon">
-                            <img class="game-header__exit-icon-image game-header__exit-icon-image--default"
-                                id="gameHeaderExitIcon" src="" alt="">
-                            <img class="game-header__exit-icon-image game-header__exit-icon-image--hover"
-                                id="gameHeaderExitIconHover" src="" alt="" aria-hidden="true">
-                        </span>
-                        <span class="game-header__exit-label">Exit game</span>
-                    </button>
-                </div>
-
-                <div class="playing-field__board" id="playingFieldBoard">
 
                 </div>
 
-
             </div>
+        </section>
 
-        </div>
-    </section>
-
-    <div class="quit-popup quit-popup--code-vibes" id="quitPopup" hidden>
-        <div class="quit-popup__backdrop" data-quit-popup-close></div>
-        <div class="quit-popup__panel" role="dialog" aria-modal="true" aria-labelledby="quitPopupTitle">
-            <h2 class="quit-popup__title" id="quitPopupTitle">Are you sure you want to quit the game?</h2>
-            <div class="quit-popup__actions">
-                <button class="quit-popup__button quit-popup__button--back" id="quitPopupBack" type="button">Back to
-                    game</button>
-                <button class="quit-popup__button quit-popup__button--exit" id="quitPopupExit" type="button">Exit
-                    game</button>
-            </div>
-        </div>
-    </div>
-
-    <section class="game-over game-over--code-vibes page" id="gameOver" aria-labelledby="gameOverTitle" hidden>
-        <div class="game-over__content">
-            <h1 id="gameOverTitle" class="game-over__title">
-                <img class="game-over__title-image" src="/img/game-field/code-vibes/game-over.png" alt="Game over">
-                <span class="game-over__title-text">GAME OVER</span>
-            </h1>
-            <div class="game-over__result">
-                <p class="game-over__subtitle">Final score</p>
-                <div class="game-over__scoreboard" aria-label="Final score">
-                    <span class="game-over__score game-over__score--blue">
-                        <img class="game-over__score-icon" src="/img/game-field/code-vibes/blue-label.png" alt="Blue">
-                        <span class="game-over__score-label">Blue</span>
-                        <strong class="game-over__score-value" id="gameOverBlueScore">0</strong>
-                    </span>
-                    <span class="game-over__score game-over__score--orange">
-                        <img class="game-over__score-icon" src="/img/game-field/code-vibes/orange-label.png"
-                            alt="Orange">
-                        <span class="game-over__score-label">Orange</span>
-                        <strong class="game-over__score-value" id="gameOverOrangeScore">0</strong>
-                    </span>
+        <div class="quit-popup quit-popup--code-vibes" id="quitPopup" hidden>
+            <div class="quit-popup__backdrop" data-quit-popup-close></div>
+            <div class="quit-popup__panel" role="dialog" aria-modal="true" aria-labelledby="quitPopupTitle">
+                <h2 class="quit-popup__title" id="quitPopupTitle">Are you sure you want to quit the game?</h2>
+                <div class="quit-popup__actions">
+                    <button class="quit-popup__button quit-popup__button--back" id="quitPopupBack" type="button">Back to
+                        game</button>
+                    <button class="quit-popup__button quit-popup__button--exit" id="quitPopupExit" type="button">Exit
+                        game</button>
                 </div>
             </div>
         </div>
-    </section>
 
-
-    <section class="winner winner--code-vibes page" id="winnerOverlay" aria-labelledby="winnerPlayer" hidden>
-        <img class="winner__confetti" src="/img/game-field/code-vibes/winner-confetti.png" alt="">
-        <div class="winner__content">
-            <div class="winner__heading">
-                <p class="winner__subtitle">The winner is</p>
-                <h1 class="winner__player" id="winnerPlayer"></h1>
-            </div>
-            <div class="winner__image-box">
-                <img class="winner__pawn" id="winnerPawn" alt="" width="200" height="250">
-            </div>
-            <button class="winner__button" id="winnerBackToStart" type="button">Back to start</button>
-        </div>
-    </section>
-    <section class="draw draw--code-vibes page" id="drawOverlay" aria-labelledby="drawTitle" hidden>
-        <div class="draw__content">
-            <div class="draw__heading">
-                <p class="draw__subtitle">It’s a</p>
-                <h1 class="draw__title" id="drawTitle">
-                    <img class="draw__title-image" src="/img/game-field/code-vibes/draw-title.png" alt="Draw">
-                    <span class="draw__title-text">DRAW</span>
+        <section class="game-over game-over--code-vibes page" id="gameOver" aria-labelledby="gameOverTitle" hidden>
+            <div class="game-over__content">
+                <h1 id="gameOverTitle" class="game-over__title">
+                    <img class="game-over__title-image" src="/img/game-field/code-vibes/game-over.png" alt="Game over">
+                    <span class="game-over__title-text">GAME OVER</span>
                 </h1>
+                <div class="game-over__result">
+                    <p class="game-over__subtitle">Final score</p>
+                    <div class="game-over__scoreboard" aria-label="Final score">
+                        <span class="game-over__score game-over__score--blue">
+                            <img class="game-over__score-icon" src="/img/game-field/code-vibes/blue-label.png" alt="Blue">
+                            <span class="game-over__score-label">Blue</span>
+                            <strong class="game-over__score-value" id="gameOverBlueScore">0</strong>
+                        </span>
+                        <span class="game-over__score game-over__score--orange">
+                            <img class="game-over__score-icon" src="/img/game-field/code-vibes/orange-label.png"
+                                alt="Orange">
+                            <span class="game-over__score-label">Orange</span>
+                            <strong class="game-over__score-value" id="gameOverOrangeScore">0</strong>
+                        </span>
+                    </div>
+                </div>
             </div>
-            <div class="draw__image-box">
-                <img class="draw__scales" src="/img/game-field/code-vibes/draw-scales.png" alt="" width="353"
-                    height="283">
+        </section>
+
+
+        <section class="winner winner--code-vibes page" id="winnerOverlay" aria-labelledby="winnerPlayer" hidden>
+            <img class="winner__confetti" src="/img/game-field/code-vibes/winner-confetti.png" alt="">
+            <div class="winner__content">
+                <div class="winner__heading">
+                    <p class="winner__subtitle">The winner is</p>
+                    <h1 class="winner__player" id="winnerPlayer"></h1>
+                </div>
+                <div class="winner__image-box">
+                    <img class="winner__pawn" id="winnerPawn" src="/img/game-field/code-vibes/winner-pawn-blue.png" alt="" width="200" height="250">
+                </div>
+                <button class="winner__button" id="winnerBackToStart" type="button">Back to start</button>
             </div>
-            <button class="draw__button" id="drawBackToStart" type="button">Back to start</button>
-        </div>
-    </section>
+        </section>
+        <section class="draw draw--code-vibes page" id="drawOverlay" aria-labelledby="drawTitle" hidden>
+            <div class="draw__content">
+                <div class="draw__heading">
+                    <p class="draw__subtitle">It’s a</p>
+                    <h1 class="draw__title" id="drawTitle">
+                        <img class="draw__title-image" src="/img/game-field/code-vibes/draw-title.png" alt="Draw">
+                        <span class="draw__title-text">DRAW</span>
+                    </h1>
+                </div>
+                <div class="draw__image-box">
+                    <img class="draw__scales" src="/img/game-field/code-vibes/draw-scales.png" alt="" width="353"
+                        height="283">
+                </div>
+                <button class="draw__button" id="drawBackToStart" type="button">Back to start</button>
+            </div>
+        </section>
+    </main>
 </body>
 
 </html>
