@@ -7,8 +7,11 @@ import { createShuffledDeck, renderPlayingFieldCards, markCardAsMatched } from "
 import { showGameOver } from "../ui/results";
 import { cancelCardReset, cancelGameOver, resetGameState, gameState, cardResetTimer, gameOverTimer } from "../app-context";
 
+/** Delay before hiding a mismatched card pair, in milliseconds. */
 const CARD_RESET_DELAY_MS = 1000;
+/** Delay before showing the game-over page after the final match, in milliseconds. */
 const GAME_OVER_DELAY_MS = 1000;
+/** Delay after hiding a mismatched pair before switching players, in milliseconds. */
 const PLAYER_SWITCH_DELAY_MS = 500;
 
 /**
@@ -31,6 +34,9 @@ export function checkSelectedPair(gameConfig: GameConfig): void {
 
 /**
  * Awards a point, marks the pair as matched, and checks for game completion.
+ *
+ * @param firstCard - First revealed card of the matching pair.
+ * @param secondCard - Second revealed card of the matching pair.
  */
 function handleMatchedPair(firstCard: Card, secondCard: Card): void {
   markCardAsMatched(firstCard);
@@ -45,6 +51,8 @@ function handleMatchedPair(firstCard: Card, secondCard: Card): void {
 
 /**
  * Schedules a mismatched pair to be hidden after one second.
+ *
+ * @param gameConfig - Game settings used to update the themed display.
  */
 function scheduleCardReset(gameConfig: GameConfig): void {
   startTimer(cardResetTimer, (): void => {
@@ -68,6 +76,8 @@ function checkGameOver(): void {
 
 /**
  * Hides the selected pair and switches players after 500 milliseconds.
+ *
+ * @param gameConfig - Game settings used to update the themed display.
  */
 function closeSelectedCards(gameConfig: GameConfig): void {
   gameState.flippedCardIds.forEach((cardId): void => {
@@ -86,6 +96,8 @@ function closeSelectedCards(gameConfig: GameConfig): void {
 
 /**
  * Switches between blue and orange and updates the current-player display.
+ *
+ * @param gameConfig - Game settings used to update the themed display.
  */
 function switchPlayer(gameConfig: GameConfig): void {
   if (gameState.currentPlayer === "blue") {
@@ -131,6 +143,9 @@ export function startGame(): void {
 
 /**
  * Opens the playing field, resets the game state, and renders a new deck.
+ *
+ * @param settingsPage - Settings page to hide, or null when unavailable.
+ * @param playingField - Playing field to display, or null when unavailable.
  */
 function beginGame(settingsPage: HTMLElement | null, playingField: HTMLElement | null): void {
   if (!settingsPage || !playingField) return;
@@ -144,6 +159,8 @@ function beginGame(settingsPage: HTMLElement | null, playingField: HTMLElement |
 
 /**
  * Stops the game timers and prepares the state, theme, player display, and deck.
+ *
+ * @param config - Settings for the new game.
  */
 function resetGameForStart(config: GameConfig): void {
   cancelCardReset();

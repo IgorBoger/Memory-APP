@@ -3,8 +3,11 @@ import { createPausableTimer, cancelTimer } from "./game/timers";
 
 /** Shared game state; replaced entirely by resetGameState. */
 export let gameState: GameState = createInitialGameState("blue");
+/** Pausable timer used to hide mismatched cards and delay the player switch. */
 export const cardResetTimer = createPausableTimer();
+/** Pausable timer used for the transition after the final matching pair. */
 export const gameOverTimer = createPausableTimer();
+/** Timeout handle for the pending winner or draw overlay. */
 export const appTimers: { resultOverlayTimeout: number | undefined } = {
   resultOverlayTimeout: undefined,
 };
@@ -12,6 +15,9 @@ export const appTimers: { resultOverlayTimeout: number | undefined } = {
 
 /**
  * Creates an empty game state with zero scores and the specified starting player.
+ *
+ * @param currentPlayer - Starting player for the empty game state.
+ * @returns Empty game state with zero scores and the specified starting player.
  */
 function createInitialGameState(currentPlayer: Player): GameState {
   return {

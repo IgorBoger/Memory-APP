@@ -1,6 +1,8 @@
+/** Player key used for turn order, scores, and themed player images. */
 export type Player = "blue" | "orange";
 
 
+/** Reusable motif data shared by the two cards in a matching pair. */
 export type CardMotif = {
   id: string;
   image: string;
@@ -8,6 +10,7 @@ export type CardMotif = {
 };
 
 
+/** One playable card with a unique deck ID, a shared motif ID, and its match status. */
 export type Card = {
   id: number;
   motifId: string;
@@ -17,6 +20,7 @@ export type Card = {
 };
 
 
+/** Mutable game state containing the deck, selected cards, scores, turn, and interaction status. */
 export type GameState = {
   cards: Card[];
   flippedCardIds: number[];
@@ -27,6 +31,7 @@ export type GameState = {
 };
 
 
+/** CSS classes, titles, labels, and images used by winner and draw overlays. */
 export type ResultTheme = {
   winnerClass: string;
   drawClass: string;
@@ -37,6 +42,7 @@ export type ResultTheme = {
 };
 
 
+/** CSS class and text labels used by the quit confirmation dialog. */
 export type QuitPopupTheme = {
   popupClass: string;
   title: string;
@@ -45,6 +51,7 @@ export type QuitPopupTheme = {
 };
 
 
+/** Mutable timeout state that preserves the remaining delay while paused. Times are measured in milliseconds. */
 export type PausableTimer = {
   timeoutId: number | undefined;
   remaining: number;
@@ -53,6 +60,7 @@ export type PausableTimer = {
 };
 
 
+/** CSS class, image paths, and alternative text for a settings-page theme preview. */
 export type ThemePreview = {
   previewClass: string;
   primaryImage: string;
@@ -70,6 +78,7 @@ export type ThemePreview = {
 };
 
 
+/** Theme-specific player display, distinguished by an image or badge type. */
 export type CurrentPlayerDisplay =
   | {
     type: "image";
@@ -84,6 +93,7 @@ export type CurrentPlayerDisplay =
   };
 
 
+/** CSS class, player labels, exit icons, and card-front data for the playing field. */
 export type GameTheme = {
   playingFieldClass: string;
   blueLabelImage: string;
@@ -99,6 +109,7 @@ export type GameTheme = {
 };
 
 
+/** Selected theme, starting player, card count, and resolved playing-field theme data. */
 export type GameConfig = {
   selectedTheme: string;
   currentPlayer: Player;

@@ -1,5 +1,6 @@
 import type { CardMotif } from "./types";
 
+/** Ordered motif lists indexed by theme key. The selected board size determines how many motifs are used. */
 export const CARD_MOTIFS_BY_THEME: Record<string, CardMotif[]> = {
   "code-vibes": [
     {

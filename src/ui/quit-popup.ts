@@ -4,8 +4,10 @@ import { getGameConfig } from "./settings";
 import { cancelCardReset, cancelGameOver, cancelResultOverlay, gameState, cardResetTimer, gameOverTimer } from "../app-context";
 import { QUIT_POPUP_THEME_DATA } from "../theme-data";
 
+/** Delay before hiding the quit dialog and restoring trigger focus, in milliseconds. */
 const QUIT_POPUP_CLOSE_DELAY_MS = 300;
 
+/** Element to refocus after closing the quit dialog, or null when no trigger is stored. */
 let quitPopupTrigger: HTMLElement | null = null;
 
 
@@ -38,6 +40,9 @@ export function setupQuitPopup(): void {
 
 /**
  * Handles Escape to resume and wraps Tab focus between the dialog controls.
+ *
+ * @param event - Keyboard event checked for Escape and Tab focus wrapping.
+ * @param panel - Quit dialog panel containing the focusable controls.
  */
 function handleQuitPopupKeydown(event: KeyboardEvent, panel: HTMLElement): void {
   if (event.key === "Escape") return event.preventDefault(), resumeGame();
@@ -52,6 +57,8 @@ function handleQuitPopupKeydown(event: KeyboardEvent, panel: HTMLElement): void 
 
 /**
  * Stores the triggering button, pauses the game timers, and opens the quit dialog.
+ *
+ * @param trigger - Element to receive focus after the dialog closes.
  */
 function openQuitPopup(trigger: HTMLElement): void {
   if (gameState.status !== "playing") return;
@@ -76,6 +83,9 @@ function pauseGameTimers(): void {
 
 /**
  * Shows the quit dialog and focuses its back button.
+ *
+ * @param popup - Quit confirmation dialog element.
+ * @param backButton - Button to focus when the quit dialog opens.
  */
 function showQuitPopup(popup: HTMLElement, backButton: HTMLButtonElement): void {
   popup.hidden = false;
@@ -88,6 +98,8 @@ function showQuitPopup(popup: HTMLElement, backButton: HTMLButtonElement): void 
 
 /**
  * Applies the current theme's class and labels to the quit dialog.
+ *
+ * @param popup - Quit confirmation dialog element.
  */
 function applyQuitPopupTheme(popup: HTMLElement): void {
   const theme = QUIT_POPUP_THEME_DATA[getGameConfig().selectedTheme]

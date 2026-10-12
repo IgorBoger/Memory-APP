@@ -1,5 +1,6 @@
 import type { GameTheme, QuitPopupTheme, ResultTheme, ThemePreview } from "./types";
 
+/** Quit-dialog CSS classes and labels indexed by theme key. */
 export const QUIT_POPUP_THEME_DATA: Record<string, QuitPopupTheme> = {
   "code-vibes": {
     popupClass: "quit-popup--code-vibes",
@@ -27,6 +28,7 @@ export const QUIT_POPUP_THEME_DATA: Record<string, QuitPopupTheme> = {
   },
 };
 
+/** Winner and draw overlay presentation data indexed by theme key. */
 export const RESULT_THEME_DATA: Record<string, ResultTheme> = {
   "code-vibes": {
     winnerClass: "winner--code-vibes",
@@ -74,6 +76,7 @@ export const RESULT_THEME_DATA: Record<string, ResultTheme> = {
   }
 };
 
+/** Settings-preview CSS classes and image data indexed by theme key. */
 export const THEME_PREVIEW_DATA: Record<string, ThemePreview> = {
   "code-vibes": {
     previewClass: "settings-page__preview-content--code-vibes",
@@ -135,6 +138,7 @@ export const THEME_PREVIEW_DATA: Record<string, ThemePreview> = {
   },
 };
 
+/** Playing-field and current-player presentation data indexed by theme key. */
 export const GAME_THEME_DATA: Record<string, GameTheme> = {
   "code-vibes": {
     playingFieldClass: "playing-field--code-vibes",

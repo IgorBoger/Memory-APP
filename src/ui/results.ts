@@ -4,6 +4,7 @@ import { resetSettings, updateSettingsSummary, getGameConfig } from "./settings"
 import { cancelCardReset, cancelGameOver, cancelResultOverlay, resetGameState, gameState, appTimers } from "../app-context";
 import { RESULT_THEME_DATA } from "../theme-data";
 
+/** Delay before opening the winner or draw overlay, in milliseconds. */
 const RESULT_OVERLAY_DELAY_MS = 3000;
 
 /**
@@ -23,6 +24,9 @@ export function showGameOver(): void {
 
 /**
  * Applies the game theme and player images to the game-over screen.
+ *
+ * @param gameOver - Game-over page used as the source for the result transition.
+ * @param gameConfig - Game settings used to update the themed display.
  */
 function applyGameOverTheme(gameOver: HTMLElement, gameConfig: GameConfig): void {
   gameOver.classList.remove("game-over--code-vibes", "game-over--gaming", "game-over--da-projects", "game-over--foods");
@@ -52,6 +56,9 @@ function scheduleResultOverlay(): void {
 
 /**
  * Opens the winner or draw overlay according to the result.
+ *
+ * @param winner - Winning player, or null for equal scores.
+ * @param gameOver - Game-over page used as the source for the result transition.
  */
 function showResultOverlay(winner: Player | null, gameOver: HTMLElement): void {
   if (winner) {
@@ -75,6 +82,9 @@ function getWinningPlayer(): Player | null {
 
 /**
  * Returns the result theme, falling back to Code vibes for an unknown key.
+ *
+ * @param theme - Theme key; unknown keys fall back to Code vibes.
+ * @returns Matching result theme, or the Code vibes theme for an unknown key.
  */
 function getResultTheme(theme: string): ResultTheme {
   return RESULT_THEME_DATA[theme] ?? RESULT_THEME_DATA["code-vibes"];
@@ -83,6 +93,10 @@ function getResultTheme(theme: string): ResultTheme {
 
 /**
  * Applies the CSS class and button label to a result overlay.
+ *
+ * @param overlay - Result overlay to configure.
+ * @param theme - CSS classes and labels for the result overlay.
+ * @param kind - Whether to apply the winner or draw theme class.
  */
 function applyResultTheme(overlay: HTMLElement, theme: ResultTheme, kind: "winner" | "draw"): void {
   const classKey = kind === "winner" ? "winnerClass" : "drawClass";
@@ -95,6 +109,10 @@ function applyResultTheme(overlay: HTMLElement, theme: ResultTheme, kind: "winne
 
 /**
  * Sets the winner title, winner image, and player data attribute.
+ *
+ * @param overlay - Result overlay to configure.
+ * @param player - Player whose state or result should be displayed.
+ * @param theme - Titles and images for the winner display.
  */
 function applyWinnerContent(overlay: HTMLElement, player: Player, theme: ResultTheme): void {
   const title = document.getElementById("winnerPlayer");
@@ -107,6 +125,10 @@ function applyWinnerContent(overlay: HTMLElement, player: Player, theme: ResultT
 
 /**
  * Configures the winner overlay and navigates to it from the current page.
+ *
+ * @param player - Player whose state or result should be displayed.
+ * @param currentPage - Page to fade out and hide.
+ * @param theme - Theme key; defaults to the currently selected game theme.
  */
 function showWinnerOverlay(player: Player, currentPage: HTMLElement, theme = getGameConfig().selectedTheme): void {
   const overlay = document.getElementById("winnerOverlay");
@@ -140,6 +162,9 @@ export function setupWinnerOverlay(): void {
 
 /**
  * Configures the draw overlay and navigates to it from the current page.
+ *
+ * @param currentPage - Page to fade out and hide.
+ * @param theme - Theme key; defaults to the currently selected game theme.
  */
 function showDrawOverlay(currentPage: HTMLElement, theme = getGameConfig().selectedTheme): void {
   const overlay = document.getElementById("drawOverlay");

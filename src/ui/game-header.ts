@@ -3,6 +3,8 @@ import { gameState } from "../app-context";
 
 /**
  * Applies the theme images to the game header and updates the current-player display.
+ *
+ * @param gameConfig - Game settings used to update the themed display.
  */
 export function applyGameHeader(gameConfig: GameConfig): void {
   const blueLabel = document.getElementById("gameHeaderBlueLabel") as HTMLImageElement;
@@ -20,6 +22,8 @@ export function applyGameHeader(gameConfig: GameConfig): void {
 
 /**
  * Applies the board layout class for 16, 24, or 36 cards.
+ *
+ * @param cardCount - Selected number of cards; supported board sizes are 16, 24, and 36.
  */
 export function applyBoardSizeClass(cardCount: number): void {
   const playingFieldBoard = document.getElementById("playingFieldBoard");
@@ -37,6 +41,8 @@ export function applyBoardSizeClass(cardCount: number): void {
 
 /**
  * Replaces the playing field's previous theme class with the selected theme.
+ *
+ * @param gameConfig - Game settings used to update the themed display.
  */
 export function applyPlayingFieldTheme(gameConfig: GameConfig): void {
   const playingField = document.getElementById("playingField");
@@ -53,6 +59,8 @@ export function applyPlayingFieldTheme(gameConfig: GameConfig): void {
 
 /**
  * Displays the current player as an image or a colored badge, depending on the theme.
+ *
+ * @param gameConfig - Game settings used to update the themed display.
  */
 export function applyCurrentPlayer(gameConfig: GameConfig): void {
   if (gameConfig.gameTheme.currentPlayer.type === "image") {
@@ -65,6 +73,8 @@ export function applyCurrentPlayer(gameConfig: GameConfig): void {
 
 /**
  * Selects the blue or orange player image from the current theme.
+ *
+ * @param gameConfig - Game settings used to update the themed display.
  */
 function applyCurrentPlayerImage(gameConfig: GameConfig): void {
   const currentPlayer = gameConfig.gameTheme.currentPlayer;
@@ -80,6 +90,8 @@ function applyCurrentPlayerImage(gameConfig: GameConfig): void {
 
 /**
  * Applies the player badge icon and its current-player color.
+ *
+ * @param gameConfig - Game settings used to update the themed display.
  */
 function applyCurrentPlayerBadge(gameConfig: GameConfig): void {
   const currentPlayer = gameConfig.gameTheme.currentPlayer;
@@ -94,6 +106,9 @@ function applyCurrentPlayerBadge(gameConfig: GameConfig): void {
 
 /**
  * Replaces the badge's previous player color with blue or orange.
+ *
+ * @param currentPlayerBadge - Badge element to recolor, or null when unavailable.
+ * @param currentPlayer - Player whose color should be applied.
  */
 function updateCurrentPlayerBadgeColor(currentPlayerBadge: HTMLElement | null, currentPlayer: string): void {
   currentPlayerBadge?.classList.remove(

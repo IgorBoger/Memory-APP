@@ -3,8 +3,10 @@ import { showPage } from "./navigation";
 import { GAME_THEME_DATA, THEME_PREVIEW_DATA } from "../theme-data";
 import { updateSettingsGroupLabels } from "../settings-groups";
 
+/** Delay before applying a pending settings-preview theme, in milliseconds. */
 const PREVIEW_TRANSITION_DELAY_MS = 120;
 
+/** DOM references used to render the settings preview. Image references are asserted to exist and checked by the caller. */
 type PreviewElements = {
   settingsPreview: HTMLElement | null;
   primaryCard: HTMLImageElement;
@@ -15,6 +17,7 @@ type PreviewElements = {
   exitIcon: HTMLImageElement;
 };
 
+/** DOM references used for the settings summary. The start-button reference is asserted to exist and checked by the caller. */
 type SummaryElements = {
   summaryTheme: HTMLElement | null;
   summaryPlayer: HTMLElement | null;
@@ -22,15 +25,20 @@ type SummaryElements = {
   startButton: HTMLButtonElement;
 };
 
+/** Raw selected radio-input values; an unselected group has an undefined value. */
 type SettingsInputData = {
   selectedTheme: string | undefined;
   selectedPlayer: string | undefined;
   selectedBoardSize: string | undefined;
 };
 
+/** Theme selected by the settings radio inputs. */
 let selectedTheme = "code-vibes";
+/** Theme currently displayed in the settings preview. */
 let currentPreviewTheme = "code-vibes";
+/** Theme waiting for the preview transition, or undefined when no change is pending. */
 let pendingPreviewTheme: string | undefined;
+/** Timeout handle for the pending preview transition. */
 let previewFadeTimeout: number | undefined;
 
 
@@ -76,6 +84,8 @@ export function setupThemePreview(): void {
 
 /**
  * Connects a theme input's hover and selection events to the preview.
+ *
+ * @param input - Theme radio input whose hover and selection events should update the preview.
  */
 function setupThemeInput(input: HTMLInputElement): void {
   const label = input.closest("label");
@@ -87,6 +97,8 @@ function setupThemeInput(input: HTMLInputElement): void {
 
 /**
  * Stores the selected theme and updates its preview.
+ *
+ * @param theme - Theme key used to select the display data.
  */
 function selectPreviewTheme(theme: string): void {
   selectedTheme = theme;
@@ -96,6 +108,8 @@ function selectPreviewTheme(theme: string): void {
 
 /**
  * Schedules a preview change while avoiding outdated or duplicate transitions.
+ *
+ * @param theme - Theme key used to select the display data.
  */
 function updateSettingsPreview(theme: string): void {
   const settingsPreview = document.getElementById("settingsPreview");
@@ -115,6 +129,9 @@ function updateSettingsPreview(theme: string): void {
 
 /**
  * Cancels any pending preview change and begins fading out the preview.
+ *
+ * @param preview - Settings preview element to update.
+ * @param theme - Theme key used to select the display data.
  */
 function preparePreviewTransition(preview: HTMLElement, theme: string): void {
   window.clearTimeout(previewFadeTimeout);
@@ -125,6 +142,9 @@ function preparePreviewTransition(preview: HTMLElement, theme: string): void {
 
 /**
  * Applies the pending theme and completes the preview transition.
+ *
+ * @param theme - Theme key used to select the display data.
+ * @param preview - Settings preview element to update.
  */
 function finishPreviewTransition(theme: string, preview: HTMLElement): void {
   previewFadeTimeout = undefined;
@@ -137,6 +157,8 @@ function finishPreviewTransition(theme: string, preview: HTMLElement): void {
 
 /**
  * Applies the preview theme and images when all required elements are present.
+ *
+ * @param theme - Theme key used to select the display data.
  */
 function applySettingsPreview(theme: string): void {
   const { settingsPreview, primaryCard, secondaryCard, blueLabel, orangeLabel, currentPlayerIcon, exitIcon } = getPreviewElements();
@@ -151,6 +173,8 @@ function applySettingsPreview(theme: string): void {
 
 /**
  * Collects the HTML elements used by the theme preview.
+ *
+ * @returns Preview container and image references; missing DOM elements remain null at runtime.
  */
 function getPreviewElements(): PreviewElements {
   return {
@@ -167,6 +191,10 @@ function getPreviewElements(): PreviewElements {
 
 /**
  * Applies the preview's theme class and theme data attribute.
+ *
+ * @param preview - Settings preview element to update.
+ * @param themeData - Image and CSS data for the selected preview theme.
+ * @param theme - Theme key used to select the display data.
  */
 function applyPreviewTheme(preview: HTMLElement, themeData: ThemePreview, theme: string): void {
   preview.classList.remove(...Object.values(THEME_PREVIEW_DATA).map((data): string => data.previewClass));
@@ -177,6 +205,13 @@ function applyPreviewTheme(preview: HTMLElement, themeData: ThemePreview, theme:
 
 /**
  * Copies the theme's image paths and alternative text to the preview images.
+ *
+ * @param data - Theme preview image paths and alternative text.
+ * @param primary - Primary preview card image.
+ * @param blue - Blue player label image.
+ * @param orange - Orange player label image.
+ * @param player - Current-player preview image.
+ * @param exit - Exit-button preview image.
  */
 function setPreviewImages(data: ThemePreview, primary: HTMLImageElement, blue: HTMLImageElement, orange: HTMLImageElement, player: HTMLImageElement, exit: HTMLImageElement): void {
   setImage(primary, data.primaryImage, data.primaryAlt);
@@ -189,6 +224,10 @@ function setPreviewImages(data: ThemePreview, primary: HTMLImageElement, blue: H
 
 /**
  * Sets an image's source path and alternative text.
+ *
+ * @param image - Image element to update.
+ * @param src - Image source path.
+ * @param alt - Alternative text for the image.
  */
 function setImage(image: HTMLImageElement, src: string, alt: string): void {
   image.src = src;
@@ -198,6 +237,9 @@ function setImage(image: HTMLImageElement, src: string, alt: string): void {
 
 /**
  * Shows the secondary preview image only if the theme supplies an image and alternative text.
+ *
+ * @param data - Theme preview image paths and alternative text.
+ * @param card - Secondary preview image to show or clear.
  */
 function setSecondaryPreview(data: ThemePreview, card: HTMLImageElement): void {
   if (data.secondaryImage && data.secondaryAlt) return showSecondaryPreview(card, data.secondaryImage, data.secondaryAlt);
@@ -209,6 +251,10 @@ function setSecondaryPreview(data: ThemePreview, card: HTMLImageElement): void {
 
 /**
  * Shows the secondary preview image and applies its image data.
+ *
+ * @param card - Secondary preview image to reveal.
+ * @param src - Image source path.
+ * @param alt - Alternative text for the image.
  */
 function showSecondaryPreview(card: HTMLImageElement, src: string, alt: string): void {
   card.hidden = false;
@@ -232,6 +278,8 @@ export function updateSettingsSummary(): void {
 
 /**
  * Collects the summary text elements and the start button.
+ *
+ * @returns Summary text and start-button references; missing DOM elements remain null at runtime.
  */
 function getSummaryElements(): SummaryElements {
   return {
@@ -245,6 +293,9 @@ function getSummaryElements(): SummaryElements {
 
 /**
  * Sets an element's text if the element exists.
+ *
+ * @param element - Element to update when present.
+ * @param text - Text to display.
  */
 function setSummaryText(element: HTMLElement | null, text: string): void {
   if (element) element.textContent = text;
@@ -266,6 +317,9 @@ export function setupSettingsSelection(): void {
 
 /**
  * Returns the theme's display label or a placeholder.
+ *
+ * @param theme - Selected theme key, or undefined when unselected.
+ * @returns Theme display label, or Theme when the key is missing or unknown.
  */
 function getThemeSummaryText(theme: string | undefined): string {
   return { "code-vibes": "Code Vibe theme", gaming: "Game theme", "da-projects": "DA Project theme", foods: "Food theme" }[theme ?? ""] ?? "Theme";
@@ -274,6 +328,9 @@ function getThemeSummaryText(theme: string | undefined): string {
 
 /**
  * Returns the player's display label or a placeholder if no player is selected.
+ *
+ * @param player - Selected player key, or undefined when unselected.
+ * @returns Player display label, or Player when the selection is missing or unknown.
  */
 function getPlayerSummaryText(player: string | undefined): string {
   if (player === "blue") {
@@ -288,6 +345,9 @@ function getPlayerSummaryText(player: string | undefined): string {
 
 /**
  * Returns the card-count label or a placeholder if no board size is selected.
+ *
+ * @param boardSize - Selected card count as text, or undefined when unselected.
+ * @returns Board-size display label, or Board size when no selection is supplied.
  */
 function getBoardSizeSummaryText(boardSize: string | undefined): string {
   if (!boardSize) return "Board size";
@@ -297,6 +357,8 @@ function getBoardSizeSummaryText(boardSize: string | undefined): string {
 
 /**
  * Reads the selected radio inputs, leaving missing selections undefined.
+ *
+ * @returns Selected theme, player, and board-size values, with undefined for missing selections.
  */
 function getInputData(): SettingsInputData {
   const selectedTheme = document.querySelector<HTMLInputElement>('input[name="game-theme"]:checked')?.value;
@@ -313,6 +375,8 @@ function getInputData(): SettingsInputData {
 /**
  * Builds the game configuration from the selected settings.
  * Missing selections default to Code vibes, blue, and 16 cards.
+ *
+ * @returns Selected game configuration with defaults for missing selections.
  */
 export function getGameConfig(): GameConfig {
   const { selectedTheme, selectedPlayer, selectedBoardSize } = getInputData();

@@ -6,6 +6,8 @@ import { GAME_THEME_DATA } from "../theme-data";
 
 /**
  * Returns half the selected card count, or zero if no board size is selected.
+ *
+ * @returns Half the selected card count, or zero when no board size is selected.
  */
 function getPairCount(): number {
   const cardCount = parseInt(document.querySelector<HTMLInputElement>
@@ -16,6 +18,9 @@ function getPairCount(): number {
 
 /**
  * Selects motifs for the current board size and includes each motif twice.
+ *
+ * @param selectedTheme - Existing theme key used to select card motifs and theme data.
+ * @returns Selected motif references, with each motif included twice.
  */
 function getCardMotifs(selectedTheme: string): CardMotif[] {
   const pairCount = getPairCount();
@@ -39,6 +44,10 @@ export function createShuffledDeck(selectedTheme: string): Card[] {
 
 /**
  * Creates an unmatched card from a motif and its deck index.
+ *
+ * @param motif - Motif shared by the two cards in a pair.
+ * @param index - Position in the deck used to identify the card.
+ * @returns New unmatched card with an ID derived from its deck index.
  */
 function createCard(motif: CardMotif, index: number): Card {
   return { id: index, motifId: motif.id, image: motif.image, alt: motif.alt, isMatched: false };
@@ -47,6 +56,9 @@ function createCard(motif: CardMotif, index: number): Card {
 
 /**
  * Shuffles the supplied array in place using Fisher-Yates and returns that array.
+ *
+ * @param deck - Card array to shuffle in place.
+ * @returns The supplied array after shuffling it in place.
  */
 function shuffleCards(deck: Card[]): Card[] {
   for (let i = deck.length - 1; i > 0; i--) {
@@ -59,6 +71,9 @@ function shuffleCards(deck: Card[]): Card[] {
 
 /**
  * Replaces the board contents with card buttons using the selected theme.
+ *
+ * @param selectedTheme - Existing theme key used to select card motifs and theme data.
+ * @param cards - Cards to render on the board.
  */
 export function renderPlayingFieldCards(selectedTheme: string, cards: Card[]): void {
   const playingFieldBoard = document.getElementById("playingFieldBoard");
@@ -69,6 +84,11 @@ export function renderPlayingFieldCards(selectedTheme: string, cards: Card[]): v
 
 /**
  * Creates a card button and links it to its game data through data-card-id.
+ *
+ * @param selectedTheme - Existing theme key used to select card motifs and theme data.
+ * @param card - Card data to display or update.
+ * @param index - Position in the deck used to identify the card.
+ * @returns Card button containing the themed markup and card ID.
  */
 function createMemoryCard(selectedTheme: string, card: Card, index: number): HTMLButtonElement {
   const memoryCard = document.createElement("button");
@@ -82,6 +102,9 @@ function createMemoryCard(selectedTheme: string, card: Card, index: number): HTM
 
 /**
  * Reveals an eligible card and notifies the game flow when two cards are selected.
+ *
+ * @param cardElement - Card element selected on the playing field.
+ * @param onPairSelected - Callback invoked when two eligible cards have been revealed.
  */
 function openCard(cardElement: HTMLElement, onPairSelected: () => void): void {
   if (gameState.status !== "playing" || gameState.isLocked) return;
@@ -100,6 +123,8 @@ function openCard(cardElement: HTMLElement, onPairSelected: () => void): void {
 
 /**
  * Marks a card as matched in both the game state and the DOM.
+ *
+ * @param card - Card data to display or update.
  */
 export function markCardAsMatched(card: Card): void {
   card.isMatched = true;

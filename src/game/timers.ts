@@ -3,6 +3,8 @@ import type { PausableTimer } from "../types";
 
 /**
  * Creates timer data without starting a timeout.
+ *
+ * @returns Inactive timer state with no pending action.
  */
 export function createPausableTimer(): PausableTimer {
   return {
@@ -16,6 +18,8 @@ export function createPausableTimer(): PausableTimer {
 
 /**
  * Stops the timer and discards its remaining time and pending action.
+ *
+ * @param timer - Timer state to update.
  */
 export function cancelTimer(timer: PausableTimer): void {
   window.clearTimeout(timer.timeoutId);
@@ -27,6 +31,8 @@ export function cancelTimer(timer: PausableTimer): void {
 
 /**
  * Resets the expired timer before running its pending action.
+ *
+ * @param timer - Timer state to update.
  */
 function finishTimer(timer: PausableTimer): void {
   const callback = timer.action;
@@ -38,6 +44,8 @@ function finishTimer(timer: PausableTimer): void {
 /**
  * Starts a prepared or paused timer using its remaining time.
  * Does nothing if the timer is already running or has no pending action.
+ *
+ * @param timer - Timer state to update.
  */
 export function resumeTimer(timer: PausableTimer): void {
   if (!timer.action || timer.timeoutId !== undefined) return;
@@ -51,6 +59,8 @@ export function resumeTimer(timer: PausableTimer): void {
 
 /**
  * Pauses a running timer and stores its remaining time.
+ *
+ * @param timer - Timer state to update.
  */
 export function pauseTimer(timer: PausableTimer): void {
   if (timer.timeoutId === undefined) return;
