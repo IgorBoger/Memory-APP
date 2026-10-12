@@ -1,87 +1,87 @@
 # Memory-APP
 
-Ein Memory-Spiel für zwei Personen im Browser, entwickelt im Rahmen der Developer Akademie. Zwei Spieler treten am selben Gerät gegeneinander an und versuchen, möglichst viele Kartenpaare zu finden.
+A browser-based memory game for two players, developed as part of the Developer Akademie course. Players compete on the same device to find as many matching card pairs as possible.
 
-## Funktionen
+## Features
 
-- Vier Designs mit passenden Kartenmotiven: **Code vibes**, **Gaming**, **DA projects** und **Foods**.
-- Wählbare Spielfeldgröße mit **16, 24 oder 36 Karten**.
-- Auswahl des Startspielers: **Blau** oder **Orange**.
-- Zufällig gemischte Karten, Anzeige des aktuellen Spielers und Punktestand.
-- Ergebnisanzeige für Sieg oder Unentschieden.
-- Bestätigungsdialog beim Verlassen einer laufenden Partie.
-- Responsive Gestaltung für verschiedene Bildschirmgrößen und Vorschau der Designs in den Einstellungen.
+- Four themes with matching card designs: **Code vibes**, **Gaming**, **DA projects**, and **Foods**.
+- Three board sizes: **16, 24, or 36 cards**.
+- Choose the starting player: **Blue** or **Orange**.
+- Randomly shuffled cards, a current-player indicator, and score tracking.
+- Results screens for a win or a draw.
+- A confirmation dialog when leaving an active game.
+- Responsive layouts and theme previews in the settings.
 
-## Spielregeln
+## How to Play
 
-1. Klicke auf **Play** und wähle Design, Startspieler und Kartenzahl.
-2. Starte die Partie und decke zwei Karten auf.
-3. Bei gleichen Motiven erhältst du einen Punkt und bist erneut am Zug.
-4. Bei unterschiedlichen Motiven werden die Karten wieder verdeckt und der andere Spieler ist an der Reihe.
-5. Sobald alle Paare gefunden sind, gewinnt die Person mit den meisten Punkten. Gleiche Punktzahlen ergeben ein Unentschieden.
+1. Click **Play** and select a theme, a starting player, and a board size.
+2. Start the game and reveal two cards.
+3. If the cards match, you earn one point and take another turn.
+4. If the cards do not match, they are turned face down again and the other player takes their turn.
+5. Once all pairs have been found, the player with the most points wins. Equal scores result in a draw.
 
-## Technologien
+## Technologies
 
-- **TypeScript** für Spiellogik und Benutzeroberfläche
-- **HTML** und **SCSS** für Struktur und Gestaltung
-- **Vite** als Entwicklungsserver und Build-Werkzeug
+- **TypeScript** for game logic and the user interface
+- **HTML** and **SCSS** for structure and styling
+- **Vite** for the development server and production builds
 
-## Lokal starten
+## Getting Started
 
-Voraussetzungen: **Node.js 20.19+ innerhalb der Version 20 oder Node.js ab 22.12** sowie npm (entsprechend der Vite-Abhängigkeit im Projekt).
+Requirements: **Node.js 20.19+ within version 20, or Node.js 22.12 and later**, plus npm, as required by the project's Vite dependency.
 
-Öffne ein Terminal im Projektordner und installiere die Abhängigkeiten:
+Open a terminal in the project directory and install the dependencies:
 
 ```sh
 npm ci
 ```
 
-Starte anschließend den Entwicklungsserver:
+Start the development server:
 
 ```sh
 npm run dev
 ```
 
-Öffne die im Terminal angezeigte Adresse im Browser. Mit dem Standardport ist das `http://localhost:5173/memory/`.
+Open the address shown in the terminal. With the default port, the application is available at `http://localhost:5173/memory/`.
 
-## Build und Vorschau
+## Build and Preview
 
 ```sh
 npm run build
 ```
 
-Der Build prüft zuerst die TypeScript-Typen und erzeugt anschließend die fertige Anwendung im Ordner `dist/`.
+The build first checks TypeScript types, then generates the production application in the `dist/` directory.
 
-Für eine lokale Vorschau des Builds:
+To preview the production build locally:
 
 ```sh
 npm run preview
 ```
 
-Öffne die im Terminal angezeigte Vorschauadresse mit dem Pfad `/memory/`.
+Open the preview address shown in the terminal using the `/memory/` path.
 
-## Projektstruktur
+## Project Structure
 
 ```text
 Memory-APP/
 ├── public/
-│   ├── fonts/          # Lokale Schriftarten
-│   └── img/            # Kartenmotive und Grafiken
+│   ├── fonts/          # Local fonts
+│   └── img/            # Card designs and graphics
 ├── src/
-│   ├── game/           # Karten, Spielablauf und Timer
-│   ├── styles/         # SCSS für Seiten und Komponenten
-│   ├── templates/      # HTML-Vorlage für Karten
-│   ├── ui/             # Einstellungen, Navigation und Ergebnisse
-│   ├── app-context.ts  # Gemeinsamer Spielzustand
-│   ├── card-data.ts    # Kartenmotive der Designs
-│   ├── main.ts         # Einstiegspunkt
-│   ├── theme-data.ts   # Daten für die Designs
-│   └── types.ts        # TypeScript-Typen
+│   ├── game/           # Cards, game flow, and timers
+│   ├── styles/         # SCSS for pages and components
+│   ├── templates/      # Card HTML template
+│   ├── ui/             # Settings, navigation, and results
+│   ├── app-context.ts  # Shared game state
+│   ├── card-data.ts    # Card motifs for each theme
+│   ├── main.ts         # Entry point
+│   ├── theme-data.ts   # Theme data
+│   └── types.ts        # TypeScript types
 ├── index.html
 ├── package.json
 └── vite.config.ts
 ```
 
-## Bereitstellung
+## Deployment
 
-Die Anwendung ist in `vite.config.ts` für den Basispfad **`/memory/`** konfiguriert. Beim Veröffentlichen müssen die Inhalte von `dist/` unter diesem Pfad erreichbar sein. Für einen anderen Zielpfad muss `base` angepasst und der Build erneut erstellt werden. Das gilt auch für GitHub Pages, wenn der Repository-Pfad von `/memory/` abweicht.
+The application uses the **`/memory/`** base path configured in `vite.config.ts`. When deploying, serve the contents of `dist/` at that path. To deploy at a different path, update `base` and rebuild the application. This also applies to GitHub Pages if the repository path differs from `/memory/`.
