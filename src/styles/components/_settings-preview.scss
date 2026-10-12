@@ -150,14 +150,20 @@
     }
 
     &__summary {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: minmax(156px, 1.2fr) 20px minmax(130px, 1fr) 20px minmax(140px, 1.1fr) auto;
+        gap: 4px;
+
         align-items: center;
         background-color: rgba(246, 246, 246);
-        padding: 14px 20px;
+        padding: 14px 12px;
         width: 100%;
         box-sizing: border-box;
+    }
+
+    &__summary-divider {
+        width: 20px;
+        height: auto;
     }
 
     &__summary-value {
@@ -168,10 +174,13 @@
         letter-spacing: 0;
         color: rgb(48, 49, 49);
         white-space: nowrap;
+        text-align: center;
     }
 
     &__start-button {
         display: flex;
+        justify-self: end;
+        white-space: nowrap;
         flex-direction: row;
         align-items: center;
         border: none;

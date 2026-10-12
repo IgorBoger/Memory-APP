@@ -76,7 +76,7 @@
     }
 
     &__option:has(.settings-page__option-input:checked) .settings-page__option-label,
-    &__theme-list:has(.settings-page__option:hover) .settings-page__option:hover .settings-page__option-label {
+    &__option:hover .settings-page__option-label {
         font-weight: 700;
     }
 
@@ -108,7 +108,7 @@
     }
 
     &__option-input:checked::before,
-    &__theme-list:has(.settings-page__option:hover) .settings-page__option:hover .settings-page__option-input::before {
+    &__option:hover .settings-page__option-input::before {
         opacity: 1;
     }
 
@@ -118,7 +118,7 @@
     }
 
     &__option:has(.settings-page__option-input:checked) .settings-page__option-indicator,
-    &__theme-list:has(.settings-page__option:hover) .settings-page__option:hover .settings-page__option-indicator {
+    &__option:hover .settings-page__option-indicator {
         opacity: 1;
     }
 

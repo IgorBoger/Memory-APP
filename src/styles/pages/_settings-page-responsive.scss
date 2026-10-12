@@ -241,30 +241,9 @@
     }
 }
 
-@container (width < 640px) {
-    .settings-page {
-        &__summary {
-            padding: 12px;
-            gap: 8px;
-        }
-
-        &__summary-value {
-            white-space: normal;
-            min-width: 0;
-        }
-
-        &__start-button {
-            padding: 12px;
-            flex-shrink: 0;
-        }
-    }
-}
-
 @media (min-width: 1001px) and (max-width: 1250px) {
 
-    .settings-page__option,
-    .settings-page__summary-value,
-    .settings-page__start-button {
+    .settings-page__option {
         font-size: 18px;
     }
 }
