@@ -84,12 +84,12 @@ export type CurrentPlayerDisplay =
     type: "image";
     currentPlayerBlueImage: string;
     currentPlayerOrangeImage: string;
-    currentPlayerAlt: string
+    currentPlayerAlt: string;
   }
   | {
     type: "badge";
     iconImage: string;
-    alt: string
+    alt: string;
   };
 
 

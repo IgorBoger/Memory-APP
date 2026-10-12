@@ -45,13 +45,40 @@ export function setupQuitPopup(): void {
  * @param panel - Quit dialog panel containing the focusable controls.
  */
 function handleQuitPopupKeydown(event: KeyboardEvent, panel: HTMLElement): void {
-  if (event.key === "Escape") return event.preventDefault(), resumeGame();
-  if (event.key !== "Tab") return;
+  if (event.key === "Escape") {
+    event.preventDefault();
+    resumeGame();
+    return;
+  }
+  if (event.key === "Tab") wrapQuitPopupFocus(event, panel);
+}
+
+
+/**
+ * Wraps Tab focus between the first and last controls in the quit dialog.
+ *
+ * @param event - Tab key event indicating the focus direction.
+ * @param panel - Quit dialog panel containing the focusable controls.
+ */
+function wrapQuitPopupFocus(event: KeyboardEvent, panel: HTMLElement): void {
   const items = panel.querySelectorAll<HTMLElement>("button:not([disabled]), [href], [tabindex]:not([tabindex='-1'])");
-  const first = items[0], last = items[items.length - 1];
+  const first = items[0];
+  const last = items[items.length - 1];
   if (!first || !last) return;
-  if (event.shiftKey && document.activeElement === first) event.preventDefault(), last.focus();
-  if (!event.shiftKey && document.activeElement === last) event.preventDefault(), first.focus();
+  if (event.shiftKey && document.activeElement === first) focusQuitPopupControl(event, last);
+  if (!event.shiftKey && document.activeElement === last) focusQuitPopupControl(event, first);
+}
+
+
+/**
+ * Prevents the default Tab action and focuses the opposite dialog control.
+ *
+ * @param event - Keyboard event whose default focus movement should be prevented.
+ * @param control - Dialog control to receive focus.
+ */
+function focusQuitPopupControl(event: KeyboardEvent, control: HTMLElement): void {
+  event.preventDefault();
+  control.focus();
 }
 
 

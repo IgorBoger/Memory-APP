@@ -113,8 +113,7 @@ function selectPreviewTheme(theme: string): void {
  */
 function updateSettingsPreview(theme: string): void {
   const settingsPreview = document.getElementById("settingsPreview");
-  if (!settingsPreview) return;
-  if (pendingPreviewTheme === theme) return;
+  if (!settingsPreview || pendingPreviewTheme === theme) return;
   if (currentPreviewTheme === theme) {
     window.clearTimeout(previewFadeTimeout);
     previewFadeTimeout = undefined;
