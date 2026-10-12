@@ -8,9 +8,9 @@ import { gameThemeData } from "../theme-data";
  * Returns half the selected card count, or zero if no board size is selected.
  */
 function getPairCount(): number {
-    const cardCount = parseInt(document.querySelector<HTMLInputElement>
-        ('input[name="board-size"]:checked')?.value || "0", 10);
-    return cardCount / 2;
+  const cardCount = parseInt(document.querySelector<HTMLInputElement>
+    ('input[name="board-size"]:checked')?.value || "0", 10);
+  return cardCount / 2;
 }
 
 
@@ -18,9 +18,9 @@ function getPairCount(): number {
  * Selects motifs for the current board size and includes each motif twice.
  */
 function getCardMotifs(selectedTheme: string) {
-    const pairCount = getPairCount();
-    const motifs = cardMotifsByTheme[selectedTheme].slice(0, pairCount);
-    return [...motifs, ...motifs];
+  const pairCount = getPairCount();
+  const motifs = cardMotifsByTheme[selectedTheme].slice(0, pairCount);
+  return [...motifs, ...motifs];
 }
 
 
@@ -31,9 +31,9 @@ function getCardMotifs(selectedTheme: string) {
  * @returns New cards with unique IDs and two cards per motif.
  */
 export function createShuffledDeck(selectedTheme: string) {
-    const deck = getCardMotifs(selectedTheme).map(createCard);
-    shuffleCards(deck);
-    return deck;
+  const deck = getCardMotifs(selectedTheme).map(createCard);
+  shuffleCards(deck);
+  return deck;
 }
 
 
@@ -41,7 +41,7 @@ export function createShuffledDeck(selectedTheme: string) {
  * Creates an unmatched card from a motif and its deck index.
  */
 function createCard(motif: CardMotif, index: number): Card {
-    return { id: index, motifId: motif.id, image: motif.image, alt: motif.alt, isMatched: false };
+  return { id: index, motifId: motif.id, image: motif.image, alt: motif.alt, isMatched: false };
 }
 
 
@@ -49,11 +49,11 @@ function createCard(motif: CardMotif, index: number): Card {
  * Shuffles the supplied array in place using Fisher-Yates and returns that array.
  */
 function shuffleCards(deck: Card[]): Card[] {
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
-    }
-    return deck;
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  return deck;
 }
 
 
@@ -61,9 +61,9 @@ function shuffleCards(deck: Card[]): Card[] {
  * Replaces the board contents with card buttons using the selected theme.
  */
 export function renderPlayingFieldCards(selectedTheme: string, cards: Card[]) {
-    const playingFieldBoard = document.getElementById("playingFieldBoard");
-    if (!playingFieldBoard) return;
-    playingFieldBoard.replaceChildren(...cards.map((card, index) => createMemoryCard(selectedTheme, card, index)));
+  const playingFieldBoard = document.getElementById("playingFieldBoard");
+  if (!playingFieldBoard) return;
+  playingFieldBoard.replaceChildren(...cards.map((card, index) => createMemoryCard(selectedTheme, card, index)));
 }
 
 
@@ -71,12 +71,12 @@ export function renderPlayingFieldCards(selectedTheme: string, cards: Card[]) {
  * Creates a card button and links it to its game data through data-card-id.
  */
 function createMemoryCard(selectedTheme: string, card: Card, index: number) {
-    const memoryCard = document.createElement("button");
-    const gameTheme = gameThemeData[selectedTheme];
-    memoryCard.className = "memory-card";
-    memoryCard.dataset.cardId = String(card.id);
-    memoryCard.innerHTML = createMemoryCardMarkup(gameTheme, card, index);
-    return memoryCard;
+  const memoryCard = document.createElement("button");
+  const gameTheme = gameThemeData[selectedTheme];
+  memoryCard.className = "memory-card";
+  memoryCard.dataset.cardId = String(card.id);
+  memoryCard.innerHTML = createMemoryCardMarkup(gameTheme, card, index);
+  return memoryCard;
 }
 
 
@@ -84,17 +84,17 @@ function createMemoryCard(selectedTheme: string, card: Card, index: number) {
  * Reveals an eligible card and notifies the game flow when two cards are selected.
  */
 function openCard(cardElement: HTMLElement, onPairSelected: () => void) {
-    if (gameState.status !== "playing" || gameState.isLocked) return;
-    const cardId = Number(cardElement.dataset.cardId);
-    const card = gameState.cards.find(card => card.id === cardId);
-    if (!card || card.isMatched) return;
-    if (gameState.flippedCardIds.includes(cardId)) return;
-    gameState.flippedCardIds.push(cardId);
-    cardElement.classList.add("is-flipped");
-    if (gameState.flippedCardIds.length === 2) {
-        gameState.isLocked = true;
-        onPairSelected();
-    }
+  if (gameState.status !== "playing" || gameState.isLocked) return;
+  const cardId = Number(cardElement.dataset.cardId);
+  const card = gameState.cards.find(card => card.id === cardId);
+  if (!card || card.isMatched) return;
+  if (gameState.flippedCardIds.includes(cardId)) return;
+  gameState.flippedCardIds.push(cardId);
+  cardElement.classList.add("is-flipped");
+  if (gameState.flippedCardIds.length === 2) {
+    gameState.isLocked = true;
+    onPairSelected();
+  }
 }
 
 
@@ -102,11 +102,11 @@ function openCard(cardElement: HTMLElement, onPairSelected: () => void) {
  * Marks a card as matched in both the game state and the DOM.
  */
 export function markCardAsMatched(card: Card) {
-    card.isMatched = true;
-    const cardElement = document.querySelector(
-        `#playingFieldBoard .memory-card[data-card-id="${card.id}"]`
-    );
-    cardElement?.classList.add("is-matched");
+  card.isMatched = true;
+  const cardElement = document.querySelector(
+    `#playingFieldBoard .memory-card[data-card-id="${card.id}"]`
+  );
+  cardElement?.classList.add("is-matched");
 }
 
 
@@ -117,13 +117,13 @@ export function markCardAsMatched(card: Card) {
  * @param onPairSelected - Called when two cards have been revealed.
  */
 export function initCard(onPairSelected: () => void) {
-    const fieldRef = document.getElementById("playingFieldBoard");
-    if (fieldRef) {
-        fieldRef.addEventListener("click", e => {
-            const card = (e.target as HTMLElement).closest(".memory-card");
-            if (card instanceof HTMLElement) {
-                openCard(card, onPairSelected);
-            }
-        });
-    }
+  const fieldRef = document.getElementById("playingFieldBoard");
+  if (fieldRef) {
+    fieldRef.addEventListener("click", e => {
+      const card = (e.target as HTMLElement).closest(".memory-card");
+      if (card instanceof HTMLElement) {
+        openCard(card, onPairSelected);
+      }
+    });
+  }
 }

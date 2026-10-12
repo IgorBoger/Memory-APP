@@ -7,14 +7,14 @@
  * @param nextPage - Page to display next.
  */
 export function showPage(currentPage: HTMLElement, nextPage: HTMLElement) {
-    currentPage.classList.remove('page--active');
-    setTimeout(() => {
-        currentPage.hidden = true;
-        nextPage.hidden = false;
-        requestAnimationFrame(() => {
-            nextPage.classList.add('page--active');
-        });
-    }, 300);
+  currentPage.classList.remove('page--active');
+  setTimeout(() => {
+    currentPage.hidden = true;
+    nextPage.hidden = false;
+    requestAnimationFrame(() => {
+      nextPage.classList.add('page--active');
+    });
+  }, 300);
 }
 
 
@@ -22,8 +22,8 @@ export function showPage(currentPage: HTMLElement, nextPage: HTMLElement) {
  * Runs a 500-millisecond fade-in animation on an HTML element.
  */
 export function fadeInElement(element: HTMLElement) {
-    element.animate(
-        [{ opacity: 0 }, { opacity: 1 }],
-        { duration: 500, easing: "ease-in-out" }
-    );
+  element.animate(
+    [{ opacity: 0 }, { opacity: 1 }],
+    { duration: 500, easing: "ease-in-out" }
+  );
 }
