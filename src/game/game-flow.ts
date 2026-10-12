@@ -8,11 +8,11 @@ import { showGameOver } from "../ui/results";
 import { cancelCardReset, cancelGameOver, resetGameState, gameState, cardResetTimer, gameOverTimer } from "../app-context";
 
 /** Delay before hiding a mismatched card pair, in milliseconds. */
-const CARD_RESET_DELAY_MS = 1000;
+const CARD_RESET_DELAY_MS = 800;
 /** Delay before showing the game-over page after the final match, in milliseconds. */
 const GAME_OVER_DELAY_MS = 1000;
 /** Delay after hiding a mismatched pair before switching players, in milliseconds. */
-const PLAYER_SWITCH_DELAY_MS = 500;
+const PLAYER_SWITCH_DELAY_MS = 300;
 
 /**
  * Compares the two selected cards and handles a match or a mismatch.
@@ -50,7 +50,7 @@ function handleMatchedPair(firstCard: Card, secondCard: Card): void {
 
 
 /**
- * Schedules a mismatched pair to be hidden after one second.
+ * Schedules a mismatched pair to be hidden after 800 milliseconds.
  *
  * @param gameConfig - Game settings used to update the themed display.
  */
@@ -75,7 +75,7 @@ function checkGameOver(): void {
 
 
 /**
- * Hides the selected pair and switches players after 500 milliseconds.
+ * Hides the selected pair and switches players after 300 milliseconds.
  *
  * @param gameConfig - Game settings used to update the themed display.
  */

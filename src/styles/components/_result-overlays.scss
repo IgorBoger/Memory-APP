@@ -1,3 +1,58 @@
+.result-transition {
+    position: relative;
+    height: 100dvh;
+    overflow: clip;
+}
+
+.winner.page,
+.draw.page {
+    --result-offset: 100%;
+    --result-opacity: 1;
+    z-index: 1;
+
+    &.page--active {
+        animation: resultEnter 300ms ease-out both;
+    }
+
+    &.result-entering {
+        pointer-events: none;
+    }
+}
+
+.winner--code-vibes,
+.draw--code-vibes {
+    &.page {
+        --result-offset: -100%;
+    }
+}
+
+.winner--da-projects,
+.draw--da-projects {
+    &.page {
+        --result-offset: 0%;
+        --result-opacity: 0;
+    }
+}
+
+@keyframes resultEnter {
+    from {
+        transform: translateY(var(--result-offset));
+        opacity: var(--result-opacity);
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .winner.page.page--active,
+    .draw.page.page--active {
+        animation: none;
+    }
+}
+
 .winner,
 .draw {
     height: 100dvh;

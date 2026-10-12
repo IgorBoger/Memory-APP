@@ -23,6 +23,35 @@ export function showPage(currentPage: HTMLElement, nextPage: HTMLElement): void 
 }
 
 
+/** Slides or fades a result page over the current page, then hides the covered page. */
+export function showResultPage(currentPage: HTMLElement, nextPage: HTMLElement): void {
+  const container = nextPage.parentElement;
+  container?.classList.add("result-transition");
+  currentPage.inert = true;
+  nextPage.classList.add("result-entering");
+  nextPage.hidden = false;
+  nextPage.classList.add("page--active");
+  void waitForPageAnimation(nextPage).then((): void => finishResultTransition(currentPage, nextPage));
+}
+
+
+/** Waits for the page animation, including cancellation or reduced motion. */
+async function waitForPageAnimation(page: HTMLElement): Promise<void> {
+  const animations = page.getAnimations();
+  await Promise.all(animations.map((animation): Promise<unknown> => animation.finished.catch(() => undefined)));
+}
+
+
+/** Hides the covered page and releases the result controls after the animation. */
+function finishResultTransition(currentPage: HTMLElement, nextPage: HTMLElement): void {
+  currentPage.hidden = true;
+  currentPage.classList.remove("page--active");
+  currentPage.inert = false;
+  nextPage.classList.remove("result-entering");
+  nextPage.parentElement?.classList.remove("result-transition");
+}
+
+
 /**
  * Runs a 500-millisecond fade-in animation on an HTML element.
  *

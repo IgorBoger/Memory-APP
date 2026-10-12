@@ -1,5 +1,5 @@
 import type { GameConfig, Player, ResultTheme } from "../types";
-import { showPage } from "./navigation";
+import { showPage, showResultPage } from "./navigation";
 import { resetSettings, updateSettingsSummary, getGameConfig } from "./settings";
 import { cancelCardReset, cancelGameOver, cancelResultOverlay, resetGameState, gameState, appTimers } from "../app-context";
 import { RESULT_THEME_DATA } from "../theme-data";
@@ -127,7 +127,7 @@ function applyWinnerContent(overlay: HTMLElement, player: Player, theme: ResultT
  * Configures the winner overlay and navigates to it from the current page.
  *
  * @param player - Player whose state or result should be displayed.
- * @param currentPage - Page to fade out and hide.
+ * @param currentPage - Page to cover during the result animation, then hide.
  * @param theme - Theme key; defaults to the currently selected game theme.
  */
 function showWinnerOverlay(player: Player, currentPage: HTMLElement, theme = getGameConfig().selectedTheme): void {
@@ -136,7 +136,7 @@ function showWinnerOverlay(player: Player, currentPage: HTMLElement, theme = get
   const resultTheme = getResultTheme(theme);
   applyResultTheme(overlay, resultTheme, "winner");
   applyWinnerContent(overlay, player, resultTheme);
-  showPage(currentPage, overlay);
+  showResultPage(currentPage, overlay);
 }
 
 
@@ -163,7 +163,7 @@ export function setupWinnerOverlay(): void {
 /**
  * Configures the draw overlay and navigates to it from the current page.
  *
- * @param currentPage - Page to fade out and hide.
+ * @param currentPage - Page to cover during the result animation, then hide.
  * @param theme - Theme key; defaults to the currently selected game theme.
  */
 function showDrawOverlay(currentPage: HTMLElement, theme = getGameConfig().selectedTheme): void {
@@ -173,7 +173,7 @@ function showDrawOverlay(currentPage: HTMLElement, theme = getGameConfig().selec
   applyResultTheme(overlay, resultTheme, "draw");
   const scales = overlay.querySelector<HTMLImageElement>(".draw__scales");
   if (scales) scales.src = resultTheme.drawImage;
-  showPage(currentPage, overlay);
+  showResultPage(currentPage, overlay);
 }
 
 
