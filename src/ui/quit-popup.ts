@@ -2,7 +2,9 @@ import { resumeTimer, pauseTimer } from "../game/timers";
 import { showPage } from "./navigation";
 import { getGameConfig } from "./settings";
 import { cancelCardReset, cancelGameOver, cancelResultOverlay, gameState, cardResetTimer, gameOverTimer } from "../app-context";
-import { quitPopupThemeData } from "../theme-data";
+import { QUIT_POPUP_THEME_DATA } from "../theme-data";
+
+const QUIT_POPUP_CLOSE_DELAY_MS = 300;
 
 let quitPopupTrigger: HTMLElement | null = null;
 
@@ -88,9 +90,9 @@ function showQuitPopup(popup: HTMLElement, backButton: HTMLButtonElement): void 
  * Applies the current theme's class and labels to the quit dialog.
  */
 function applyQuitPopupTheme(popup: HTMLElement): void {
-  const theme = quitPopupThemeData[getGameConfig().selectedTheme]
-    ?? quitPopupThemeData["code-vibes"];
-  popup.classList.remove(...Object.values(quitPopupThemeData).map((theme): string => theme.popupClass));
+  const theme = QUIT_POPUP_THEME_DATA[getGameConfig().selectedTheme]
+    ?? QUIT_POPUP_THEME_DATA["code-vibes"];
+  popup.classList.remove(...Object.values(QUIT_POPUP_THEME_DATA).map((theme): string => theme.popupClass));
   popup.classList.add(theme.popupClass);
   document.getElementById("quitPopupTitle")!.textContent = theme.title;
   document.getElementById("quitPopupBack")!.textContent = theme.backLabel;
@@ -109,7 +111,7 @@ function closeQuitPopup(): void {
     popup.hidden = true;
     quitPopupTrigger?.focus();
     quitPopupTrigger = null;
-  }, 300);
+  }, QUIT_POPUP_CLOSE_DELAY_MS);
 }
 
 

@@ -1,4 +1,4 @@
-const groups = [
+const SETTINGS_GROUPS = [
   { name: "game-theme", target: "settingsGameThemesValue" },
   { name: "player", target: "settingsPlayerValue" },
   { name: "board-size", target: "settingsBoardValue" }
@@ -89,7 +89,7 @@ function handleLayoutChange(): void {
 }
 
 export function updateSettingsGroupLabels(): void {
-  groups.forEach(({ name, target }): void => {
+  SETTINGS_GROUPS.forEach(({ name, target }): void => {
     const selected = document.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`);
     const label = selected?.closest("label")?.querySelector(".settings-page__option-label")?.textContent;
     const value = document.getElementById(target);

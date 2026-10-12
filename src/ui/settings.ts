@@ -1,7 +1,9 @@
 import type { GameConfig, Player, ThemePreview } from "../types";
 import { showPage } from "./navigation";
-import { gameThemeData, themePreviewData } from "../theme-data";
+import { GAME_THEME_DATA, THEME_PREVIEW_DATA } from "../theme-data";
 import { updateSettingsGroupLabels } from "../settings-groups";
+
+const PREVIEW_TRANSITION_DELAY_MS = 120;
 
 type PreviewElements = {
   settingsPreview: HTMLElement | null;
@@ -107,7 +109,7 @@ function updateSettingsPreview(theme: string): void {
     return;
   }
   preparePreviewTransition(settingsPreview, theme);
-  previewFadeTimeout = window.setTimeout((): void => finishPreviewTransition(theme, settingsPreview), 120);
+  previewFadeTimeout = window.setTimeout((): void => finishPreviewTransition(theme, settingsPreview), PREVIEW_TRANSITION_DELAY_MS);
 }
 
 
@@ -138,7 +140,7 @@ function finishPreviewTransition(theme: string, preview: HTMLElement): void {
  */
 function applySettingsPreview(theme: string): void {
   const { settingsPreview, primaryCard, secondaryCard, blueLabel, orangeLabel, currentPlayerIcon, exitIcon } = getPreviewElements();
-  const themePreview = themePreviewData[theme] ?? themePreviewData["code-vibes"];
+  const themePreview = THEME_PREVIEW_DATA[theme] ?? THEME_PREVIEW_DATA["code-vibes"];
   if (!settingsPreview || !primaryCard || !secondaryCard || !blueLabel ||
     !orangeLabel || !currentPlayerIcon || !exitIcon) return;
   applyPreviewTheme(settingsPreview, themePreview, theme);
@@ -167,9 +169,9 @@ function getPreviewElements(): PreviewElements {
  * Applies the preview's theme class and theme data attribute.
  */
 function applyPreviewTheme(preview: HTMLElement, themeData: ThemePreview, theme: string): void {
-  preview.classList.remove(...Object.values(themePreviewData).map((data): string => data.previewClass));
+  preview.classList.remove(...Object.values(THEME_PREVIEW_DATA).map((data): string => data.previewClass));
   preview.classList.add(themeData.previewClass);
-  preview.dataset.themePreview = themePreviewData[theme] ? theme : "code-vibes";
+  preview.dataset.themePreview = THEME_PREVIEW_DATA[theme] ? theme : "code-vibes";
 }
 
 
@@ -314,7 +316,7 @@ function getInputData(): SettingsInputData {
  */
 export function getGameConfig(): GameConfig {
   const { selectedTheme, selectedPlayer, selectedBoardSize } = getInputData();
-  const gameTheme = gameThemeData[selectedTheme ?? "code-vibes"];
+  const gameTheme = GAME_THEME_DATA[selectedTheme ?? "code-vibes"];
   const cardCount = Number(selectedBoardSize ?? 16);
   const currentPlayer: Player = selectedPlayer === "orange" ? "orange" : "blue";
   return {

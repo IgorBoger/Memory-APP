@@ -1,6 +1,6 @@
 import type { CardMotif } from "./types";
 
-export const cardMotifsByTheme: Record<string, CardMotif[]> = {
+export const CARD_MOTIFS_BY_THEME: Record<string, CardMotif[]> = {
   "code-vibes": [
     {
       id: "angular",

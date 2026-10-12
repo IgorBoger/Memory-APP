@@ -1,6 +1,6 @@
 import type { GameTheme, QuitPopupTheme, ResultTheme, ThemePreview } from "./types";
 
-export const quitPopupThemeData: Record<string, QuitPopupTheme> = {
+export const QUIT_POPUP_THEME_DATA: Record<string, QuitPopupTheme> = {
   "code-vibes": {
     popupClass: "quit-popup--code-vibes",
     title: "Are you sure you want to quit the game?",
@@ -27,7 +27,7 @@ export const quitPopupThemeData: Record<string, QuitPopupTheme> = {
   },
 };
 
-export const resultThemeData: Record<string, ResultTheme> = {
+export const RESULT_THEME_DATA: Record<string, ResultTheme> = {
   "code-vibes": {
     winnerClass: "winner--code-vibes",
     drawClass: "draw--code-vibes",
@@ -74,7 +74,7 @@ export const resultThemeData: Record<string, ResultTheme> = {
   }
 };
 
-export const themePreviewData: Record<string, ThemePreview> = {
+export const THEME_PREVIEW_DATA: Record<string, ThemePreview> = {
   "code-vibes": {
     previewClass: "settings-page__preview-content--code-vibes",
     primaryImage: "img/settings-page/gaming-theme/code-vibes/card-front.png",
@@ -135,7 +135,7 @@ export const themePreviewData: Record<string, ThemePreview> = {
   },
 };
 
-export const gameThemeData: Record<string, GameTheme> = {
+export const GAME_THEME_DATA: Record<string, GameTheme> = {
   "code-vibes": {
     playingFieldClass: "playing-field--code-vibes",
 

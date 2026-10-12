@@ -2,7 +2,9 @@ import type { GameConfig, Player, ResultTheme } from "../types";
 import { showPage } from "./navigation";
 import { resetSettings, updateSettingsSummary, getGameConfig } from "./settings";
 import { cancelCardReset, cancelGameOver, cancelResultOverlay, resetGameState, gameState, appTimers } from "../app-context";
-import { resultThemeData } from "../theme-data";
+import { RESULT_THEME_DATA } from "../theme-data";
+
+const RESULT_OVERLAY_DELAY_MS = 3000;
 
 /**
  * Displays final scores, sets the status to finished, and schedules the result overlay.
@@ -44,7 +46,7 @@ function scheduleResultOverlay(): void {
     appTimers.resultOverlayTimeout = undefined;
     if (gameState.status !== "finished") return;
     showResultOverlay(winner, gameOver);
-  }, 3000);
+  }, RESULT_OVERLAY_DELAY_MS);
 }
 
 
@@ -75,7 +77,7 @@ function getWinningPlayer(): Player | null {
  * Returns the result theme, falling back to Code vibes for an unknown key.
  */
 function getResultTheme(theme: string): ResultTheme {
-  return resultThemeData[theme] ?? resultThemeData["code-vibes"];
+  return RESULT_THEME_DATA[theme] ?? RESULT_THEME_DATA["code-vibes"];
 }
 
 
@@ -84,7 +86,7 @@ function getResultTheme(theme: string): ResultTheme {
  */
 function applyResultTheme(overlay: HTMLElement, theme: ResultTheme, kind: "winner" | "draw"): void {
   const classKey = kind === "winner" ? "winnerClass" : "drawClass";
-  overlay.classList.remove(...Object.values(resultThemeData).map((data): string => data[classKey]));
+  overlay.classList.remove(...Object.values(RESULT_THEME_DATA).map((data): string => data[classKey]));
   overlay.classList.add(theme[classKey]);
   const button = overlay.querySelector<HTMLButtonElement>("button");
   if (button) button.textContent = theme.buttonText;

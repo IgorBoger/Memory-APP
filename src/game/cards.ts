@@ -1,8 +1,8 @@
 import type { Card, CardMotif } from "../types";
 import { createMemoryCardMarkup } from "../templates/card-template";
 import { gameState } from "../app-context";
-import { cardMotifsByTheme } from "../card-data";
-import { gameThemeData } from "../theme-data";
+import { CARD_MOTIFS_BY_THEME } from "../card-data";
+import { GAME_THEME_DATA } from "../theme-data";
 
 /**
  * Returns half the selected card count, or zero if no board size is selected.
@@ -19,7 +19,7 @@ function getPairCount(): number {
  */
 function getCardMotifs(selectedTheme: string): CardMotif[] {
   const pairCount = getPairCount();
-  const motifs = cardMotifsByTheme[selectedTheme].slice(0, pairCount);
+  const motifs = CARD_MOTIFS_BY_THEME[selectedTheme].slice(0, pairCount);
   return [...motifs, ...motifs];
 }
 
@@ -72,7 +72,7 @@ export function renderPlayingFieldCards(selectedTheme: string, cards: Card[]): v
  */
 function createMemoryCard(selectedTheme: string, card: Card, index: number): HTMLButtonElement {
   const memoryCard = document.createElement("button");
-  const gameTheme = gameThemeData[selectedTheme];
+  const gameTheme = GAME_THEME_DATA[selectedTheme];
   memoryCard.className = "memory-card";
   memoryCard.dataset.cardId = String(card.id);
   memoryCard.innerHTML = createMemoryCardMarkup(gameTheme, card, index);

@@ -7,6 +7,10 @@ import { createShuffledDeck, renderPlayingFieldCards, markCardAsMatched } from "
 import { showGameOver } from "../ui/results";
 import { cancelCardReset, cancelGameOver, resetGameState, gameState, cardResetTimer, gameOverTimer } from "../app-context";
 
+const CARD_RESET_DELAY_MS = 1000;
+const GAME_OVER_DELAY_MS = 1000;
+const PLAYER_SWITCH_DELAY_MS = 500;
+
 /**
  * Compares the two selected cards and handles a match or a mismatch.
  *
@@ -45,7 +49,7 @@ function handleMatchedPair(firstCard: Card, secondCard: Card): void {
 function scheduleCardReset(gameConfig: GameConfig): void {
   startTimer(cardResetTimer, (): void => {
     closeSelectedCards(gameConfig);
-  }, 1000);
+  }, CARD_RESET_DELAY_MS);
 }
 
 
@@ -57,7 +61,7 @@ function checkGameOver(): void {
     gameState.isLocked = true;
     startTimer(gameOverTimer, (): void => {
       showGameOver();
-    }, 1000);
+    }, GAME_OVER_DELAY_MS);
   }
 }
 
@@ -76,7 +80,7 @@ function closeSelectedCards(gameConfig: GameConfig): void {
     gameState.flippedCardIds = [];
     switchPlayer(gameConfig);
     gameState.isLocked = false;
-  }, 500);
+  }, PLAYER_SWITCH_DELAY_MS);
 }
 
 

@@ -1,4 +1,7 @@
 
+const PAGE_TRANSITION_DELAY_MS = 300;
+const ELEMENT_FADE_DURATION_MS = 500;
+
 
 /**
  * Fades out the current page and opens the next page after 300 milliseconds.
@@ -14,7 +17,7 @@ export function showPage(currentPage: HTMLElement, nextPage: HTMLElement): void 
     requestAnimationFrame((): void => {
       nextPage.classList.add('page--active');
     });
-  }, 300);
+  }, PAGE_TRANSITION_DELAY_MS);
 }
 
 
@@ -24,6 +27,6 @@ export function showPage(currentPage: HTMLElement, nextPage: HTMLElement): void 
 export function fadeInElement(element: HTMLElement): void {
   element.animate(
     [{ opacity: 0 }, { opacity: 1 }],
-    { duration: 500, easing: "ease-in-out" }
+    { duration: ELEMENT_FADE_DURATION_MS, easing: "ease-in-out" }
   );
 }
