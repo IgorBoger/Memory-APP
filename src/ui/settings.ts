@@ -1,7 +1,30 @@
-import type { Player, ThemePreview } from "../types";
+import type { GameConfig, Player, ThemePreview } from "../types";
 import { showPage } from "./navigation";
 import { gameThemeData, themePreviewData } from "../theme-data";
 import { updateSettingsGroupLabels } from "../settings-groups";
+
+type PreviewElements = {
+  settingsPreview: HTMLElement | null;
+  primaryCard: HTMLImageElement;
+  secondaryCard: HTMLImageElement;
+  blueLabel: HTMLImageElement;
+  orangeLabel: HTMLImageElement;
+  currentPlayerIcon: HTMLImageElement;
+  exitIcon: HTMLImageElement;
+};
+
+type SummaryElements = {
+  summaryTheme: HTMLElement | null;
+  summaryPlayer: HTMLElement | null;
+  summaryBoardSize: HTMLElement | null;
+  startButton: HTMLButtonElement;
+};
+
+type SettingsInputData = {
+  selectedTheme: string | undefined;
+  selectedPlayer: string | undefined;
+  selectedBoardSize: string | undefined;
+};
 
 let selectedTheme = "code-vibes";
 let currentPreviewTheme = "code-vibes";
@@ -12,9 +35,9 @@ let previewFadeTimeout: number | undefined;
 /**
  * Registers the Play button to open the settings page. Call once.
  */
-export function startSettingsPage() {
+export function startSettingsPage(): void {
   const playBtn = document.getElementById('playButton');
-  playBtn?.addEventListener('click', () => {
+  playBtn?.addEventListener('click', (): void => {
     const settingsPage = document.getElementById('settingsPage');
     const startPage = document.getElementById('startPage');
     if (startPage && settingsPage) {
@@ -28,10 +51,10 @@ export function startSettingsPage() {
  * Selects Code vibes and clears the player and board-size selections.
  * Updates the preview; the caller updates the summary separately.
  */
-export function resetSettings() {
+export function resetSettings(): void {
   const gameThemeInput = document.querySelector<HTMLInputElement>('input[name="game-theme"][value="code-vibes"]');
   const gameSettingsInputs = document.querySelectorAll<HTMLInputElement>('input[name="player"], input[name="board-size"]');
-  gameSettingsInputs.forEach(input => {
+  gameSettingsInputs.forEach((input): void => {
     input.checked = false;
   });
   if (gameThemeInput) gameThemeInput.checked = true;
@@ -43,7 +66,7 @@ export function resetSettings() {
 /**
  * Registers preview handlers for all theme inputs. Call once.
  */
-export function setupThemePreview() {
+export function setupThemePreview(): void {
   const themeInputs = document.querySelectorAll<HTMLInputElement>('input[name="game-theme"]');
   themeInputs.forEach(setupThemeInput);
 }
@@ -52,18 +75,18 @@ export function setupThemePreview() {
 /**
  * Connects a theme input's hover and selection events to the preview.
  */
-function setupThemeInput(input: HTMLInputElement) {
+function setupThemeInput(input: HTMLInputElement): void {
   const label = input.closest("label");
-  label?.addEventListener("mouseenter", () => updateSettingsPreview(input.value));
-  label?.addEventListener("mouseleave", () => updateSettingsPreview(selectedTheme));
-  input.addEventListener("change", () => selectPreviewTheme(input.value));
+  label?.addEventListener("mouseenter", (): void => updateSettingsPreview(input.value));
+  label?.addEventListener("mouseleave", (): void => updateSettingsPreview(selectedTheme));
+  input.addEventListener("change", (): void => selectPreviewTheme(input.value));
 }
 
 
 /**
  * Stores the selected theme and updates its preview.
  */
-function selectPreviewTheme(theme: string) {
+function selectPreviewTheme(theme: string): void {
   selectedTheme = theme;
   updateSettingsPreview(theme);
 }
@@ -72,7 +95,7 @@ function selectPreviewTheme(theme: string) {
 /**
  * Schedules a preview change while avoiding outdated or duplicate transitions.
  */
-function updateSettingsPreview(theme: string) {
+function updateSettingsPreview(theme: string): void {
   const settingsPreview = document.getElementById("settingsPreview");
   if (!settingsPreview) return;
   if (pendingPreviewTheme === theme) return;
@@ -84,14 +107,14 @@ function updateSettingsPreview(theme: string) {
     return;
   }
   preparePreviewTransition(settingsPreview, theme);
-  previewFadeTimeout = window.setTimeout(() => finishPreviewTransition(theme, settingsPreview), 120);
+  previewFadeTimeout = window.setTimeout((): void => finishPreviewTransition(theme, settingsPreview), 120);
 }
 
 
 /**
  * Cancels any pending preview change and begins fading out the preview.
  */
-function preparePreviewTransition(preview: HTMLElement, theme: string) {
+function preparePreviewTransition(preview: HTMLElement, theme: string): void {
   window.clearTimeout(previewFadeTimeout);
   pendingPreviewTheme = theme;
   preview.classList.add("settings-page__preview-content--is-changing");
@@ -101,7 +124,7 @@ function preparePreviewTransition(preview: HTMLElement, theme: string) {
 /**
  * Applies the pending theme and completes the preview transition.
  */
-function finishPreviewTransition(theme: string, preview: HTMLElement) {
+function finishPreviewTransition(theme: string, preview: HTMLElement): void {
   previewFadeTimeout = undefined;
   applySettingsPreview(theme);
   currentPreviewTheme = theme;
@@ -113,7 +136,7 @@ function finishPreviewTransition(theme: string, preview: HTMLElement) {
 /**
  * Applies the preview theme and images when all required elements are present.
  */
-function applySettingsPreview(theme: string) {
+function applySettingsPreview(theme: string): void {
   const { settingsPreview, primaryCard, secondaryCard, blueLabel, orangeLabel, currentPlayerIcon, exitIcon } = getPreviewElements();
   const themePreview = themePreviewData[theme] ?? themePreviewData["code-vibes"];
   if (!settingsPreview || !primaryCard || !secondaryCard || !blueLabel ||
@@ -127,7 +150,7 @@ function applySettingsPreview(theme: string) {
 /**
  * Collects the HTML elements used by the theme preview.
  */
-function getPreviewElements() {
+function getPreviewElements(): PreviewElements {
   return {
     settingsPreview: document.getElementById("settingsPreview"),
     primaryCard: document.getElementById("settingsPreviewPrimaryCard") as HTMLImageElement,
@@ -143,8 +166,8 @@ function getPreviewElements() {
 /**
  * Applies the preview's theme class and theme data attribute.
  */
-function applyPreviewTheme(preview: HTMLElement, themeData: ThemePreview, theme: string) {
-  preview.classList.remove(...Object.values(themePreviewData).map(data => data.previewClass));
+function applyPreviewTheme(preview: HTMLElement, themeData: ThemePreview, theme: string): void {
+  preview.classList.remove(...Object.values(themePreviewData).map((data): string => data.previewClass));
   preview.classList.add(themeData.previewClass);
   preview.dataset.themePreview = themePreviewData[theme] ? theme : "code-vibes";
 }
@@ -153,7 +176,7 @@ function applyPreviewTheme(preview: HTMLElement, themeData: ThemePreview, theme:
 /**
  * Copies the theme's image paths and alternative text to the preview images.
  */
-function setPreviewImages(data: ThemePreview, primary: HTMLImageElement, blue: HTMLImageElement, orange: HTMLImageElement, player: HTMLImageElement, exit: HTMLImageElement) {
+function setPreviewImages(data: ThemePreview, primary: HTMLImageElement, blue: HTMLImageElement, orange: HTMLImageElement, player: HTMLImageElement, exit: HTMLImageElement): void {
   setImage(primary, data.primaryImage, data.primaryAlt);
   setImage(blue, data.blueLabelImage, data.blueLabelAlt);
   setImage(orange, data.orangeLabelImage, data.orangeLabelAlt);
@@ -165,7 +188,7 @@ function setPreviewImages(data: ThemePreview, primary: HTMLImageElement, blue: H
 /**
  * Sets an image's source path and alternative text.
  */
-function setImage(image: HTMLImageElement, src: string, alt: string) {
+function setImage(image: HTMLImageElement, src: string, alt: string): void {
   image.src = src;
   image.alt = alt;
 }
@@ -174,7 +197,7 @@ function setImage(image: HTMLImageElement, src: string, alt: string) {
 /**
  * Shows the secondary preview image only if the theme supplies an image and alternative text.
  */
-function setSecondaryPreview(data: ThemePreview, card: HTMLImageElement) {
+function setSecondaryPreview(data: ThemePreview, card: HTMLImageElement): void {
   if (data.secondaryImage && data.secondaryAlt) return showSecondaryPreview(card, data.secondaryImage, data.secondaryAlt);
   card.hidden = true;
   card.removeAttribute("src");
@@ -185,7 +208,7 @@ function setSecondaryPreview(data: ThemePreview, card: HTMLImageElement) {
 /**
  * Shows the secondary preview image and applies its image data.
  */
-function showSecondaryPreview(card: HTMLImageElement, src: string, alt: string) {
+function showSecondaryPreview(card: HTMLImageElement, src: string, alt: string): void {
   card.hidden = false;
   setImage(card, src, alt);
 }
@@ -194,7 +217,7 @@ function showSecondaryPreview(card: HTMLImageElement, src: string, alt: string) 
 /**
  * Updates the summary and enables Start only when all selections are complete.
  */
-export function updateSettingsSummary() {
+export function updateSettingsSummary(): void {
   updateSettingsGroupLabels();
   const { selectedTheme, selectedPlayer, selectedBoardSize } = getInputData();
   const { summaryTheme, summaryPlayer, summaryBoardSize, startButton } = getSummaryElements();
@@ -208,7 +231,7 @@ export function updateSettingsSummary() {
 /**
  * Collects the summary text elements and the start button.
  */
-function getSummaryElements() {
+function getSummaryElements(): SummaryElements {
   return {
     summaryTheme: document.getElementById("settingsSummaryTheme"),
     summaryPlayer: document.getElementById("settingsSummaryPlayer"),
@@ -221,7 +244,7 @@ function getSummaryElements() {
 /**
  * Sets an element's text if the element exists.
  */
-function setSummaryText(element: HTMLElement | null, text: string) {
+function setSummaryText(element: HTMLElement | null, text: string): void {
   if (element) element.textContent = text;
 }
 
@@ -229,11 +252,11 @@ function setSummaryText(element: HTMLElement | null, text: string) {
 /**
  * Registers summary updates for changes to the selected settings. Call once.
  */
-export function setupSettingsSelection() {
+export function setupSettingsSelection(): void {
   const settingsInputs = document.querySelectorAll<HTMLInputElement>(
     'input[name="game-theme"], input[name="player"], input[name="board-size"]'
   );
-  settingsInputs.forEach((input) => {
+  settingsInputs.forEach((input): void => {
     input.addEventListener("change", updateSettingsSummary);
   });
 }
@@ -242,7 +265,7 @@ export function setupSettingsSelection() {
 /**
  * Returns the theme's display label or a placeholder.
  */
-function getThemeSummaryText(theme: string | undefined) {
+function getThemeSummaryText(theme: string | undefined): string {
   return { "code-vibes": "Code Vibe theme", gaming: "Game theme", "da-projects": "DA Project theme", foods: "Food theme" }[theme ?? ""] ?? "Theme";
 }
 
@@ -250,7 +273,7 @@ function getThemeSummaryText(theme: string | undefined) {
 /**
  * Returns the player's display label or a placeholder if no player is selected.
  */
-function getPlayerSummaryText(player: string | undefined) {
+function getPlayerSummaryText(player: string | undefined): string {
   if (player === "blue") {
     return "Blue Player";
   }
@@ -264,7 +287,7 @@ function getPlayerSummaryText(player: string | undefined) {
 /**
  * Returns the card-count label or a placeholder if no board size is selected.
  */
-function getBoardSizeSummaryText(boardSize: string | undefined) {
+function getBoardSizeSummaryText(boardSize: string | undefined): string {
   if (!boardSize) return "Board size";
   return "Board-" + boardSize + " Cards";
 }
@@ -273,7 +296,7 @@ function getBoardSizeSummaryText(boardSize: string | undefined) {
 /**
  * Reads the selected radio inputs, leaving missing selections undefined.
  */
-function getInputData() {
+function getInputData(): SettingsInputData {
   const selectedTheme = document.querySelector<HTMLInputElement>('input[name="game-theme"]:checked')?.value;
   const selectedPlayer = document.querySelector<HTMLInputElement>('input[name="player"]:checked')?.value;
   const selectedBoardSize = document.querySelector<HTMLInputElement>('input[name="board-size"]:checked')?.value;
@@ -289,7 +312,7 @@ function getInputData() {
  * Builds the game configuration from the selected settings.
  * Missing selections default to Code vibes, blue, and 16 cards.
  */
-export function getGameConfig() {
+export function getGameConfig(): GameConfig {
   const { selectedTheme, selectedPlayer, selectedBoardSize } = getInputData();
   const gameTheme = gameThemeData[selectedTheme ?? "code-vibes"];
   const cardCount = Number(selectedBoardSize ?? 16);

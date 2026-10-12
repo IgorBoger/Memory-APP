@@ -10,9 +10,9 @@ let quitPopupTrigger: HTMLElement | null = null;
 /**
  * Registers the exit-button handler to open the confirmation dialog. Call once.
  */
-export function exitGame() {
+export function exitGame(): void {
   const exitButton = document.getElementById("exitGameBtn");
-  exitButton?.addEventListener("click", () => {
+  exitButton?.addEventListener("click", (): void => {
     openQuitPopup(exitButton);
   });
 }
@@ -21,7 +21,7 @@ export function exitGame() {
 /**
  * Registers the quit dialog's click and keyboard handlers. Call once.
  */
-export function setupQuitPopup() {
+export function setupQuitPopup(): void {
   const popup = document.getElementById("quitPopup");
   const panel = popup?.querySelector<HTMLElement>(".quit-popup__panel");
   const backButton = document.getElementById("quitPopupBack");
@@ -30,14 +30,14 @@ export function setupQuitPopup() {
   backButton.addEventListener("click", resumeGame);
   popup.querySelector("[data-quit-popup-close]")?.addEventListener("click", resumeGame);
   exitButton.addEventListener("click", exitCurrentGame);
-  popup.addEventListener("keydown", event => handleQuitPopupKeydown(event, panel));
+  popup.addEventListener("keydown", (event): void => handleQuitPopupKeydown(event, panel));
 }
 
 
 /**
  * Handles Escape to resume and wraps Tab focus between the dialog controls.
  */
-function handleQuitPopupKeydown(event: KeyboardEvent, panel: HTMLElement) {
+function handleQuitPopupKeydown(event: KeyboardEvent, panel: HTMLElement): void {
   if (event.key === "Escape") return event.preventDefault(), resumeGame();
   if (event.key !== "Tab") return;
   const items = panel.querySelectorAll<HTMLElement>("button:not([disabled]), [href], [tabindex]:not([tabindex='-1'])");
@@ -51,7 +51,7 @@ function handleQuitPopupKeydown(event: KeyboardEvent, panel: HTMLElement) {
 /**
  * Stores the triggering button, pauses the game timers, and opens the quit dialog.
  */
-function openQuitPopup(trigger: HTMLElement) {
+function openQuitPopup(trigger: HTMLElement): void {
   if (gameState.status !== "playing") return;
   const popup = document.getElementById("quitPopup");
   const backButton = document.getElementById("quitPopupBack") as HTMLButtonElement | null;
@@ -66,7 +66,7 @@ function openQuitPopup(trigger: HTMLElement) {
 /**
  * Pauses the card-reset timer and the pending game-over transition.
  */
-function pauseGameTimers() {
+function pauseGameTimers(): void {
   pauseTimer(cardResetTimer);
   pauseTimer(gameOverTimer);
 }
@@ -75,9 +75,9 @@ function pauseGameTimers() {
 /**
  * Shows the quit dialog and focuses its back button.
  */
-function showQuitPopup(popup: HTMLElement, backButton: HTMLButtonElement) {
+function showQuitPopup(popup: HTMLElement, backButton: HTMLButtonElement): void {
   popup.hidden = false;
-  requestAnimationFrame(() => {
+  requestAnimationFrame((): void => {
     popup.classList.add("quit-popup--is-open");
     backButton.focus();
   });
@@ -87,10 +87,10 @@ function showQuitPopup(popup: HTMLElement, backButton: HTMLButtonElement) {
 /**
  * Applies the current theme's class and labels to the quit dialog.
  */
-function applyQuitPopupTheme(popup: HTMLElement) {
+function applyQuitPopupTheme(popup: HTMLElement): void {
   const theme = quitPopupThemeData[getGameConfig().selectedTheme]
     ?? quitPopupThemeData["code-vibes"];
-  popup.classList.remove(...Object.values(quitPopupThemeData).map(theme => theme.popupClass));
+  popup.classList.remove(...Object.values(quitPopupThemeData).map((theme): string => theme.popupClass));
   popup.classList.add(theme.popupClass);
   document.getElementById("quitPopupTitle")!.textContent = theme.title;
   document.getElementById("quitPopupBack")!.textContent = theme.backLabel;
@@ -101,11 +101,11 @@ function applyQuitPopupTheme(popup: HTMLElement) {
 /**
  * Fades out the dialog and restores focus to its trigger after 300 milliseconds.
  */
-function closeQuitPopup() {
+function closeQuitPopup(): void {
   const popup = document.getElementById("quitPopup");
   if (!popup) return;
   popup.classList.remove("quit-popup--is-open");
-  window.setTimeout(() => {
+  window.setTimeout((): void => {
     popup.hidden = true;
     quitPopupTrigger?.focus();
     quitPopupTrigger = null;
@@ -116,7 +116,7 @@ function closeQuitPopup() {
 /**
  * Closes an open quit dialog and resumes timers if the game is still playing.
  */
-function resumeGame() {
+function resumeGame(): void {
   const popup = document.getElementById("quitPopup");
   if (!popup?.classList.contains("quit-popup--is-open")) return;
   closeQuitPopup();
@@ -129,7 +129,7 @@ function resumeGame() {
 /**
  * Cancels game timers, sets the status to idle, and opens the settings page.
  */
-function exitCurrentGame() {
+function exitCurrentGame(): void {
   const settingsPage = document.getElementById("settingsPage");
   const playingField = document.getElementById("playingField");
   if (!settingsPage || !playingField) return;

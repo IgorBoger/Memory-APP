@@ -12,14 +12,14 @@ import { setupWinnerOverlay, setupDrawOverlay } from "./ui/results";
 /**
  * Connects the controls to their actions during application startup. Call once.
  */
-function init() {
+function init(): void {
   startSettingsPage();
   setupSettingsGroups();
   setupThemePreview();
   updateSettingsSummary();
   setupSettingsSelection();
   startGame();
-  initCard(() => checkSelectedPair(getGameConfig()));
+  initCard((): void => checkSelectedPair(getGameConfig()));
   exitGame();
   setupQuitPopup();
   setupWinnerOverlay();

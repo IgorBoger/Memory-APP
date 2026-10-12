@@ -4,7 +4,7 @@ import { gameState } from "../app-context";
 /**
  * Applies the theme images to the game header and updates the current-player display.
  */
-export function applyGameHeader(gameConfig: GameConfig) {
+export function applyGameHeader(gameConfig: GameConfig): void {
   const blueLabel = document.getElementById("gameHeaderBlueLabel") as HTMLImageElement;
   const orangeLabel = document.getElementById("gameHeaderOrangeLabel") as HTMLImageElement;
   const exitIcon = document.getElementById("gameHeaderExitIcon") as HTMLImageElement;
@@ -21,7 +21,7 @@ export function applyGameHeader(gameConfig: GameConfig) {
 /**
  * Applies the board layout class for 16, 24, or 36 cards.
  */
-export function applyBoardSizeClass(cardCount: number) {
+export function applyBoardSizeClass(cardCount: number): void {
   const playingFieldBoard = document.getElementById("playingFieldBoard");
   if (!playingFieldBoard) {
     return;
@@ -38,7 +38,7 @@ export function applyBoardSizeClass(cardCount: number) {
 /**
  * Replaces the playing field's previous theme class with the selected theme.
  */
-export function applyPlayingFieldTheme(gameConfig: GameConfig) {
+export function applyPlayingFieldTheme(gameConfig: GameConfig): void {
   const playingField = document.getElementById("playingField");
   if (!playingField) return;
   playingField.classList.remove(
@@ -54,7 +54,7 @@ export function applyPlayingFieldTheme(gameConfig: GameConfig) {
 /**
  * Displays the current player as an image or a colored badge, depending on the theme.
  */
-export function applyCurrentPlayer(gameConfig: GameConfig) {
+export function applyCurrentPlayer(gameConfig: GameConfig): void {
   if (gameConfig.gameTheme.currentPlayer.type === "image") {
     applyCurrentPlayerImage(gameConfig);
     return;
@@ -66,7 +66,7 @@ export function applyCurrentPlayer(gameConfig: GameConfig) {
 /**
  * Selects the blue or orange player image from the current theme.
  */
-function applyCurrentPlayerImage(gameConfig: GameConfig) {
+function applyCurrentPlayerImage(gameConfig: GameConfig): void {
   const currentPlayer = gameConfig.gameTheme.currentPlayer;
   if (currentPlayer.type !== "image") return;
   const currentPlayerIcon = document.getElementById("gameHeaderCurrentPlayerIcon") as HTMLImageElement;
@@ -81,7 +81,7 @@ function applyCurrentPlayerImage(gameConfig: GameConfig) {
 /**
  * Applies the player badge icon and its current-player color.
  */
-function applyCurrentPlayerBadge(gameConfig: GameConfig) {
+function applyCurrentPlayerBadge(gameConfig: GameConfig): void {
   const currentPlayer = gameConfig.gameTheme.currentPlayer;
   if (currentPlayer.type !== "badge") return;
   const currentPlayerBadge = document.getElementById("gameHeaderCurrentPlayerBadge");
@@ -95,7 +95,7 @@ function applyCurrentPlayerBadge(gameConfig: GameConfig) {
 /**
  * Replaces the badge's previous player color with blue or orange.
  */
-function updateCurrentPlayerBadgeColor(currentPlayerBadge: HTMLElement | null, currentPlayer: string) {
+function updateCurrentPlayerBadgeColor(currentPlayerBadge: HTMLElement | null, currentPlayer: string): void {
   currentPlayerBadge?.classList.remove(
     "game-header__current-player-icon--blue",
     "game-header__current-player-icon--orange"

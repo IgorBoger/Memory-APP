@@ -28,7 +28,7 @@ function createInitialGameState(currentPlayer: Player): GameState {
 /**
  * Cancels the pending card reset or player switch.
  */
-export function cancelCardReset() {
+export function cancelCardReset(): void {
   cancelTimer(cardResetTimer);
 }
 
@@ -36,7 +36,7 @@ export function cancelCardReset() {
 /**
  * Cancels the pending transition to the game-over screen.
  */
-export function cancelGameOver() {
+export function cancelGameOver(): void {
   cancelTimer(gameOverTimer);
 }
 
@@ -44,7 +44,7 @@ export function cancelGameOver() {
 /**
  * Cancels the pending transition to the winner or draw overlay.
  */
-export function cancelResultOverlay() {
+export function cancelResultOverlay(): void {
   window.clearTimeout(appTimers.resultOverlayTimeout);
   appTimers.resultOverlayTimeout = undefined;
 }
@@ -56,6 +56,6 @@ export function cancelResultOverlay() {
  *
  * @param player - Starting player for the new state.
  */
-export function resetGameState(player: Player) {
+export function resetGameState(player: Player): void {
   gameState = createInitialGameState(player);
 }

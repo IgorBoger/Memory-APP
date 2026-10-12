@@ -8,7 +8,7 @@ const mobileLayout = window.matchMedia("(max-width: 800px)");
 let buttons: HTMLButtonElement[] = [];
 let activeButton: HTMLButtonElement | null = null;
 
-export function setupSettingsGroups() {
+export function setupSettingsGroups(): void {
   buttons = [...document.querySelectorAll<HTMLButtonElement>(".settings-page__group-toggle")];
   buttons.forEach(setupSettingsGroup);
   document.addEventListener("pointerdown", handleOutsidePointer);
@@ -16,26 +16,26 @@ export function setupSettingsGroups() {
   renderGroups();
 }
 
-function getPanel(button: HTMLButtonElement) {
+function getPanel(button: HTMLButtonElement): HTMLElement | null {
   return document.getElementById(button.getAttribute("aria-controls") ?? "");
 }
 
-function setupSettingsGroup(button: HTMLButtonElement) {
+function setupSettingsGroup(button: HTMLButtonElement): void {
   const group = button.closest("fieldset");
   const panel = getPanel(button);
-  button.addEventListener("click", () => toggleGroup(button));
-  group?.addEventListener("pointerleave", event => handleGroupLeave(event, button));
-  group?.addEventListener("focusout", event => handleGroupFocus(event, button));
-  group?.addEventListener("keydown", event => handleGroupKey(event, button));
+  button.addEventListener("click", (): void => toggleGroup(button));
+  group?.addEventListener("pointerleave", (event): void => handleGroupLeave(event, button));
+  group?.addEventListener("focusout", (event): void => handleGroupFocus(event, button));
+  group?.addEventListener("keydown", (event): void => handleGroupKey(event, button));
   panel?.addEventListener("click", handleOptionClick);
-  panel?.addEventListener("change", () => closeGroup(true));
+  panel?.addEventListener("change", (): void => closeGroup(true));
 }
 
-function renderGroups() {
+function renderGroups(): void {
   buttons.forEach(updateGroup);
 }
 
-function updateGroup(button: HTMLButtonElement) {
+function updateGroup(button: HTMLButtonElement): void {
   const panel = getPanel(button);
   if (!panel) return;
   const expanded = !mobileLayout.matches || button === activeButton;
@@ -44,52 +44,52 @@ function updateGroup(button: HTMLButtonElement) {
   panel.hidden = !expanded;
 }
 
-function toggleGroup(button: HTMLButtonElement) {
+function toggleGroup(button: HTMLButtonElement): void {
   activeButton = activeButton === button ? null : button;
   renderGroups();
 }
 
-function closeGroup(restoreFocus = false) {
+function closeGroup(restoreFocus = false): void {
   if (!activeButton) return;
   if (restoreFocus) activeButton.focus();
   activeButton = null;
   renderGroups();
 }
 
-function handleGroupLeave(event: PointerEvent, button: HTMLButtonElement) {
+function handleGroupLeave(event: PointerEvent, button: HTMLButtonElement): void {
   if (event.pointerType === "mouse" && activeButton === button) closeGroup();
 }
 
-function handleGroupFocus(event: FocusEvent, button: HTMLButtonElement) {
+function handleGroupFocus(event: FocusEvent, button: HTMLButtonElement): void {
   const nextTarget = event.relatedTarget as Node | null;
   const group = button.closest("fieldset");
   // Blank panel space has no focus target; outside clicks are handled separately.
   if (activeButton === button && nextTarget && !group?.contains(nextTarget)) closeGroup();
 }
 
-function handleGroupKey(event: KeyboardEvent, button: HTMLButtonElement) {
+function handleGroupKey(event: KeyboardEvent, button: HTMLButtonElement): void {
   if (event.key !== "Escape" || activeButton !== button) return;
   event.preventDefault();
   closeGroup(true);
 }
 
-function handleOptionClick(event: MouseEvent) {
+function handleOptionClick(event: MouseEvent): void {
   if (event.target instanceof HTMLInputElement) closeGroup(true);
 }
 
-function handleOutsidePointer(event: PointerEvent) {
+function handleOutsidePointer(event: PointerEvent): void {
   if (activeButton && !activeButton.closest("fieldset")?.contains(event.target as Node)) closeGroup();
 }
 
-function handleLayoutChange() {
-  const focusedButton = buttons.find(button => getPanel(button)?.contains(document.activeElement));
+function handleLayoutChange(): void {
+  const focusedButton = buttons.find((button): boolean | undefined => getPanel(button)?.contains(document.activeElement));
   activeButton = null;
   renderGroups();
   if (mobileLayout.matches) focusedButton?.focus();
 }
 
-export function updateSettingsGroupLabels() {
-  groups.forEach(({ name, target }) => {
+export function updateSettingsGroupLabels(): void {
+  groups.forEach(({ name, target }): void => {
     const selected = document.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`);
     const label = selected?.closest("label")?.querySelector(".settings-page__option-label")?.textContent;
     const value = document.getElementById(target);

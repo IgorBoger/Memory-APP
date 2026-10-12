@@ -9,7 +9,7 @@ import type { Card, GameTheme } from "../types";
  * @param index - Position used for the unique back-image ID.
  * @returns HTML markup to be inserted by the cards module.
  */
-export function createMemoryCardMarkup(theme: GameTheme, card: Card, index: number) {
+export function createMemoryCardMarkup(theme: GameTheme, card: Card, index: number): string {
   const front = theme.cardFrontImage
     ? `<img class="memory-card__image" src="${theme.cardFrontImage}" alt="${theme.cardFrontAlt}">` : "";
   return `<div class="memory-card__inner"><div class="memory-card__face memory-card__face--front">${front}</div>` +

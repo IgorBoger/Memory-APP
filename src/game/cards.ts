@@ -17,7 +17,7 @@ function getPairCount(): number {
 /**
  * Selects motifs for the current board size and includes each motif twice.
  */
-function getCardMotifs(selectedTheme: string) {
+function getCardMotifs(selectedTheme: string): CardMotif[] {
   const pairCount = getPairCount();
   const motifs = cardMotifsByTheme[selectedTheme].slice(0, pairCount);
   return [...motifs, ...motifs];
@@ -30,7 +30,7 @@ function getCardMotifs(selectedTheme: string) {
  * @param selectedTheme - An existing theme key from the card data.
  * @returns New cards with unique IDs and two cards per motif.
  */
-export function createShuffledDeck(selectedTheme: string) {
+export function createShuffledDeck(selectedTheme: string): Card[] {
   const deck = getCardMotifs(selectedTheme).map(createCard);
   shuffleCards(deck);
   return deck;
@@ -60,17 +60,17 @@ function shuffleCards(deck: Card[]): Card[] {
 /**
  * Replaces the board contents with card buttons using the selected theme.
  */
-export function renderPlayingFieldCards(selectedTheme: string, cards: Card[]) {
+export function renderPlayingFieldCards(selectedTheme: string, cards: Card[]): void {
   const playingFieldBoard = document.getElementById("playingFieldBoard");
   if (!playingFieldBoard) return;
-  playingFieldBoard.replaceChildren(...cards.map((card, index) => createMemoryCard(selectedTheme, card, index)));
+  playingFieldBoard.replaceChildren(...cards.map((card, index): HTMLButtonElement => createMemoryCard(selectedTheme, card, index)));
 }
 
 
 /**
  * Creates a card button and links it to its game data through data-card-id.
  */
-function createMemoryCard(selectedTheme: string, card: Card, index: number) {
+function createMemoryCard(selectedTheme: string, card: Card, index: number): HTMLButtonElement {
   const memoryCard = document.createElement("button");
   const gameTheme = gameThemeData[selectedTheme];
   memoryCard.className = "memory-card";
@@ -83,10 +83,10 @@ function createMemoryCard(selectedTheme: string, card: Card, index: number) {
 /**
  * Reveals an eligible card and notifies the game flow when two cards are selected.
  */
-function openCard(cardElement: HTMLElement, onPairSelected: () => void) {
+function openCard(cardElement: HTMLElement, onPairSelected: () => void): void {
   if (gameState.status !== "playing" || gameState.isLocked) return;
   const cardId = Number(cardElement.dataset.cardId);
-  const card = gameState.cards.find(card => card.id === cardId);
+  const card = gameState.cards.find((card): boolean => card.id === cardId);
   if (!card || card.isMatched) return;
   if (gameState.flippedCardIds.includes(cardId)) return;
   gameState.flippedCardIds.push(cardId);
@@ -101,7 +101,7 @@ function openCard(cardElement: HTMLElement, onPairSelected: () => void) {
 /**
  * Marks a card as matched in both the game state and the DOM.
  */
-export function markCardAsMatched(card: Card) {
+export function markCardAsMatched(card: Card): void {
   card.isMatched = true;
   const cardElement = document.querySelector(
     `#playingFieldBoard .memory-card[data-card-id="${card.id}"]`
@@ -116,10 +116,10 @@ export function markCardAsMatched(card: Card) {
  *
  * @param onPairSelected - Called when two cards have been revealed.
  */
-export function initCard(onPairSelected: () => void) {
+export function initCard(onPairSelected: () => void): void {
   const fieldRef = document.getElementById("playingFieldBoard");
   if (fieldRef) {
-    fieldRef.addEventListener("click", e => {
+    fieldRef.addEventListener("click", (e): void => {
       const card = (e.target as HTMLElement).closest(".memory-card");
       if (card instanceof HTMLElement) {
         openCard(card, onPairSelected);

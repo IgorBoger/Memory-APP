@@ -7,7 +7,7 @@ import { resultThemeData } from "../theme-data";
 /**
  * Displays final scores, sets the status to finished, and schedules the result overlay.
  */
-export function showGameOver() {
+export function showGameOver(): void {
   const playingField = document.getElementById("playingField");
   const gameOver = document.getElementById("gameOver");
   if (!playingField || !gameOver) return;
@@ -22,7 +22,7 @@ export function showGameOver() {
 /**
  * Applies the game theme and player images to the game-over screen.
  */
-function applyGameOverTheme(gameOver: HTMLElement, gameConfig: GameConfig) {
+function applyGameOverTheme(gameOver: HTMLElement, gameConfig: GameConfig): void {
   gameOver.classList.remove("game-over--code-vibes", "game-over--gaming", "game-over--da-projects", "game-over--foods");
   gameOver.classList.add(`game-over--${gameConfig.selectedTheme}`);
   const blueLabel = gameOver.querySelector<HTMLImageElement>(".game-over__score--blue img");
@@ -35,12 +35,12 @@ function applyGameOverTheme(gameOver: HTMLElement, gameConfig: GameConfig) {
 /**
  * Schedules the result overlay after three seconds if the game is still finished.
  */
-function scheduleResultOverlay() {
+function scheduleResultOverlay(): void {
   const gameOver = document.getElementById("gameOver");
   if (!gameOver) return;
   cancelResultOverlay();
   const winner = getWinningPlayer();
-  appTimers.resultOverlayTimeout = window.setTimeout(() => {
+  appTimers.resultOverlayTimeout = window.setTimeout((): void => {
     appTimers.resultOverlayTimeout = undefined;
     if (gameState.status !== "finished") return;
     showResultOverlay(winner, gameOver);
@@ -51,7 +51,7 @@ function scheduleResultOverlay() {
 /**
  * Opens the winner or draw overlay according to the result.
  */
-function showResultOverlay(winner: Player | null, gameOver: HTMLElement) {
+function showResultOverlay(winner: Player | null, gameOver: HTMLElement): void {
   if (winner) {
     showWinnerOverlay(winner, gameOver);
   } else {
@@ -82,9 +82,9 @@ function getResultTheme(theme: string): ResultTheme {
 /**
  * Applies the CSS class and button label to a result overlay.
  */
-function applyResultTheme(overlay: HTMLElement, theme: ResultTheme, kind: "winner" | "draw") {
+function applyResultTheme(overlay: HTMLElement, theme: ResultTheme, kind: "winner" | "draw"): void {
   const classKey = kind === "winner" ? "winnerClass" : "drawClass";
-  overlay.classList.remove(...Object.values(resultThemeData).map(data => data[classKey]));
+  overlay.classList.remove(...Object.values(resultThemeData).map((data): string => data[classKey]));
   overlay.classList.add(theme[classKey]);
   const button = overlay.querySelector<HTMLButtonElement>("button");
   if (button) button.textContent = theme.buttonText;
@@ -94,7 +94,7 @@ function applyResultTheme(overlay: HTMLElement, theme: ResultTheme, kind: "winne
 /**
  * Sets the winner title, winner image, and player data attribute.
  */
-function applyWinnerContent(overlay: HTMLElement, player: Player, theme: ResultTheme) {
+function applyWinnerContent(overlay: HTMLElement, player: Player, theme: ResultTheme): void {
   const title = document.getElementById("winnerPlayer");
   const pawn = document.getElementById("winnerPawn") as HTMLImageElement | null;
   overlay.dataset.player = player;
@@ -106,7 +106,7 @@ function applyWinnerContent(overlay: HTMLElement, player: Player, theme: ResultT
 /**
  * Configures the winner overlay and navigates to it from the current page.
  */
-function showWinnerOverlay(player: Player, currentPage: HTMLElement, theme = getGameConfig().selectedTheme) {
+function showWinnerOverlay(player: Player, currentPage: HTMLElement, theme = getGameConfig().selectedTheme): void {
   const overlay = document.getElementById("winnerOverlay");
   if (!overlay) return;
   const resultTheme = getResultTheme(theme);
@@ -121,10 +121,10 @@ function showWinnerOverlay(player: Player, currentPage: HTMLElement, theme = get
  * A later click resets the game and settings and opens the start page.
  * Calling this setup function does not display the winner overlay.
  */
-export function setupWinnerOverlay() {
+export function setupWinnerOverlay(): void {
   const overlay = document.getElementById("winnerOverlay");
   const startPage = document.getElementById("startPage");
-  document.getElementById("winnerBackToStart")?.addEventListener("click", () => {
+  document.getElementById("winnerBackToStart")?.addEventListener("click", (): void => {
     if (!overlay || !startPage) return;
     cancelCardReset();
     cancelGameOver();
@@ -139,7 +139,7 @@ export function setupWinnerOverlay() {
 /**
  * Configures the draw overlay and navigates to it from the current page.
  */
-function showDrawOverlay(currentPage: HTMLElement, theme = getGameConfig().selectedTheme) {
+function showDrawOverlay(currentPage: HTMLElement, theme = getGameConfig().selectedTheme): void {
   const overlay = document.getElementById("drawOverlay");
   if (!overlay) return;
   const resultTheme = getResultTheme(theme);
@@ -155,10 +155,10 @@ function showDrawOverlay(currentPage: HTMLElement, theme = getGameConfig().selec
  * A later click resets the game and settings and opens the start page.
  * Calling this setup function does not display the draw overlay.
  */
-export function setupDrawOverlay() {
+export function setupDrawOverlay(): void {
   const overlay = document.getElementById("drawOverlay");
   const startPage = document.getElementById("startPage");
-  document.getElementById("drawBackToStart")?.addEventListener("click", () => {
+  document.getElementById("drawBackToStart")?.addEventListener("click", (): void => {
     if (!overlay || !startPage) return;
     cancelCardReset();
     cancelGameOver();
@@ -173,7 +173,7 @@ export function setupDrawOverlay() {
 /**
  * Copies both players' scores to the game-over screen.
  */
-function updateFinalScoreDisplay() {
+function updateFinalScoreDisplay(): void {
   const blueScore = document.getElementById("gameOverBlueScore");
   const orangeScore = document.getElementById("gameOverOrangeScore");
   if (blueScore) blueScore.textContent = String(gameState.scores.blue);

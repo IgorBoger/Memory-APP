@@ -17,7 +17,7 @@ export function createPausableTimer(): PausableTimer {
 /**
  * Stops the timer and discards its remaining time and pending action.
  */
-export function cancelTimer(timer: PausableTimer) {
+export function cancelTimer(timer: PausableTimer): void {
   window.clearTimeout(timer.timeoutId);
   timer.timeoutId = undefined;
   timer.remaining = 0;
@@ -28,7 +28,7 @@ export function cancelTimer(timer: PausableTimer) {
 /**
  * Resets the expired timer before running its pending action.
  */
-function finishTimer(timer: PausableTimer) {
+function finishTimer(timer: PausableTimer): void {
   const callback = timer.action;
   cancelTimer(timer);
   callback?.();
@@ -39,11 +39,11 @@ function finishTimer(timer: PausableTimer) {
  * Starts a prepared or paused timer using its remaining time.
  * Does nothing if the timer is already running or has no pending action.
  */
-export function resumeTimer(timer: PausableTimer) {
+export function resumeTimer(timer: PausableTimer): void {
   if (!timer.action || timer.timeoutId !== undefined) return;
   timer.startedAt = performance.now();
   timer.timeoutId = window.setTimeout(
-    () => finishTimer(timer),
+    (): void => finishTimer(timer),
     timer.remaining
   );
 }
@@ -52,7 +52,7 @@ export function resumeTimer(timer: PausableTimer) {
 /**
  * Pauses a running timer and stores its remaining time.
  */
-export function pauseTimer(timer: PausableTimer) {
+export function pauseTimer(timer: PausableTimer): void {
   if (timer.timeoutId === undefined) return;
   window.clearTimeout(timer.timeoutId);
   timer.timeoutId = undefined;
@@ -72,7 +72,7 @@ export function startTimer(
   timer: PausableTimer,
   callback: () => void,
   delay: number
-) {
+): void {
   cancelTimer(timer);
   timer.action = callback;
   timer.remaining = delay;
